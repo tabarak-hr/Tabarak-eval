@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>نظام تقييم الأداء — تبارك</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -405,6 +406,7 @@ label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
     <h2 style="font-weight:900;margin-bottom:8px">تم التوقيع بالاطلاع بنجاح</h2>
     <p style="color:#64748b">اكتملت دورة التقييم بشكل رسمي</p>
     <div id="empDoneDetails" style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:12px;padding:20px;margin:20px 0;text-align:right"></div>
+    <button class="btn btn-primary" onclick="downloadPDF()" style="margin-bottom:12px">تحميل PDF 📄</button>
     <button class="btn btn-ghost" onclick="showPage('page-home')">العودة للرئيسية</button>
   </div>
 </div>
@@ -988,6 +990,154 @@ window.resetAll = function() {
 };
 
 init();
+
+// ===== PDF GENERATION =====
+window.downloadPDF = function() {
+  const data = state.empData;
+  if (!data) return;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+  const W = 210, margin = 15;
+  let y = 20;
+
+  const items = ITEMS[data.role];
+  const allItems = [...items.cat1, ...items.cat2, ...items.cat3];
+  const total = allItems.reduce((s,i) => s + (data.scores[i.id] || 0), 0);
+  const totalMax = allItems.length * 5;
+  const grade = getGrade(total);
+  const roleName = ROLES.find(r => r.id === data.role)?.label || "";
+
+  function addText(text, x, yPos, size=10, bold=false, color=[226,232,240]) {
+    doc.setFontSize(size);
+    doc.setFont("helvetica", bold ? "bold" : "normal");
+    doc.setTextColor(...color);
+    doc.text(text, x, yPos, { align: "right" });
+  }
+
+  function addRect(x, yPos, w, h, fillColor, radius=2) {
+    doc.setFillColor(...fillColor);
+    doc.roundedRect(x, yPos, w, h, radius, radius, "F");
+  }
+
+  // Background
+  doc.setFillColor(15, 23, 42);
+  doc.rect(0, 0, W, 297, "F");
+
+  // Header
+  doc.setFillColor(124, 58, 237);
+  doc.rect(0, 0, W, 28, "F");
+  addText("Performance Evaluation — تبارك", W - margin, 12, 14, true, [255,255,255]);
+  addText("نظام تقييم الأداء", W - margin, 22, 10, false, [200,190,255]);
+
+  y = 38;
+
+  // Employee info box
+  addRect(margin, y, W - margin*2, 36, [30, 41, 59], 3);
+  addText("بيانات الموظف", W - margin - 4, y + 8, 9, true, [148,163,184]);
+  addText(data.employeeName, W - margin - 4, y + 17, 12, true, [226,232,240]);
+  addText(data.jobTitle + "  |  " + data.department, W - margin - 4, y + 25, 9, false, [148,163,184]);
+  addText("الفترة: " + data.period + "  |  المقيم: " + data.evaluatorName, W - margin - 4, y + 32, 9, false, [148,163,184]);
+  y += 44;
+
+  // Score summary box
+  const gradeColor = grade.color.match(/\d+/g).map(Number);
+  addRect(margin, y, W - margin*2, 28, [30, 41, 59], 3);
+  addText("النتيجة النهائية", W - margin - 4, y + 8, 9, true, [148,163,184]);
+  addText(total + " / " + totalMax, W - margin - 4, y + 20, 16, true, gradeColor);
+  addText(grade.ar + " — " + grade.en, margin + 4, y + 20, 13, true, gradeColor);
+  const pct = Math.round(total/totalMax*100);
+  addText(pct + "%", W/2, y + 20, 13, true, gradeColor);
+
+  // Progress bar
+  y += 32;
+  doc.setFillColor(50, 60, 80);
+  doc.roundedRect(margin, y, W - margin*2, 4, 2, 2, "F");
+  doc.setFillColor(...gradeColor);
+  doc.roundedRect(margin, y, (W - margin*2) * pct/100, 4, 2, 2, "F");
+  y += 12;
+
+  // Category scores
+  const c1 = items.cat1.reduce((s,i) => s+(data.scores[i.id]||0),0);
+  const c2 = items.cat2.reduce((s,i) => s+(data.scores[i.id]||0),0);
+  const c3 = items.cat3.reduce((s,i) => s+(data.scores[i.id]||0),0);
+  const catW = (W - margin*2 - 8) / 3;
+  [[" الكفاءة الفنية",c1,items.cat1.length*5],[" السلوك",c2,items.cat2.length*5],[" العلاقات",c3,items.cat3.length*5]].forEach(([label,s,m], idx) => {
+    const cx = margin + idx * (catW + 4);
+    addRect(cx, y, catW, 18, [20,30,50], 2);
+    addText(label, cx + catW - 4, y + 7, 7, false, [100,116,139]);
+    addText(s + "/" + m, cx + catW - 4, y + 15, 9, true, [226,232,240]);
+  });
+  y += 26;
+
+  // Items
+  const cats = [
+    {label:"الفئة الأولى: الكفاءة الفنية والإنتاجية", items: items.cat1},
+    {label:"الفئة الثانية: السلوك والانضباط", items: items.cat2},
+    {label:"الفئة الثالثة: العلاقات المهنية", items: items.cat3},
+  ];
+
+  for (const cat of cats) {
+    if (y > 250) { doc.addPage(); doc.setFillColor(15,23,42); doc.rect(0,0,W,297,"F"); y = 20; }
+    addRect(margin, y, W-margin*2, 8, [40,30,80], 2);
+    addText(cat.label, W-margin-4, y+6, 8, true, [167,139,250]);
+    y += 12;
+
+    for (const item of cat.items) {
+      if (y > 270) { doc.addPage(); doc.setFillColor(15,23,42); doc.rect(0,0,W,297,"F"); y = 20; }
+      const val = data.scores[item.id] || 0;
+      const scoreColor = val<=2?[239,68,68]:val===3?[249,115,22]:val===4?[59,130,246]:[34,197,94];
+      addRect(margin, y, W-margin*2, 7, [25,35,55], 1);
+      addText(item.t, W-margin-3, y+5, 7, false, [200,210,230]);
+      addRect(W-margin-12, y+0.5, 10, 6, scoreColor, 1);
+      doc.setTextColor(255,255,255); doc.setFontSize(7); doc.setFont("helvetica","bold");
+      doc.text(String(val), W-margin-7, y+5, {align:"center"});
+      y += 9;
+    }
+    y += 4;
+  }
+
+  // Comments
+  const comments = [
+    {label:"مواطن القوة", val:data.strengths, color:[34,197,94]},
+    {label:"مواطن الضعف", val:data.weaknesses, color:[239,68,68]},
+    {label:"التوصيات", val:data.recommendations, color:[245,158,11]},
+    {label:"رأي المدير", val:data.managerOpinion, color:[148,163,184]},
+  ].filter(c => c.val);
+
+  for (const c of comments) {
+    if (y > 260) { doc.addPage(); doc.setFillColor(15,23,42); doc.rect(0,0,W,297,"F"); y = 20; }
+    addText(c.label, W-margin-4, y+6, 8, true, c.color);
+    y += 8;
+    const lines = doc.splitTextToSize(c.val, W-margin*2-8);
+    const boxH = lines.length * 5 + 6;
+    addRect(margin, y, W-margin*2, boxH, [25,35,55], 2);
+    doc.setFontSize(8); doc.setFont("helvetica","normal"); doc.setTextColor(180,190,210);
+    lines.forEach((line, li) => { doc.text(line, W-margin-4, y+5+(li*5), {align:"right"}); });
+    y += boxH + 6;
+  }
+
+  // Signatures
+  if (y > 250) { doc.addPage(); doc.setFillColor(15,23,42); doc.rect(0,0,W,297,"F"); y = 20; }
+  y += 4;
+  addRect(margin, y, W-margin*2, 30, [25,35,55], 3);
+  addText("التوقيعات والاعتمادات", W-margin-4, y+8, 9, true, [148,163,184]);
+  // Manager
+  addText("اعتماد المدير:", W-margin-4, y+17, 8, true, [124,58,237]);
+  addText(data.managerSignature + "   " + data.managerApprovalDate, W-margin-4, y+25, 9, false, [226,232,240]);
+  // Employee
+  addText("اطلاع الموظف:", margin+90, y+17, 8, true, [34,197,94]);
+  addText((data.employeeSignature||"") + "   " + (data.employeeApprovalDate||""), margin+90, y+25, 9, false, [226,232,240]);
+  y += 36;
+
+  // Footer
+  doc.setFillColor(124,58,237);
+  doc.rect(0, 285, W, 12, "F");
+  addText("tabarak-eval.vercel.app  |  شركة تبارك المحدودة", W/2, 292, 8, false, [200,190,255]);
+
+  // Save
+  const fileName = "تقييم_" + data.employeeName.replace(/\s/g,"_") + "_" + (data.period||"").replace(/\s/g,"_") + ".pdf";
+  doc.save(fileName);
+};
 </script>
 
 </body>
