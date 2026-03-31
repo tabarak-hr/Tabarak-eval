@@ -407,7 +407,7 @@ label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
     <h2 style="font-weight:900;margin-bottom:8px">تم التوقيع بالاطلاع بنجاح</h2>
     <p style="color:#64748b">اكتملت دورة التقييم بشكل رسمي</p>
     <div id="empDoneDetails" style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:12px;padding:20px;margin:20px 0;text-align:right"></div>
-    <button class="btn btn-primary" onclick="downloadPDF()" style="margin-bottom:12px">عرض التقييم كاملاً 📋</button>
+    <button class="btn btn-primary" onclick="downloadPDF()" style="margin-bottom:12px">تحميل PDF 📄</button>
     <button class="btn btn-ghost" onclick="showPage('page-home')">العودة للرئيسية</button>
   </div>
 </div>
@@ -992,7 +992,7 @@ window.resetAll = function() {
 
 init();
 
-// ===== عرض التقييم كصفحة ويب =====
+// ===== PDF GENERATION (Print-based) =====
 window.downloadPDF = function() {
   const data = state.empData;
   if (!data) return;
@@ -1008,142 +1008,171 @@ window.downloadPDF = function() {
   const c2 = items.cat2.reduce((s,i)=>s+(data.scores[i.id]||0),0);
   const c3 = items.cat3.reduce((s,i)=>s+(data.scores[i.id]||0),0);
 
-  function sc(v){return v<=2?"color:#ef4444":v===3?"color:#f97316":v===4?"color:#3b82f6":"color:#22c55e";}
+  function scoreColor(v) {
+    return v<=2?"#ef4444":v===3?"#f97316":v===4?"#3b82f6":"#22c55e";
+  }
 
-  // Build scores table
-  const cats = [
-    {label:"الفئة الاولى: الكفاءة الفنية والانتاجية", cat:items.cat1},
+  const catsHTML = [
+    {label:"الفئة الأولى: الكفاءة الفنية والإنتاجية", cat:items.cat1},
     {label:"الفئة الثانية: السلوك والانضباط", cat:items.cat2},
     {label:"الفئة الثالثة: العلاقات المهنية", cat:items.cat3},
-  ];
-
-  const scoresTable = cats.map(({label,cat}) => `
-    <tr style="background:#e8e0ff"><td colspan="2" style="padding:6px 8px;font-weight:700;font-size:13px;border:1px solid #ccc">${label}</td></tr>
-    ${cat.map(item => {
-      const v = data.scores[item.id]||0;
-      return `<tr><td style="padding:5px 8px;border:1px solid #ddd;font-size:12px">${item.t}</td><td style="padding:5px;border:1px solid #ddd;text-align:center;font-weight:700;font-size:14px;${sc(v)}">${v}</td></tr>`;
-    }).join("")}
+  ].map(({label,cat}) => `
+    <div style="margin-bottom:12px">
+      <div style="background:#2d1f5e;padding:6px 10px;border-radius:4px;font-weight:700;color:#a78bfa;margin-bottom:6px">${label}</div>
+      ${cat.map(item => {
+        const v = data.scores[item.id]||0;
+        return `<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 8px;background:#1a2535;border-radius:4px;margin-bottom:3px">
+          <span style="font-size:11px;color:#cbd5e1">${item.t}</span>
+          <span style="background:${scoreColor(v)};color:#fff;width:22px;height:22px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0">${v}</span>
+        </div>`;
+      }).join("")}
+    </div>
   `).join("");
 
-  const comments = [
-    {l:"مواطن القوة", v:data.strengths, c:"#16a34a"},
-    {l:"مواطن الضعف", v:data.weaknesses, c:"#dc2626"},
-    {l:"التوجيهات والتوصيات", v:data.recommendations, c:"#d97706"},
-    {l:"راي المدير", v:data.managerOpinion, c:"#6b7280"},
-    {l:"ملاحظات الموظف", v:data.employeeComment, c:"#2563eb"},
-  ].filter(x=>x.v).map(x=>`
-    <tr><td style="padding:6px 8px;font-weight:700;color:${x.c};border:1px solid #ddd;width:140px">${x.l}</td>
-    <td style="padding:6px 8px;border:1px solid #ddd;font-size:12px">${x.v}</td></tr>
+  const commentsHTML = [
+    {label:"مواطن القوة", val:data.strengths, color:"#22c55e"},
+    {label:"مواطن الضعف", val:data.weaknesses, color:"#ef4444"},
+    {label:"التوجيهات والتوصيات", val:data.recommendations, color:"#f59e0b"},
+    {label:"رأي المدير", val:data.managerOpinion, color:"#94a3b8"},
+    {label:"ملاحظات الموظف", val:data.employeeComment, color:"#60a5fa"},
+  ].filter(c=>c.val).map(c=>`
+    <div style="margin-bottom:10px">
+      <div style="font-weight:700;color:${c.color};font-size:11px;margin-bottom:4px">${c.label}</div>
+      <div style="background:#1a2535;padding:8px;border-radius:4px;font-size:11px;color:#cbd5e1;line-height:1.6">${c.val}</div>
+    </div>
   `).join("");
 
   const html = `<!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>تقييم اداء - ${data.employeeName}</title>
+<title>تقييم أداء — ${data.employeeName}</title>
 <style>
-body { font-family: Tahoma, Arial, sans-serif; direction: rtl; background: #f8fafc; color: #1e293b; margin: 0; padding: 16px; }
-.container { max-width: 800px; margin: 0 auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
-.header { background: linear-gradient(90deg, #7c3aed, #4f46e5); color: white; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; }
-.header h1 { margin: 0; font-size: 18px; }
-.header p { margin: 4px 0 0; font-size: 11px; opacity: 0.85; }
-.section { padding: 14px 16px; border-bottom: 1px solid #e2e8f0; }
-.section-title { font-size: 13px; font-weight: 700; color: #475569; margin-bottom: 8px; }
-table { width: 100%; border-collapse: collapse; }
-.score-box { font-size: 32px; font-weight: 900; color: ${grade.color}; }
-.grade-box { display: inline-block; background: ${grade.color}; color: white; padding: 4px 16px; border-radius: 20px; font-weight: 700; font-size: 15px; }
-.progress { background: #e2e8f0; border-radius: 4px; height: 10px; margin: 8px 0; }
-.progress-fill { background: ${grade.color}; height: 100%; border-radius: 4px; width: ${pct}%; }
-.sig-box { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; }
-.print-btn { display: block; width: 200px; margin: 16px auto; padding: 12px; background: #7c3aed; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: Tahoma; }
-@media print { .print-btn { display: none; } body { padding: 0; } .container { box-shadow: none; } }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background:#0f172a; color:#e2e8f0; direction:rtl; }
+  @media print {
+    body { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    .no-print { display:none; }
+  }
 </style>
 
 </head>
 <body>
-<div class="container">
+<div style="max-width:800px;margin:0 auto;padding:20px">
 
-  <div class="header">
-    <div><h1>نظام تقييم الاداء</h1><p>شركة تبارك المحدودة — tabarak-eval.vercel.app</p></div>
-    <div style="text-align:left;font-size:12px;opacity:0.9">${new Date().toLocaleDateString('ar-SA')}</div>
+  <!-- Header -->
+
+  <div style="background:linear-gradient(90deg,#7c3aed,#4f46e5);padding:16px 20px;border-radius:10px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center">
+    <div>
+      <div style="font-weight:900;font-size:18px">نظام تقييم الأداء</div>
+      <div style="font-size:11px;opacity:0.8">Performance Evaluation — شركة تبارك المحدودة</div>
+    </div>
+    <div style="font-size:12px;opacity:0.8">tabarak-eval.vercel.app</div>
   </div>
 
-  <div class="section">
-    <div class="section-title">بيانات الموظف</div>
-    <table>
-      <tr>
-        <td style="padding:4px 8px;width:120px;color:#64748b;font-size:12px">الموظف</td><td style="padding:4px 8px;font-weight:700">${data.employeeName}</td>
-        <td style="padding:4px 8px;width:120px;color:#64748b;font-size:12px">المسمى الوظيفي</td><td style="padding:4px 8px;font-weight:700">${data.jobTitle}</td>
-      </tr>
-      <tr>
-        <td style="padding:4px 8px;color:#64748b;font-size:12px">القسم / المشروع</td><td style="padding:4px 8px;font-weight:700">${data.department}</td>
-        <td style="padding:4px 8px;color:#64748b;font-size:12px">الفئة الوظيفية</td><td style="padding:4px 8px;font-weight:700">${roleName}</td>
-      </tr>
-      <tr>
-        <td style="padding:4px 8px;color:#64748b;font-size:12px">فترة التقييم</td><td style="padding:4px 8px;font-weight:700">${data.period}</td>
-        <td style="padding:4px 8px;color:#64748b;font-size:12px">المقيم</td><td style="padding:4px 8px;font-weight:700">${data.evaluatorName}</td>
-      </tr>
-    </table>
+  <!-- Employee Info -->
+
+  <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div><div style="font-size:10px;color:#64748b">اسم الموظف</div><div style="font-weight:700;font-size:14px">${data.employeeName}</div></div>
+    <div><div style="font-size:10px;color:#64748b">المسمى الوظيفي</div><div style="font-weight:600">${data.jobTitle}</div></div>
+    <div><div style="font-size:10px;color:#64748b">القسم / المشروع</div><div style="font-weight:600">${data.department}</div></div>
+    <div><div style="font-size:10px;color:#64748b">الفئة الوظيفية</div><div style="font-weight:600">${roleName}</div></div>
+    <div><div style="font-size:10px;color:#64748b">فترة التقييم</div><div style="font-weight:600">${data.period}</div></div>
+    <div><div style="font-size:10px;color:#64748b">المقيم</div><div style="font-weight:600">${data.evaluatorName}</div></div>
   </div>
 
-  <div class="section" style="text-align:center">
-    <div class="section-title">النتيجة النهائية</div>
-    <div class="score-box">${total} <span style="font-size:16px;color:#94a3b8">/ ${totalMax}</span></div>
-    <br><div class="grade-box">${grade.ar} — ${grade.en}</div>
-    <div class="progress"><div class="progress-fill"></div></div>
-    <div style="font-size:14px;color:#64748b">${pct}% من الدرجة الكاملة</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px">
-      <div style="background:#f1f5f9;border-radius:6px;padding:8px"><div style="font-size:10px;color:#64748b">الكفاءة الفنية</div><div style="font-weight:800;font-size:18px">${c1}<span style="font-size:11px;color:#94a3b8">/${items.cat1.length*5}</span></div></div>
-      <div style="background:#f1f5f9;border-radius:6px;padding:8px"><div style="font-size:10px;color:#64748b">السلوك والانضباط</div><div style="font-weight:800;font-size:18px">${c2}<span style="font-size:11px;color:#94a3b8">/${items.cat2.length*5}</span></div></div>
-      <div style="background:#f1f5f9;border-radius:6px;padding:8px"><div style="font-size:10px;color:#64748b">العلاقات المهنية</div><div style="font-weight:800;font-size:18px">${c3}<span style="font-size:11px;color:#94a3b8">/${items.cat3.length*5}</span></div></div>
+  <!-- Score Summary -->
+
+  <div style="background:#1e293b;border:2px solid ${grade.color};border-radius:8px;padding:14px;margin-bottom:12px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div style="text-align:center">
+        <div style="font-size:36px;font-weight:900;color:${grade.color}">${total}</div>
+        <div style="font-size:11px;color:#64748b">من ${totalMax}</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:22px;font-weight:800;color:${grade.color}">${grade.ar}</div>
+        <div style="font-size:12px;color:#64748b">${grade.en}</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:36px;font-weight:900;color:${grade.color}">${pct}%</div>
+        <div style="font-size:11px;color:#64748b">النسبة</div>
+      </div>
+    </div>
+    <div style="background:#334155;border-radius:4px;height:8px;margin-bottom:10px">
+      <div style="width:${pct}%;height:100%;background:${grade.color};border-radius:4px"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+      <div style="background:#0f172a;border-radius:6px;padding:8px;text-align:center">
+        <div style="font-size:10px;color:#64748b">الكفاءة الفنية</div>
+        <div style="font-weight:800;font-size:16px">${c1}<span style="font-size:10px;color:#475569">/${items.cat1.length*5}</span></div>
+      </div>
+      <div style="background:#0f172a;border-radius:6px;padding:8px;text-align:center">
+        <div style="font-size:10px;color:#64748b">السلوك والانضباط</div>
+        <div style="font-weight:800;font-size:16px">${c2}<span style="font-size:10px;color:#475569">/${items.cat2.length*5}</span></div>
+      </div>
+      <div style="background:#0f172a;border-radius:6px;padding:8px;text-align:center">
+        <div style="font-size:10px;color:#64748b">العلاقات المهنية</div>
+        <div style="font-weight:800;font-size:16px">${c3}<span style="font-size:10px;color:#475569">/${items.cat3.length*5}</span></div>
+      </div>
     </div>
   </div>
 
-  <div class="section">
-    <div class="section-title">تفاصيل عناصر التقييم</div>
-    <table>
-      <tr style="background:#f1f5f9"><th style="padding:6px 8px;border:1px solid #ddd;text-align:right">العنصر</th><th style="padding:6px;border:1px solid #ddd;width:60px">الدرجة</th></tr>
-      ${scoresTable}
-    </table>
+  <!-- Scores -->
+
+  <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px">
+    <div style="font-weight:800;margin-bottom:12px;font-size:13px">تفاصيل عناصر التقييم</div>
+    ${catsHTML}
   </div>
 
-${comments ? `<div class="section">
-<div class="section-title">الملاحظات والتوجيهات</div>
-<table>${comments}</table>
+  <!-- Comments -->
+
+${commentsHTML ? `<div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px">
+<div style="font-weight:800;margin-bottom:12px;font-size:13px">الملاحظات والتوجيهات</div>
+${commentsHTML}
 
   </div>` : ""}
 
-  <div class="section">
-    <div class="section-title">التوقيعات والاعتمادات</div>
+  <!-- Signatures -->
+
+  <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:16px">
+    <div style="font-weight:800;margin-bottom:12px;font-size:13px">التوقيعات والاعتمادات</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      <div class="sig-box" style="border-color:#7c3aed">
-        <div style="color:#7c3aed;font-weight:700;margin-bottom:6px">اعتماد المدير المباشر</div>
-        <div style="font-size:16px;font-weight:700;margin-bottom:4px">${data.managerSignature}</div>
+      <div style="background:#0f172a;border-radius:8px;padding:12px;border-right:3px solid #7c3aed">
+        <div style="font-size:10px;color:#7c3aed;font-weight:700;margin-bottom:4px">✅ اعتماد المدير المباشر</div>
+        <div style="font-weight:700;font-size:13px;margin-bottom:2px">${data.managerSignature}</div>
         <div style="font-size:11px;color:#64748b">التاريخ: ${data.managerApprovalDate}</div>
-        <div style="margin-top:12px;border-top:1px solid #e2e8f0;padding-top:8px;font-size:10px;color:#94a3b8">التوقيع: _____________________</div>
+        <div style="margin-top:8px;border-top:1px solid #334155;padding-top:6px;font-size:10px;color:#64748b">التوقيع: ___________________</div>
       </div>
-      <div class="sig-box" style="border-color:#16a34a">
-        <div style="color:#16a34a;font-weight:700;margin-bottom:6px">اقرار الموظف بالاطلاع</div>
-        <div style="font-size:16px;font-weight:700;margin-bottom:4px">${data.employeeSignature||""}</div>
+      <div style="background:#0f172a;border-radius:8px;padding:12px;border-right:3px solid #22c55e">
+        <div style="font-size:10px;color:#22c55e;font-weight:700;margin-bottom:4px">✅ إقرار الموظف بالاطلاع</div>
+        <div style="font-weight:700;font-size:13px;margin-bottom:2px">${data.employeeSignature||""}</div>
         <div style="font-size:11px;color:#64748b">التاريخ: ${data.employeeApprovalDate||""}</div>
-        <div style="margin-top:12px;border-top:1px solid #e2e8f0;padding-top:8px;font-size:10px;color:#94a3b8">التوقيع: _____________________</div>
+        <div style="margin-top:8px;border-top:1px solid #334155;padding-top:6px;font-size:10px;color:#64748b">التوقيع: ___________________</div>
       </div>
     </div>
-    <div style="margin-top:12px;font-size:11px;color:#94a3b8;text-align:center;border-top:1px solid #e2e8f0;padding-top:8px">
-      اقر الموظف المذكور اعلاه بالاطلاع على نتيجة تقييم ادائه وفهم محتواها بتاريخ ${data.employeeApprovalDate||""}
+    <div style="margin-top:10px;font-size:10px;color:#475569;text-align:center">
+      أقر الموظف المذكور أعلاه بالاطلاع على نتيجة تقييم أدائه وفهم محتواها
     </div>
   </div>
 
-<button class="print-btn" onclick="window.print()">طباعة / حفظ PDF 🖨️</button>
+  <!-- Print button -->
+
+  <div class="no-print" style="text-align:center;margin-bottom:20px">
+    <button onclick="window.print()" style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border:none;border-radius:10px;padding:14px 40px;font-size:15px;font-weight:700;cursor:pointer;margin-left:10px">طباعة / حفظ PDF 🖨️</button>
+    <button onclick="window.close()" style="background:rgba(255,255,255,0.1);color:#94a3b8;border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:14px 24px;font-size:14px;cursor:pointer">إغلاق</button>
+  </div>
 
 </div>
 </body>
 </html>`;
 
-const win = window.open(””, “_blank”);
-win.document.write(html);
-win.document.close();
+const old = document.getElementById(‘evalOverlay’);
+if (old) old.remove();
+const overlay = document.createElement(‘div’);
+overlay.id = ‘evalOverlay’;
+overlay.style.cssText = ‘position:fixed;inset:0;z-index:9999;overflow-y:auto;’;
+overlay.innerHTML = html;
+document.body.appendChild(overlay);
 };
 </script>
 
