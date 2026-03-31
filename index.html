@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html dir="rtl" lang="ar">
 <head>
 <meta charset="UTF-8">
@@ -206,6 +207,7 @@ label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
 }
 .loading-overlay.show { display: flex; }
 </style>
+
 </head>
 <body>
 
@@ -217,6 +219,7 @@ label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
 </div>
 
 <!-- HOME PAGE -->
+
 <div class="page active" id="page-home">
   <div class="header">
     <h1>نظام تقييم الأداء</h1>
@@ -243,6 +246,7 @@ label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
 </div>
 
 <!-- SETUP PAGE -->
+
 <div class="page" id="page-setup">
   <div class="top-bar">
     <button class="back-btn" onclick="showPage('page-home')">← رجوع</button>
@@ -269,6 +273,7 @@ label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
 </div>
 
 <!-- FILL PAGE -->
+
 <div class="page" id="page-fill">
   <div class="top-bar">
     <button class="back-btn" onclick="showPage('page-setup')">← رجوع</button>
@@ -301,6 +306,7 @@ label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
 </div>
 
 <!-- APPROVE PAGE -->
+
 <div class="page" id="page-approve">
   <div class="top-bar">
     <button class="back-btn" onclick="showPage('page-fill')">← رجوع</button>
@@ -327,6 +333,7 @@ label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
 </div>
 
 <!-- MANAGER DONE PAGE -->
+
 <div class="page" id="page-done">
   <div class="top-bar">
     <div style="width:60px"></div>
@@ -354,6 +361,7 @@ label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
 </div>
 
 <!-- EMPLOYEE PAGE -->
+
 <div class="page" id="page-employee">
   <div class="top-bar">
     <div>
@@ -389,6 +397,7 @@ label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
 </div>
 
 <!-- EMP DONE PAGE -->
+
 <div class="page" id="page-emp-done">
   <div class="top-bar">
     <div class="top-bar-title">نظام تقييم الأداء — تبارك</div>
@@ -1039,18 +1048,21 @@ window.downloadPDF = function() {
 <meta charset="UTF-8">
 <title>تقييم أداء — ${data.employeeName}</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
   * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background:#0f172a; color:#e2e8f0; direction:rtl; }
+  body { font-family: 'Tajawal', Tahoma, Arial, sans-serif; background:#0f172a; color:#e2e8f0; direction:rtl; }
   @media print {
     body { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
     .no-print { display:none; }
   }
 </style>
+
 </head>
 <body>
 <div style="max-width:800px;margin:0 auto;padding:20px">
 
   <!-- Header -->
+
   <div style="background:linear-gradient(90deg,#7c3aed,#4f46e5);padding:16px 20px;border-radius:10px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center">
     <div>
       <div style="font-weight:900;font-size:18px">نظام تقييم الأداء</div>
@@ -1060,6 +1072,7 @@ window.downloadPDF = function() {
   </div>
 
   <!-- Employee Info -->
+
   <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
     <div><div style="font-size:10px;color:#64748b">اسم الموظف</div><div style="font-weight:700;font-size:14px">${data.employeeName}</div></div>
     <div><div style="font-size:10px;color:#64748b">المسمى الوظيفي</div><div style="font-weight:600">${data.jobTitle}</div></div>
@@ -1070,6 +1083,7 @@ window.downloadPDF = function() {
   </div>
 
   <!-- Score Summary -->
+
   <div style="background:#1e293b;border:2px solid ${grade.color};border-radius:8px;padding:14px;margin-bottom:12px">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
       <div style="text-align:center">
@@ -1105,18 +1119,22 @@ window.downloadPDF = function() {
   </div>
 
   <!-- Scores -->
+
   <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px">
     <div style="font-weight:800;margin-bottom:12px;font-size:13px">تفاصيل عناصر التقييم</div>
     ${catsHTML}
   </div>
 
   <!-- Comments -->
-  ${commentsHTML ? `<div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px">
-    <div style="font-weight:800;margin-bottom:12px;font-size:13px">الملاحظات والتوجيهات</div>
-    ${commentsHTML}
+
+${commentsHTML ? `<div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px">
+<div style="font-weight:800;margin-bottom:12px;font-size:13px">الملاحظات والتوجيهات</div>
+${commentsHTML}
+
   </div>` : ""}
 
   <!-- Signatures -->
+
   <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:16px">
     <div style="font-weight:800;margin-bottom:12px;font-size:13px">التوقيعات والاعتمادات</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
@@ -1139,6 +1157,7 @@ window.downloadPDF = function() {
   </div>
 
   <!-- Print button -->
+
   <div class="no-print" style="text-align:center;margin-bottom:20px">
     <button onclick="window.print()" style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border:none;border-radius:10px;padding:14px 40px;font-size:15px;font-weight:700;cursor:pointer;margin-left:10px">طباعة / حفظ PDF 🖨️</button>
     <button onclick="window.close()" style="background:rgba(255,255,255,0.1);color:#94a3b8;border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:14px 24px;font-size:14px;cursor:pointer">إغلاق</button>
@@ -1148,10 +1167,11 @@ window.downloadPDF = function() {
 </body>
 </html>`;
 
-  const win = window.open("", "_blank");
-  win.document.write(html);
-  win.document.close();
+const win = window.open(””, “_blank”);
+win.document.write(html);
+win.document.close();
 };
 </script>
+
 </body>
 </html>
