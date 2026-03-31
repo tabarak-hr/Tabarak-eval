@@ -871,17 +871,29 @@ window.copyCode = function() {
 // ===== EMPLOYEE =====
 window.openEvalAsEmployee = async function() {
   const code = document.getElementById("empCodeInput").value.trim().toUpperCase();
-  if (!code) return;
+  if (!code) { document.getElementById("empError").textContent = "يرجى إدخال الرمز"; return; }
   document.getElementById("empError").textContent = "";
+  
+  if (!window.loadEval) {
+    document.getElementById("empError").textContent = "جاري التحميل... انتظر ثانية وأعد المحاولة";
+    setTimeout(window.openEvalAsEmployee, 1500);
+    return;
+  }
+  
   showLoading(true);
-  const data = await window.loadEval(code);
-  showLoading(false);
-  if (!data) { document.getElementById("empError").textContent = "لم يُعثر على التقييم. تحقق من الرمز."; return; }
-  if (data.stage !== "pending_employee") { document.getElementById("empError").textContent = "هذا التقييم لم يُعتمد من المدير بعد، أو تم إغلاقه."; return; }
-  state.empCode = code;
-  state.empData = data;
-  buildEmployeePage(data);
-  showPage("page-employee");
+  try {
+    const data = await window.loadEval(code);
+    showLoading(false);
+    if (!data) { document.getElementById("empError").textContent = "لم يُعثر على التقييم. تحقق من الرمز."; return; }
+    if (data.stage !== "pending_employee") { document.getElementById("empError").textContent = "هذا التقييم لم يُعتمد من المدير بعد، أو تم إغلاقه."; return; }
+    state.empCode = code;
+    state.empData = data;
+    buildEmployeePage(data);
+    showPage("page-employee");
+  } catch(e) {
+    showLoading(false);
+    document.getElementById("empError").textContent = "حدث خطأ: " + e.message;
+  }
 };
 
 function buildEmployeePage(data) {
@@ -1166,13 +1178,14 @@ ${commentsHTML}
 </body>
 </html>`;
 
-const old = document.getElementById(‘evalOverlay’);
-if (old) old.remove();
-const overlay = document.createElement(‘div’);
-overlay.id = ‘evalOverlay’;
-overlay.style.cssText = ‘position:fixed;inset:0;z-index:9999;overflow-y:auto;’;
-overlay.innerHTML = html;
-document.body.appendChild(overlay);
+// overlay for mobile
+const ov = document.getElementById(“evalOv”);
+if(ov) ov.remove();
+const d = document.createElement(“div”);
+d.id = “evalOv”;
+d.style.cssText = “position:fixed;inset:0;z-index:9999;overflow-y:auto;background:#f8fafc”;
+d.innerHTML = html;
+document.body.appendChild(d);
 };
 </script>
 
