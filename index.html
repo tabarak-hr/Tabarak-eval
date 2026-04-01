@@ -9,11 +9,11 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-  min-height: 100vh; color: #e2e8f0; direction: rtl;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f8fafc 100%);
+  min-height: 100vh; color: #1e293b; direction: rtl;
 }
 .header {
-  background: linear-gradient(90deg, #7c3aed, #4f46e5);
+  background: linear-gradient(90deg, #2d3748, #1a202c);
   padding: 14px 20px;
   box-shadow: 0 4px 20px rgba(124,58,237,0.4);
 }
@@ -21,34 +21,35 @@ body {
 .header p { font-size: 12px; opacity: 0.75; margin-top: 2px; }
 .container { max-width: 640px; margin: 0 auto; padding: 24px 16px; }
 .card {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: #ffffff;
+  border: 1px solid #e8d5d8;
   border-radius: 14px; padding: 20px; margin-bottom: 16px;
+  border-top: 3px solid #9b2335;
 }
 .home-card {
-  background: rgba(124,58,237,0.08);
-  border: 1px solid rgba(124,58,237,0.2);
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
   border-radius: 16px; padding: 24px; margin-bottom: 16px;
   cursor: pointer; text-align: center;
 }
 .home-card.green {
-  background: rgba(34,197,94,0.08);
-  border-color: rgba(34,197,94,0.2);
+  background: #f0fdf4;
+  border-color: #bbf7d0;
 }
 .home-card .icon { font-size: 36px; margin-bottom: 12px; }
 .home-card h2 { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
-.home-card p { color: #94a3b8; font-size: 14px; margin-bottom: 14px; }
+.home-card p { color: #64748b; font-size: 14px; margin-bottom: 14px; }
 .btn {
   border: none; border-radius: 10px; color: #fff;
   padding: 12px 24px; font-size: 14px; font-weight: 700;
   cursor: pointer; transition: all 0.2s; width: 100%;
 }
-.btn-primary { background: linear-gradient(135deg, #7c3aed, #4f46e5); }
+.btn-primary { background: linear-gradient(135deg, #7b1d35, #9b2335); }
 .btn-green { background: linear-gradient(135deg, #059669, #10b981); }
 .btn-ghost {
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.12);
-  color: #94a3b8;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
 }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .btn-small {
@@ -56,27 +57,27 @@ body {
   background: linear-gradient(135deg, #059669, #10b981);
 }
 input, textarea, select {
-  width: 100%; background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.13);
+  width: 100%; background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 9px; padding: 10px 12px;
-  color: #e2e8f0; font-size: 14px; outline: none;
+  color: #1e293b; font-size: 14px; outline: none;
   font-family: inherit;
 }
 textarea { resize: vertical; }
-label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
+label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 .field { margin-bottom: 12px; }
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.section-title { font-size: 15px; font-weight: 800; margin-bottom: 14px; }
+.section-title { font-size: 15px; font-weight: 800; margin-bottom: 14px; color: #2d3748; border-right: 3px solid #9b2335; padding-right: 10px; }
 .score-row {
   display: flex; align-items: center; justify-content: space-between;
   padding: 10px 12px; border-radius: 9px; margin-bottom: 7px;
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.06);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   transition: all 0.2s;
 }
 .score-row.scored {
-  background: rgba(124,58,237,0.09);
-  border-color: rgba(124,58,237,0.25);
+  background: #fdf2f4;
+  border-color: #9b2335;
 }
 .score-row .item-text { flex: 1; padding-left: 12px; }
 .score-row .item-name { font-size: 13px; font-weight: 600; }
@@ -84,7 +85,7 @@ label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
 .score-btns { display: flex; gap: 5px; }
 .score-btn {
   width: 32px; height: 32px; border-radius: 7px; border: none;
-  background: rgba(255,255,255,0.07); color: #fff;
+  background: #f8fafc; color: #fff;
   font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s;
 }
 .score-btn.active-1, .score-btn.active-2 { background: #ef4444; }
@@ -96,65 +97,65 @@ label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
 .score-btn.readonly.active-3, .score-btn.readonly.active-4,
 .score-btn.readonly.active-5 { opacity: 1; }
 .summary-box {
-  background: rgba(124,58,237,0.1);
-  border: 1px solid rgba(124,58,237,0.2);
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
   border-radius: 14px; padding: 18px; margin-bottom: 16px;
 }
 .summary-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
 .summary-score { font-size: 32px; font-weight: 900; }
-.summary-label { font-size: 12px; color: #64748b; }
+.summary-label { font-size: 12px; color: #475569; }
 .summary-grade { font-size: 20px; font-weight: 800; text-align: center; }
 .progress-bar {
-  background: rgba(255,255,255,0.08); border-radius: 5px;
+  background: #e2e8f0; border-radius: 5px;
   height: 8px; margin-bottom: 12px; overflow: hidden;
 }
 .progress-fill { height: 100%; border-radius: 5px; transition: width 0.5s; }
 .cat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 7px; }
 .cat-box {
-  background: rgba(0,0,0,0.2); border-radius: 9px;
+  background: #e2e8f0; border-radius: 9px;
   padding: 8px 0; text-align: center;
 }
-.cat-box .cat-label { font-size: 10px; color: #64748b; }
+.cat-box .cat-label { font-size: 10px; color: #475569; }
 .cat-box .cat-score { font-weight: 800; font-size: 17px; }
 .cat-box .cat-max { font-size: 10px; color: #475569; }
 .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .role-btn {
   padding: 12px 14px; border-radius: 10px; border: none;
-  text-align: right; background: rgba(255,255,255,0.06);
-  color: #fff; cursor: pointer; font-weight: 600; font-size: 13px;
+  text-align: right; background: #f1f5f9;
+  color: #374151; cursor: pointer; font-weight: 600; font-size: 13px;
   transition: all 0.2s;
 }
 .role-btn.active {
-  background: linear-gradient(135deg, #7c3aed, #4f46e5);
+  background: linear-gradient(135deg, #7b1d35, #9b2335);
   box-shadow: 0 4px 15px rgba(124,58,237,0.4);
 }
 .role-btn small { display: block; font-size: 11px; opacity: 0.7; margin-top: 2px; font-weight: 400; }
 .cat-title { font-size: 15px; font-weight: 800; margin-bottom: 14px; }
 .success-box {
-  background: rgba(124,58,237,0.15);
-  border: 2px dashed rgba(124,58,237,0.5);
+  background: #fdf2f4;
+  border: 2px dashed #9b2335;
   border-radius: 16px; padding: 28px; margin-bottom: 20px; text-align: center;
 }
 .code-display {
   font-size: 40px; font-weight: 900; letter-spacing: 8px;
-  color: #a78bfa; margin-bottom: 16px;
+  color: #9b2335; margin-bottom: 16px;
 }
 .instructions {
-  background: rgba(255,255,255,0.04); border-radius: 12px;
-  padding: 16px; font-size: 13px; color: #64748b;
+  background: #f8fafc; border-radius: 12px;
+  padding: 16px; font-size: 13px; color: #475569;
   margin-bottom: 24px; text-align: right;
 }
-.instructions strong { color: #a78bfa; }
+.instructions strong { color: #9b2335; }
 .error-msg { color: #ef4444; font-size: 13px; margin-top: 8px; }
 .success-msg {
-  background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3);
+  background: #f0fdf4; border: 1px solid #86efac;
   border-radius: 8px; padding: 10px; font-size: 13px;
   color: #22c55e; margin-bottom: 12px;
 }
 .input-row { display: flex; gap: 8px; }
 .input-row input { flex: 1; letter-spacing: 4px; font-weight: 800; font-size: 16px; text-align: center; }
 .back-btn {
-  background: transparent; border: none; color: rgba(255,255,255,0.8);
+  background: transparent; border: none; color: rgba(255,255,255,0.9);
   font-size: 14px; cursor: pointer; padding: 4px 8px;
 }
 .header-row {
@@ -163,19 +164,19 @@ label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
 .comment-block { margin-bottom: 12px; }
 .comment-label { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
 .comment-text {
-  background: rgba(255,255,255,0.04); border-radius: 8px;
+  background: #f8fafc; border-radius: 8px;
   padding: 10px 12px; font-size: 14px;
 }
 .sig-box {
   display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-  background: rgba(124,58,237,0.06); border-radius: 10px; padding: 14px;
+  background: #f8fafc; border-radius: 10px; padding: 14px; border: 1px solid #e2e8f0;
 }
-.sig-label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+.sig-label { font-size: 12px; color: #475569; margin-bottom: 4px; }
 .sig-value { font-weight: 700; }
 .page { display: none; }
 .page.active { display: block; }
 .top-bar {
-  background: linear-gradient(90deg, #7c3aed, #4f46e5);
+  background: linear-gradient(90deg, #2d3748, #1a202c);
   padding: 14px 20px; display: flex; align-items: center;
   justify-content: space-between;
   box-shadow: 0 4px 20px rgba(124,58,237,0.4);
@@ -183,12 +184,12 @@ label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
 .top-bar-title { font-weight: 900; font-size: 16px; }
 .top-bar-sub { font-size: 12px; opacity: 0.75; margin-top: 2px; }
 .progress-top {
-  background: rgba(255,255,255,0.08); border-radius: 6px;
+  background: #e2e8f0; border-radius: 6px;
   height: 6px; margin-bottom: 16px; overflow: hidden;
 }
 .progress-top-fill {
   height: 100%;
-  background: linear-gradient(90deg, #7c3aed, #22c55e);
+  background: linear-gradient(90deg, #9b2335, #22c55e);
   border-radius: 6px; transition: width 0.3s;
 }
 .spinner {
@@ -200,7 +201,7 @@ label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .loading-overlay {
   position: fixed; inset: 0;
-  background: rgba(15,23,42,0.8);
+  background: rgba(0,0,0,0.5);
   display: flex; align-items: center; justify-content: center;
   z-index: 100; display: none;
 }
@@ -212,32 +213,78 @@ label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
 <div class="loading-overlay" id="loadingOverlay">
   <div style="text-align:center">
     <div class="spinner"></div>
-    <div style="margin-top:12px;font-size:14px;color:#94a3b8">جاري التحميل...</div>
+    <div style="margin-top:12px;font-size:14px;color:#64748b">جاري التحميل...</div>
   </div>
 </div>
 
 <!-- HOME PAGE -->
 <div class="page active" id="page-home">
-  <div class="header">
-    <h1>نظام تقييم الأداء</h1>
-    <p>Performance Evaluation — تبارك</p>
+  <div class="header" style="background:linear-gradient(135deg,#2d3748,#1a202c);padding:0">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 20px">
+      <div style="display:flex;align-items:center;gap:14px">
+        <img src="data:image/jpeg;base64,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LEJPHbonnnv0Wat6iTV9CE+qsOkVvnwfVupbPiPz08js1j6+fPT7+4ZCb7j+yj8SD5+7oqo/S7XnpkslO2R2a1kBQAAAAAAAAAAAAAAAAAAAKyySlJZFKvo+lb5vCkuij5fFD6uiP79KqWyUpp/kpSWfozJrf0eeiwQXiUl0VINKMreXhV+bgBQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//aAAwDAQACAAMAAAAh88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888rN188pd988848888888888888888888888888888q9V88p9+888yq888888888888888888888888888q9V88p9+888yu88888888888888888888884n888q9V83p9+9986N888888888888888888888899888q9Vtup9+oK0WK8888888888888888888888+9888q9V++p9+o8UWp8888888888888888888888+9888q9V++p9+o8UWp8888888888888888888888+98a9q9V++p9+o8UWp8888888888888888888888+99a1q9V++p9+o8UWp8888888888888888888888x1DDDG6d15tyKEyj5m888888888888888888888888888888qC888tK888888888888888888888888888888888888889F888888888888888888888888pqO0q98yy89689yRp9yU888888888888888888888p94W+849c+S0+yKpB98888888888888888888888tdp228W+d++f+86p/6888888888888888888888419955999818x881x0x088888888888888888888oRtRtdpdpVa894sVt8B98888888888888888888885888885x89599xx88R088888888888888888888pah+V1pmpJ1rB92xP55d888888888888888888888N9ddt9dcdtltc9999Nc888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888/9oADAMBAAIAAwAAABDzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz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" style="width:52px;height:52px;border-radius:50%;object-fit:contain;background:#fff;padding:4px;box-shadow:0 2px 8px rgba(0,0,0,0.3)" />
+        <div>
+          <h1 style="font-size:17px;margin:0">نظام تقييم الأداء</h1>
+          <p style="margin:2px 0 0;font-size:11px;opacity:0.8">Performance Evaluation</p>
+        </div>
+      </div>
+      <div style="text-align:left;font-size:11px;opacity:0.7;line-height:1.5">شركة تبارك المحدودة<br>TABARK COMPANY. LTD</div>
+    </div>
+    <div style="height:3px;background:linear-gradient(90deg,#7b1d35,#9b2335,#7b1d35)"></div>
   </div>
   <div class="container">
-    <div class="home-card" onclick="showPage('page-setup')">
+    <div class="home-card" onclick="checkManagerAccess()">
       <div class="icon">📋</div>
-      <h2>أنا المدير</h2>
-      <p>أعبئ نموذج تقييم موظف وأرسله له</p>
+      <h2>المدير</h2>
+      <p>النموذج الخاص بتقييم المدير للموظف</p>
       <div style="display:inline-block;background:linear-gradient(135deg,#7c3aed,#4f46e5);border-radius:8px;padding:10px 20px;font-weight:700;font-size:13px">ابدأ التقييم ←</div>
     </div>
     <div class="home-card green">
       <div class="icon">👤</div>
-      <h2>أنا الموظف</h2>
-      <p>أدخل رمز التقييم الذي أرسله لي مديري</p>
+      <h2>الموظف</h2>
+      <p>الصق الرمز المرسل لك من المدير</p>
       <div class="input-row" style="margin-top:0">
-        <input type="text" id="empCodeInput" placeholder="أدخل رمز التقييم" maxlength="8" oninput="this.value=this.value.toUpperCase()">
+        <input type="text" id="empCodeInput" placeholder="الصق الرمز هنا" maxlength="8" oninput="this.value=this.value.toUpperCase()">
         <button class="btn btn-small" onclick="openEvalAsEmployee()">فتح</button>
       </div>
       <div class="error-msg" id="empError"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- MANAGER DASHBOARD PAGE -->
+<div class="page" id="page-manager-login">
+  <div class="top-bar">
+    <button class="back-btn" onclick="showPage('page-home')">← رجوع</button>
+    <div class="top-bar-title">لوحة تحكم المدير</div>
+    <div style="width:60px"></div>
+  </div>
+  <div class="container" style="max-width:400px">
+    <div class="card" style="text-align:center;padding:32px">
+      <div style="font-size:48px;margin-bottom:16px">🔐</div>
+      <h2 style="margin-bottom:8px;color:#1e293b">دخول المدير</h2>
+      <p style="color:#64748b;margin-bottom:24px;font-size:14px">أدخل كلمة المرور للوصول للتقييمات</p>
+      <input type="password" id="managerPassword" placeholder="كلمة المرور" style="text-align:center;letter-spacing:4px;font-size:18px;margin-bottom:12px">
+      <div class="error-msg" id="passwordError" style="margin-bottom:12px"></div>
+      <button class="btn btn-primary" onclick="checkManagerPassword()">دخول ←</button>
+    </div>
+  </div>
+</div>
+
+<!-- MANAGER DASHBOARD -->
+<div class="page" id="page-dashboard">
+  <div class="top-bar">
+    <button class="back-btn" onclick="showPage('page-home')">← رجوع</button>
+    <div class="top-bar-title">جميع التقييمات المكتملة</div>
+    <div style="width:60px"></div>
+  </div>
+  <div class="container">
+    <div id="dashboardList">
+      <div style="text-align:center;padding:40px;color:#64748b">جاري التحميل...</div>
+    </div>
+      <div style="text-align:center;margin-top:8px">
+      <button onclick="showPage('page-manager-login')" style="background:#f1f5f9;border:1px solid #cbd5e1;border-radius:8px;color:#4a5568;font-size:13px;cursor:pointer;padding:8px 20px;margin-top:4px">🔐 لوحة تحكم المدير</button>
     </div>
   </div>
 </div>
@@ -338,14 +385,14 @@ label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
     <h2 style="font-size:22px;font-weight:900;margin-bottom:8px">تم اعتماد التقييم بنجاح!</h2>
     <p style="color:#64748b;margin-bottom:28px">أرسل هذا الرمز للموظف ليفتح تقييمه ويوقع بالاطلاع</p>
     <div class="success-box">
-      <div style="font-size:13px;color:#94a3b8;margin-bottom:8px">رمز التقييم</div>
+      <div style="font-size:13px;color:#64748b;margin-bottom:8px">رمز التقييم</div>
       <div class="code-display" id="finalCode"></div>
       <button class="btn btn-primary" style="width:auto;padding:11px 24px" onclick="copyCode()">نسخ الرمز 📋</button>
     </div>
     <div class="instructions">
-      <div style="font-weight:700;color:#94a3b8;margin-bottom:8px">تعليمات للموظف:</div>
+      <div style="font-weight:700;color:#64748b;margin-bottom:8px">تعليمات للموظف:</div>
       <div>١. افتح tabarak-eval.vercel.app</div>
-      <div>٢. اضغط على "أنا الموظف"</div>
+      <div>٢. اضغط على "الموظف"</div>
       <div>٣. أدخل الرمز: <strong id="instrCode"></strong></div>
       <div>٤. اطّلع على نتيجتك ووقّع بالاطلاع</div>
     </div>
@@ -432,6 +479,7 @@ window.loadEval = async (id) => {
 };
 
 window.firebaseReady = true;
+window._db = db;
 </script>
 
 <script>
@@ -764,7 +812,7 @@ function buildSummaryHTML(sc) {
   const pct = Math.round(sc.total / sc.totalMax * 100);
   return `<div class="summary-box">
     <div class="summary-row">
-      <div><div class="summary-score" style="color:${grade.color}">${sc.total}</div><div class="summary-label">من ${sc.totalMax}</div></div>
+      <div><div class="summary-score" style="color:${grade.color};font-weight:900">${sc.total}</div><div class="summary-label" style="color:#64748b">من ${sc.totalMax}</div></div>
       <div><div class="summary-grade" style="color:${grade.color}">${grade.ar}</div><div style="font-size:11px;color:#64748b">${grade.en}</div></div>
       <div style="text-align:left"><div class="summary-score" style="color:${grade.color}">${pct}%</div><div class="summary-label">النسبة</div></div>
     </div>
@@ -807,7 +855,7 @@ window.goToApprove = function() {
   document.getElementById("scoresList").innerHTML = allItems.map(item => {
     const v = state.scores[item.id] || 0;
     const bg = v <= 2 ? "#ef4444" : v === 3 ? "#f97316" : v === 4 ? "#3b82f6" : "#22c55e";
-    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:13px">
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #e2e8f0;font-size:13px">
       <span style="flex:1;padding-left:8px">${item.t}</span>
       <span style="width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:800;background:${bg}">${v}</span>
     </div>`;
@@ -932,7 +980,7 @@ function buildEmployeePage(data) {
   if (data.strengths) commentsHTML += `<div class="comment-block"><div class="comment-label" style="color:#22c55e">مواطن القوة</div><div class="comment-text">${data.strengths}</div></div>`;
   if (data.weaknesses) commentsHTML += `<div class="comment-block"><div class="comment-label" style="color:#ef4444">مواطن الضعف</div><div class="comment-text">${data.weaknesses}</div></div>`;
   if (data.recommendations) commentsHTML += `<div class="comment-block"><div class="comment-label" style="color:#f59e0b">التوصيات</div><div class="comment-text">${data.recommendations}</div></div>`;
-  if (data.managerOpinion) commentsHTML += `<div class="comment-block"><div class="comment-label" style="color:#94a3b8">رأي المدير</div><div class="comment-text">${data.managerOpinion}</div></div>`;
+  if (data.managerOpinion) commentsHTML += `<div class="comment-block"><div class="comment-label" style="color:#64748b">رأي المدير</div><div class="comment-text">${data.managerOpinion}</div></div>`;
   if (commentsHTML) { commentsEl.innerHTML = commentsHTML; commentsCard.style.display = "block"; }
 
   // Manager sig
@@ -998,7 +1046,12 @@ init();
 // ===== PDF GENERATION (Print-based) =====
 window.downloadPDF = function() {
   const data = state.empData;
-  if (!data) return;
+  if (!data) { alert('لا توجد بيانات'); return; }
+  showEvalReport(data);
+  return;
+  // old code below
+  const _data = state.empData;
+  if (!_data) return;
 
   const items = ITEMS[data.role];
   const allItems = [...items.cat1, ...items.cat2, ...items.cat3];
@@ -1153,9 +1206,24 @@ window.downloadPDF = function() {
   <!-- Print button -->
   <div class="no-print" style="text-align:center;margin-bottom:20px">
     <button onclick="window.print()" style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border:none;border-radius:10px;padding:14px 40px;font-size:15px;font-weight:700;cursor:pointer;margin-left:10px">طباعة / حفظ PDF 🖨️</button>
-    <button onclick="window.close()" style="background:rgba(255,255,255,0.1);color:#94a3b8;border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:14px 24px;font-size:14px;cursor:pointer">إغلاق</button>
+    <button onclick="window.close()" style="background:rgba(255,255,255,0.1);color:#64748b;border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:14px 24px;font-size:14px;cursor:pointer">إغلاق</button>
   </div>
 
+</div>
+
+<!-- MANAGER ACCESS MODAL -->
+<div id="managerAccessModal" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:16px;padding:32px;width:320px;max-width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
+    <div style="font-size:48px;margin-bottom:12px">🔐</div>
+    <h2 style="margin:0 0 6px;color:#1e293b;font-size:18px">دخول المدير</h2>
+    <p style="color:#64748b;font-size:13px;margin-bottom:20px">أدخل كلمة المرور لبدء التقييم</p>
+    <input type="password" id="managerAccessPwd" placeholder="كلمة المرور" 
+      style="width:100%;text-align:center;letter-spacing:6px;font-size:20px;padding:12px;border:2px solid #e2e8f0;border-radius:10px;outline:none;margin-bottom:10px;box-sizing:border-box;font-family:inherit"
+      onkeydown="if(event.key==='Enter')submitManagerAccess()">
+    <div id="managerAccessError" style="color:#dc2626;font-size:13px;margin-bottom:10px;min-height:18px"></div>
+    <button onclick="submitManagerAccess()" style="width:100%;background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff;border:none;border-radius:10px;padding:12px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px;font-family:inherit">دخول ←</button>
+    <button onclick="closeManagerModal()" style="width:100%;background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0;border-radius:10px;padding:10px;font-size:14px;cursor:pointer;font-family:inherit">إلغاء</button>
+  </div>
 </div>
 </body>
 </html>`;
@@ -1170,5 +1238,20 @@ window.downloadPDF = function() {
   document.body.appendChild(d);
 };
 </script>
+
+<!-- MANAGER ACCESS MODAL -->
+<div id="managerAccessModal" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:16px;padding:32px;width:320px;max-width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
+    <div style="font-size:48px;margin-bottom:12px">🔐</div>
+    <h2 style="margin:0 0 6px;color:#1e293b;font-size:18px">دخول المدير</h2>
+    <p style="color:#64748b;font-size:13px;margin-bottom:20px">أدخل كلمة المرور لبدء التقييم</p>
+    <input type="password" id="managerAccessPwd" placeholder="كلمة المرور" 
+      style="width:100%;text-align:center;letter-spacing:6px;font-size:20px;padding:12px;border:2px solid #e2e8f0;border-radius:10px;outline:none;margin-bottom:10px;box-sizing:border-box;font-family:inherit"
+      onkeydown="if(event.key==='Enter')submitManagerAccess()">
+    <div id="managerAccessError" style="color:#dc2626;font-size:13px;margin-bottom:10px;min-height:18px"></div>
+    <button onclick="submitManagerAccess()" style="width:100%;background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff;border:none;border-radius:10px;padding:12px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px;font-family:inherit">دخول ←</button>
+    <button onclick="closeManagerModal()" style="width:100%;background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0;border-radius:10px;padding:10px;font-size:14px;cursor:pointer;font-family:inherit">إلغاء</button>
+  </div>
+</div>
 </body>
 </html>
