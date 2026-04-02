@@ -84,15 +84,16 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 .score-row .item-desc { font-size: 11px; color: #475569; margin-top: 1px; }
 .score-btns { display: flex; gap: 5px; }
 .score-btn {
-  width: 32px; height: 32px; border-radius: 7px; border: none;
-  background: #f8fafc; color: #fff;
+  width: 32px; height: 32px; border-radius: 7px; border: 1px solid #cbd5e1;
+  background: #e2e8f0; color: #475569;
   font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s;
 }
-.score-btn.active-1, .score-btn.active-2 { background: #ef4444; }
-.score-btn.active-3 { background: #f97316; }
-.score-btn.active-4 { background: #3b82f6; }
-.score-btn.active-5 { background: #22c55e; }
-.score-btn.readonly { cursor: default; opacity: 0.35; }
+.score-btn:hover:not(.readonly) { background: #cbd5e1; color: #1e293b; }
+.score-btn.active-1, .score-btn.active-2 { background: #ef4444; color: #fff; border-color: #ef4444; }
+.score-btn.active-3 { background: #f97316; color: #fff; border-color: #f97316; }
+.score-btn.active-4 { background: #3b82f6; color: #fff; border-color: #3b82f6; }
+.score-btn.active-5 { background: #22c55e; color: #fff; border-color: #22c55e; }
+.score-btn.readonly { cursor: default; opacity: 0.4; }
 .score-btn.readonly.active-1, .score-btn.readonly.active-2,
 .score-btn.readonly.active-3, .score-btn.readonly.active-4,
 .score-btn.readonly.active-5 { opacity: 1; }
@@ -267,7 +268,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
     <div class="card" style="text-align:center;padding:32px">
       <div style="font-size:48px;margin-bottom:16px">🔐</div>
       <h2 style="margin-bottom:8px;color:#1e293b">دخول المدير</h2>
-      <p style="color:#64748b;margin-bottom:24px;font-size:14px">أدخل كلمة المرور للوصول للتقييمات</p>
+      <p style="color:#64748b;margin-bottom:24px;font-size:14px">أدخل كلمة مرور <strong style="color:#9b2335">لوحة التحكم</strong> للاطلاع على جميع التقييمات</p>
       <input type="password" id="managerPassword" placeholder="كلمة المرور" style="text-align:center;letter-spacing:4px;font-size:18px;margin-bottom:12px">
       <div class="error-msg" id="passwordError" style="margin-bottom:12px"></div>
       <button class="btn btn-primary" onclick="checkManagerPassword()">دخول ←</button>
@@ -455,7 +456,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, doc, setDoc, getDoc, getDocs, collection, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, doc, setDoc, getDoc, getDocs, deleteDoc, collection, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCfWGtHul4Rveezls-0C061-mjUD1Y_i1Q",
@@ -479,6 +480,11 @@ window.loadEval = async (id) => {
     const snap = await getDoc(doc(db, "evaluations", id));
     return snap.exists() ? snap.data() : null;
   } catch(e) { console.error(e); return null; }
+};
+
+window.deleteEval = async (id) => {
+  try { await deleteDoc(doc(db, "evaluations", id)); return true; }
+  catch(e) { console.error(e); return false; }
 };
 
 window.loadAllEvals = async () => {
@@ -1241,7 +1247,8 @@ window.downloadPDF = function() {
   document.body.appendChild(d);
 };
 // ===== MANAGER AUTH & DASHBOARD =====
-const MANAGER_PASS = "tabarak2026";
+const MANAGER_PASS = "tabarak2026";    // باسورد بدء التقييم
+const DASHBOARD_PASS = "tabarak@admin"; // باسورد لوحة التحكم
 let managerAuthenticated = false;
 
 // Called from home page "المدير" card
@@ -1272,7 +1279,7 @@ window.submitManagerAccess = function() {
 // Called from dashboard "لوحة تحكم المدير" button
 window.checkManagerPassword = function() {
   const pwd = document.getElementById("managerPassword").value;
-  if (pwd === MANAGER_PASS) {
+  if (pwd === DASHBOARD_PASS) {
     document.getElementById("passwordError").textContent = "";
     managerAuthenticated = true;
     loadDashboard();
@@ -1284,23 +1291,51 @@ window.checkManagerPassword = function() {
 
 // ===== DASHBOARD LOGIC =====
 let allEvalsCache = [];
-let dashFilter = "all";
+let dashFilter = "all";       // all | pending | completed
+let dashRoleFilter = "all";   // all | site_eng | tech_off | ...
+let dashView = "list";        // list | insights
+
+function evalGetTotal(ev) {
+  if (!ev.scores || !ev.role) return 0;
+  const items = ITEMS[ev.role];
+  if (!items) return 0;
+  return [...items.cat1, ...items.cat2, ...items.cat3].reduce((s,i) => s + (ev.scores[i.id]||0), 0);
+}
+function evalGetMax(ev) {
+  if (!ev.role) return 125;
+  const items = ITEMS[ev.role];
+  if (!items) return 125;
+  return [...items.cat1, ...items.cat2, ...items.cat3].length * 5;
+}
+function evalGetPct(ev) {
+  const mx = evalGetMax(ev);
+  return mx > 0 ? Math.round(evalGetTotal(ev) / mx * 100) : 0;
+}
 
 async function loadDashboard() {
   showPage("page-dashboard");
   document.getElementById("dashboardList").innerHTML = `<div style="text-align:center;padding:40px;color:#64748b">⏳ جاري تحميل التقييمات...</div>`;
-
   if (!window.loadAllEvals) {
     document.getElementById("dashboardList").innerHTML = `<div style="text-align:center;padding:40px;color:#ef4444">خطأ: Firebase لم يُحمَّل بعد. أعد المحاولة.</div>`;
     return;
   }
-
   const evals = await window.loadAllEvals();
   allEvalsCache = evals;
-  renderDashboard(evals);
+  renderDashboard();
 }
 
-function renderDashboard(evals) {
+function getAppliedFilters() {
+  return allEvalsCache.filter(e => {
+    const stageOk = dashFilter === "all" || 
+      (dashFilter === "pending" && e.stage === "pending_employee") ||
+      (dashFilter === "completed" && e.stage === "completed");
+    const roleOk = dashRoleFilter === "all" || e.role === dashRoleFilter;
+    return stageOk && roleOk;
+  });
+}
+
+function renderDashboard() {
+  const evals = allEvalsCache;
   const container = document.getElementById("dashboardList");
 
   if (!evals || evals.length === 0) {
@@ -1312,80 +1347,157 @@ function renderDashboard(evals) {
     return;
   }
 
-  // Stats
   const total = evals.length;
   const pending = evals.filter(e => e.stage === "pending_employee").length;
   const completed = evals.filter(e => e.stage === "completed").length;
+  const scores = evals.map(e => evalGetTotal(e)).filter(s => s > 0);
+  const avgScore = scores.length > 0 ? Math.round(scores.reduce((a,b)=>a+b,0)/scores.length) : 0;
 
-  // Score distribution
-  function getTotal(ev) {
-    if (!ev.scores || !ev.role) return 0;
-    const items = ITEMS[ev.role];
-    if (!items) return 0;
-    return [...items.cat1, ...items.cat2, ...items.cat3].reduce((s,i) => s + (ev.scores[i.id]||0), 0);
-  }
+  const filtered = getAppliedFilters();
 
-  const avgScore = total > 0 ? Math.round(evals.reduce((s,e) => s + getTotal(e), 0) / total) : 0;
-
-  // Filter tabs
-  const filtered = dashFilter === "all" ? evals
-    : dashFilter === "pending" ? evals.filter(e => e.stage === "pending_employee")
-    : evals.filter(e => e.stage === "completed");
+  // Role filter pills
+  const roleCountMap = {};
+  ROLES.forEach(r => { roleCountMap[r.id] = evals.filter(e => e.role === r.id).length; });
+  const rolePills = ROLES.filter(r => roleCountMap[r.id] > 0).map(r =>
+    `<button onclick="setDashRole('${r.id}')" style="padding:5px 10px;border-radius:20px;border:none;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;${dashRoleFilter===r.id?'background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff':'background:#f1f5f9;color:#475569'}">${r.label} (${roleCountMap[r.id]})</button>`
+  ).join("");
 
   container.innerHTML = `
-    <!-- Stats bar -->
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:16px">
+    <!-- Stats -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:14px">
       <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
         <div style="font-size:22px;font-weight:900;color:#1e293b">${total}</div>
-        <div style="font-size:11px;color:#64748b">إجمالي</div>
+        <div style="font-size:10px;color:#64748b">إجمالي</div>
       </div>
       <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
         <div style="font-size:22px;font-weight:900;color:#f97316">${pending}</div>
-        <div style="font-size:11px;color:#64748b">بانتظار الموظف</div>
+        <div style="font-size:10px;color:#64748b">بانتظار الموظف</div>
       </div>
       <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
         <div style="font-size:22px;font-weight:900;color:#22c55e">${completed}</div>
-        <div style="font-size:11px;color:#64748b">مكتملة</div>
+        <div style="font-size:10px;color:#64748b">مكتملة</div>
       </div>
       <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
         <div style="font-size:22px;font-weight:900;color:#7b1d35">${avgScore}</div>
-        <div style="font-size:11px;color:#64748b">متوسط الدرجة</div>
+        <div style="font-size:10px;color:#64748b">متوسط الدرجة</div>
       </div>
     </div>
 
-    <!-- Filter tabs -->
-    <div style="display:flex;gap:6px;margin-bottom:14px">
-      <button onclick="setDashFilter('all')" style="flex:1;padding:8px;border-radius:8px;border:none;font-size:12px;font-weight:700;cursor:pointer;${dashFilter==='all'?'background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff':'background:#f1f5f9;color:#64748b'}">الكل (${total})</button>
-      <button onclick="setDashFilter('pending')" style="flex:1;padding:8px;border-radius:8px;border:none;font-size:12px;font-weight:700;cursor:pointer;${dashFilter==='pending'?'background:#f97316;color:#fff':'background:#f1f5f9;color:#64748b'}">بانتظار الموظف (${pending})</button>
-      <button onclick="setDashFilter('completed')" style="flex:1;padding:8px;border-radius:8px;border:none;font-size:12px;font-weight:700;cursor:pointer;${dashFilter==='completed'?'background:#22c55e;color:#fff':'background:#f1f5f9;color:#64748b'}">مكتملة (${completed})</button>
+    <!-- View toggle -->
+    <div style="display:flex;gap:6px;margin-bottom:10px">
+      <button onclick="setDashView('list')" style="flex:1;padding:8px;border-radius:8px;border:none;font-size:12px;font-weight:700;cursor:pointer;${dashView==='list'?'background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff':'background:#f1f5f9;color:#64748b'}">📋 القائمة</button>
+      <button onclick="setDashView('insights')" style="flex:1;padding:8px;border-radius:8px;border:none;font-size:12px;font-weight:700;cursor:pointer;${dashView==='insights'?'background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff':'background:#f1f5f9;color:#64748b'}">🏆 المتميزون</button>
     </div>
 
-    <!-- Cards -->
-    <div id="evalCardsList">
-      ${filtered.length === 0
-        ? `<div style="text-align:center;padding:40px;color:#64748b;font-size:14px">لا توجد تقييمات في هذه الفئة</div>`
-        : filtered.map(ev => buildEvalCard(ev, getTotal(ev))).join("")
-      }
-    </div>
+    ${dashView === 'insights' ? buildInsightsView(evals) : `
+      <!-- Stage filter -->
+      <div style="display:flex;gap:6px;margin-bottom:8px">
+        <button onclick="setDashFilter('all')" style="flex:1;padding:7px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashFilter==='all'?'background:#1e293b;color:#fff':'background:#f1f5f9;color:#64748b'}">الكل (${total})</button>
+        <button onclick="setDashFilter('pending')" style="flex:1;padding:7px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashFilter==='pending'?'background:#f97316;color:#fff':'background:#f1f5f9;color:#64748b'}">⏳ بانتظار (${pending})</button>
+        <button onclick="setDashFilter('completed')" style="flex:1;padding:7px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashFilter==='completed'?'background:#22c55e;color:#fff':'background:#f1f5f9;color:#64748b'}">✓ مكتملة (${completed})</button>
+      </div>
 
-    <div style="text-align:center;margin-top:12px">
+      <!-- Role filter pills -->
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;align-items:center">
+        <button onclick="setDashRole('all')" style="padding:5px 10px;border-radius:20px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashRoleFilter==='all'?'background:#1e293b;color:#fff':'background:#f1f5f9;color:#475569'}">كل المهن</button>
+        ${rolePills}
+      </div>
+
+      <!-- Cards -->
+      <div id="evalCardsList">
+        ${filtered.length === 0
+          ? `<div style="text-align:center;padding:40px;color:#64748b;font-size:14px">لا توجد تقييمات في هذه الفئة</div>`
+          : filtered.map(ev => buildEvalCard(ev)).join("")
+        }
+      </div>
+    `}
+
+    <div style="text-align:center;margin-top:14px;padding-bottom:20px;display:flex;gap:8px;justify-content:center">
       <button onclick="loadDashboard()" style="background:#f1f5f9;border:1px solid #cbd5e1;border-radius:8px;color:#4a5568;font-size:12px;cursor:pointer;padding:7px 16px">🔄 تحديث</button>
-      <button onclick="showPage('page-manager-login')" style="background:#f1f5f9;border:1px solid #cbd5e1;border-radius:8px;color:#4a5568;font-size:13px;cursor:pointer;padding:8px 20px;margin-right:6px">🔐 إعادة تسجيل الدخول</button>
+      <button onclick="showPage('page-manager-login')" style="background:#f1f5f9;border:1px solid #cbd5e1;border-radius:8px;color:#4a5568;font-size:12px;cursor:pointer;padding:7px 16px">🔐 إعادة الدخول</button>
     </div>
   `;
 }
 
-function buildEvalCard(ev, total) {
+function buildInsightsView(evals) {
+  // Overall top 3
+  const ranked = [...evals].sort((a,b) => evalGetPct(b) - evalGetPct(a));
+  const top3 = ranked.slice(0, 3);
+
+  // Top per role
+  const topPerRole = ROLES.map(role => {
+    const roleEvals = evals.filter(e => e.role === role.id);
+    if (!roleEvals.length) return null;
+    const best = roleEvals.sort((a,b) => evalGetPct(b) - evalGetPct(a))[0];
+    return { role, best };
+  }).filter(Boolean);
+
+  const medalIcons = ["🥇","🥈","🥉"];
+  const medalColors = ["#f59e0b","#94a3b8","#b45309"];
+
+  const top3HTML = top3.map((ev, i) => {
+    const pct = evalGetPct(ev);
+    const grade = getGrade(evalGetTotal(ev));
+    const roleName = ROLES.find(r => r.id === ev.role)?.label || "";
+    return `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-bottom:8px;border-right:4px solid ${medalColors[i]};display:flex;align-items:center;gap:12px">
+      <div style="font-size:32px;flex-shrink:0">${medalIcons[i]}</div>
+      <div style="flex:1">
+        <div style="font-weight:800;font-size:15px;color:#1e293b">${ev.employeeName || "—"}</div>
+        <div style="font-size:12px;color:#64748b">${ev.jobTitle || ""} • ${roleName}</div>
+        <div style="font-size:11px;color:#94a3b8">${ev.department || ""} • ${ev.period || ""}</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:26px;font-weight:900;color:${grade.color}">${pct}%</div>
+        <div style="font-size:11px;color:${grade.color};font-weight:700">${grade.ar}</div>
+        <div style="font-size:10px;color:#94a3b8">${evalGetTotal(ev)} / ${evalGetMax(ev)}</div>
+      </div>
+    </div>`;
+  }).join("");
+
+  const perRoleHTML = topPerRole.map(({role, best}) => {
+    const pct = evalGetPct(best);
+    const grade = getGrade(evalGetTotal(best));
+    const roleEvals = evals.filter(e => e.role === role.id);
+    return `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div>
+          <div style="font-size:11px;font-weight:700;color:#7b1d35;margin-bottom:2px">🏅 الأعلى في: ${role.label}</div>
+          <div style="font-weight:800;font-size:14px;color:#1e293b">${best.employeeName || "—"}</div>
+          <div style="font-size:11px;color:#64748b">${best.department || ""} • ${best.period || ""}</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:22px;font-weight:900;color:${grade.color}">${pct}%</div>
+          <div style="font-size:10px;color:#64748b">${roleEvals.length} موظف في هذه المهنة</div>
+        </div>
+      </div>
+      <div style="background:#f1f5f9;border-radius:4px;height:5px;overflow:hidden">
+        <div style="width:${pct}%;height:100%;background:${grade.color};border-radius:4px"></div>
+      </div>
+    </div>`;
+  }).join("");
+
+  return `
+    <div style="background:linear-gradient(135deg,#7b1d35,#9b2335);border-radius:12px;padding:14px;margin-bottom:14px;color:#fff;text-align:center">
+      <div style="font-size:24px;margin-bottom:4px">🏆</div>
+      <div style="font-weight:800;font-size:15px">لوحة المتميزين</div>
+      <div style="font-size:12px;opacity:0.8">الأعلى تقييماً من جميع الفئات</div>
+    </div>
+    ${top3.length > 0 ? `<div style="margin-bottom:16px">${top3HTML}</div>` : ""}
+    <div style="font-size:13px;font-weight:800;color:#1e293b;margin-bottom:10px;border-right:3px solid #9b2335;padding-right:8px">الأعلى تقييماً لكل مهنة</div>
+    ${perRoleHTML}
+  `;
+}
+
+function buildEvalCard(ev) {
+  const total = evalGetTotal(ev);
+  const totalMax = evalGetMax(ev);
+  const pct = evalGetPct(ev);
   const grade = getGrade(total);
-  const items = ITEMS[ev.role];
-  const totalMax = items ? [...items.cat1,...items.cat2,...items.cat3].length * 5 : 125;
-  const pct = totalMax > 0 ? Math.round(total / totalMax * 100) : 0;
   const roleName = ROLES.find(r => r.id === ev.role)?.label || ev.role || "";
   const isCompleted = ev.stage === "completed";
   const statusBadge = isCompleted
     ? `<span style="background:#dcfce7;color:#16a34a;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px">✓ مكتمل</span>`
     : `<span style="background:#fff7ed;color:#ea580c;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px">⏳ بانتظار الموظف</span>`;
-
   const dateStr = ev.createdAt ? new Date(ev.createdAt).toLocaleDateString("ar-SA", {year:"numeric",month:"short",day:"numeric"}) : "";
 
   return `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-bottom:10px;border-right:3px solid ${grade.color}">
@@ -1401,27 +1513,45 @@ function buildEvalCard(ev, total) {
         <div style="font-size:13px;font-weight:700;color:${grade.color}">${pct}%</div>
       </div>
     </div>
-    <div style="background:#f1f5f9;border-radius:4px;height:5px;margin-bottom:8px;overflow:hidden">
+    <div style="background:#f1f5f9;border-radius:4px;height:5px;margin-bottom:10px;overflow:hidden">
       <div style="width:${pct}%;height:100%;background:${grade.color};border-radius:4px"></div>
     </div>
     <div style="display:flex;justify-content:space-between;align-items:center">
-      <div style="display:flex;gap:6px;align-items:center">
+      <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap">
         ${statusBadge}
         <span style="font-size:11px;font-weight:700;color:${grade.color};background:${grade.color}22;padding:3px 8px;border-radius:20px">${grade.ar}</span>
-      </div>
-      <div style="display:flex;gap:6px;align-items:center">
         <span style="font-size:10px;color:#94a3b8">${dateStr}</span>
-        <button onclick="viewEvalDetail('${ev.evalId}')" style="background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff;border:none;border-radius:7px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer">عرض التفاصيل</button>
+      </div>
+      <div style="display:flex;gap:5px;align-items:center">
+        <button onclick="viewEvalDetail('${ev.evalId}')" style="background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;border:none;border-radius:7px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer">عرض</button>
+        <button onclick="confirmDeleteEval('${ev.evalId}','${(ev.employeeName||'').replace(/'/g,"\'")}')" style="background:#fff;border:1px solid #fca5a5;color:#dc2626;border-radius:7px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer">🗑 حذف</button>
       </div>
     </div>
     ${isCompleted && ev.employeeSignature ? `<div style="margin-top:8px;padding-top:8px;border-top:1px dashed #e2e8f0;font-size:11px;color:#64748b">وقّع الموظف: <strong style="color:#16a34a">${ev.employeeSignature}</strong> — ${ev.employeeApprovalDate || ""}</div>` : ""}
   </div>`;
 }
 
-window.setDashFilter = function(f) {
-  dashFilter = f;
-  renderDashboard(allEvalsCache);
+window.setDashFilter = function(f) { dashFilter = f; renderDashboard(); };
+window.setDashRole = function(r) { dashRoleFilter = r; renderDashboard(); };
+window.setDashView = function(v) { dashView = v; renderDashboard(); };
+
+window.confirmDeleteEval = function(id, name) {
+  if (!id) return;
+  if (!confirm(`هل أنت متأكد من حذف تقييم "${name}"؟\nلا يمكن التراجع عن هذا الإجراء.`)) return;
+  deleteEvalAndRefresh(id);
 };
+
+async function deleteEvalAndRefresh(id) {
+  showLoading(true);
+  const ok = await window.deleteEval(id);
+  showLoading(false);
+  if (ok) {
+    allEvalsCache = allEvalsCache.filter(e => e.evalId !== id);
+    renderDashboard();
+  } else {
+    alert("حدث خطأ أثناء الحذف. تحقق من الاتصال وأعد المحاولة.");
+  }
+}
 
 window.viewEvalDetail = async function(id) {
   if (!id) return;
@@ -1429,14 +1559,11 @@ window.viewEvalDetail = async function(id) {
   const data = await window.loadEval(id);
   showLoading(false);
   if (!data) { alert("لم يُعثر على التقييم"); return; }
-  // Reuse employee view but read-only
   state.empCode = id;
   state.empData = data;
   buildEmployeePage(data);
-  // Hide the sign section for manager view
   document.querySelector("#page-employee .card:last-child").style.display = "none";
   showPage("page-employee");
-  // Add back button to dashboard
   document.querySelector("#page-employee .top-bar .back-btn").onclick = function() {
     document.querySelector("#page-employee .card:last-child").style.display = "block";
     showPage("page-dashboard");
