@@ -1528,12 +1528,30 @@ function buildEvalCard(ev) {
       </div>
     </div>
     ${isCompleted && ev.employeeSignature ? `<div style="margin-top:8px;padding-top:8px;border-top:1px dashed #e2e8f0;font-size:11px;color:#64748b">وقّع الموظف: <strong style="color:#16a34a">${ev.employeeSignature}</strong> — ${ev.employeeApprovalDate || ""}</div>` : ""}
+    ${!isCompleted && ev.evalId ? `
+    <div style="margin-top:10px;padding-top:10px;border-top:1px dashed #fed7aa;background:#fff7ed;border-radius:8px;padding:10px;display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <div>
+        <div style="font-size:10px;color:#ea580c;font-weight:700;margin-bottom:3px">📤 رمز الموظف — لم يُرسَل بعد</div>
+        <div style="font-size:20px;font-weight:900;letter-spacing:6px;color:#9b2335;font-family:monospace">${ev.evalId}</div>
+      </div>
+      <button onclick="copyEvalCode('${ev.evalId}')" style="background:linear-gradient(135deg,#ea580c,#f97316);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0">📋 نسخ الرمز</button>
+    </div>` : ""}
   </div>`;
 }
 
 window.setDashFilter = function(f) { dashFilter = f; renderDashboard(); };
 window.setDashRole = function(r) { dashRoleFilter = r; renderDashboard(); };
 window.setDashView = function(v) { dashView = v; renderDashboard(); };
+
+window.copyEvalCode = function(code) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(code).then(() => {
+      alert("✅ تم نسخ الرمز: " + code + "\n\nأرسله للموظف ليفتح تقييمه على:\ntabarak-eval.vercel.app");
+    });
+  } else {
+    prompt("انسخ الرمز التالي وأرسله للموظف:", code);
+  }
+};
 
 window.confirmDeleteEval = function(id, name) {
   if (!id) return;
