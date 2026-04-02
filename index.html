@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html dir="rtl" lang="ar">
 <head>
 <meta charset="UTF-8">
@@ -207,6 +208,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 }
 .loading-overlay.show { display: flex; }
 </style>
+
 </head>
 <body>
 
@@ -218,6 +220,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- HOME PAGE -->
+
 <div class="page active" id="page-home">
   <div class="header" style="background:linear-gradient(135deg,#2d3748,#1a202c);padding:0">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 20px">
@@ -252,8 +255,8 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
   </div>
 </div>
 
-
 <!-- MANAGER DASHBOARD PAGE -->
+
 <div class="page" id="page-manager-login">
   <div class="top-bar">
     <button class="back-btn" onclick="showPage('page-home')">← رجوع</button>
@@ -273,6 +276,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- MANAGER DASHBOARD -->
+
 <div class="page" id="page-dashboard">
   <div class="top-bar">
     <button class="back-btn" onclick="showPage('page-home')">← رجوع</button>
@@ -290,6 +294,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- SETUP PAGE -->
+
 <div class="page" id="page-setup">
   <div class="top-bar">
     <button class="back-btn" onclick="showPage('page-home')">← رجوع</button>
@@ -316,6 +321,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- FILL PAGE -->
+
 <div class="page" id="page-fill">
   <div class="top-bar">
     <button class="back-btn" onclick="showPage('page-setup')">← رجوع</button>
@@ -348,6 +354,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- APPROVE PAGE -->
+
 <div class="page" id="page-approve">
   <div class="top-bar">
     <button class="back-btn" onclick="showPage('page-fill')">← رجوع</button>
@@ -374,6 +381,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- MANAGER DONE PAGE -->
+
 <div class="page" id="page-done">
   <div class="top-bar">
     <div style="width:60px"></div>
@@ -401,6 +409,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- EMPLOYEE PAGE -->
+
 <div class="page" id="page-employee">
   <div class="top-bar">
     <div>
@@ -436,6 +445,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- EMP DONE PAGE -->
+
 <div class="page" id="page-emp-done">
   <div class="top-bar">
     <div class="top-bar-title">نظام تقييم الأداء — تبارك</div>
@@ -1043,62 +1053,196 @@ window.resetAll = function() {
 
 init();
 
-// ===== PDF GENERATION (Print-based) =====
-window.downloadPDF = function() {
-  const data = state.empData;
-  if (!data) { alert('لا توجد بيانات'); return; }
-  showEvalReport(data);
-  return;
-  // old code below
-  const _data = state.empData;
-  if (!_data) return;
+// ===== MANAGER ACCESS =====
+window.checkManagerAccess = function() {
+  showPage('page-manager-login');
+};
 
+window.checkManagerPassword = function() {
+  const pwd = document.getElementById('managerPassword').value;
+  if (pwd === '101112') {
+    showPage('page-dashboard'); loadDashboard();
+  } else {
+    document.getElementById('passwordError').textContent = 'كلمة المرور غير صحيحة';
+  }
+};
+
+// ===== SHOW EVAL REPORT =====
+window.showEvalReport = function(data) {
   const items = ITEMS[data.role];
-  const allItems = [...items.cat1, ...items.cat2, ...items.cat3];
-  const total = allItems.reduce((s,i) => s + (data.scores[i.id]||0), 0);
+  if (!items) { alert('بيانات غير صحيحة'); return; }
+  const allItems = [...items.cat1,...items.cat2,...items.cat3];
+  const total = allItems.reduce((s,i)=>s+(data.scores[i.id]||0),0);
   const totalMax = allItems.length * 5;
   const grade = getGrade(total);
   const pct = Math.round(total/totalMax*100);
-  const roleName = ROLES.find(r => r.id === data.role)?.label || "";
+  const roleName = ROLES.find(r=>r.id===data.role)?.label||'';
   const c1 = items.cat1.reduce((s,i)=>s+(data.scores[i.id]||0),0);
   const c2 = items.cat2.reduce((s,i)=>s+(data.scores[i.id]||0),0);
   const c3 = items.cat3.reduce((s,i)=>s+(data.scores[i.id]||0),0);
 
-  function scoreColor(v) {
-    return v<=2?"#ef4444":v===3?"#f97316":v===4?"#3b82f6":"#22c55e";
-  }
+  function sc(v){return v<=2?'#ef4444':v===3?'#f97316':v===4?'#3b82f6':'#22c55e';}
 
-  const catsHTML = [
-    {label:"الفئة الأولى: الكفاءة الفنية والإنتاجية", cat:items.cat1},
-    {label:"الفئة الثانية: السلوك والانضباط", cat:items.cat2},
-    {label:"الفئة الثالثة: العلاقات المهنية", cat:items.cat3},
-  ].map(({label,cat}) => `
-    <div style="margin-bottom:12px">
-      <div style="background:#2d1f5e;padding:6px 10px;border-radius:4px;font-weight:700;color:#a78bfa;margin-bottom:6px">${label}</div>
-      ${cat.map(item => {
-        const v = data.scores[item.id]||0;
-        return `<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 8px;background:#1a2535;border-radius:4px;margin-bottom:3px">
-          <span style="font-size:11px;color:#cbd5e1">${item.t}</span>
-          <span style="background:${scoreColor(v)};color:#fff;width:22px;height:22px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0">${v}</span>
-        </div>`;
-      }).join("")}
-    </div>
-  `).join("");
+  const scoresRows = [
+    {label:'الفئة الاولى: الكفاءة الفنية والانتاجية',cat:items.cat1},
+    {label:'الفئة الثانية: السلوك والانضباط',cat:items.cat2},
+    {label:'الفئة الثالثة: العلاقات المهنية',cat:items.cat3},
+  ].map(function(x){
+    return '<tr style="background:#e8e8e8"><td colspan="2" style="padding:6px 8px;font-weight:700;border:1px solid #ccc">'+x.label+'</td></tr>'+
+    x.cat.map(function(item){
+      var v=data.scores[item.id]||0;
+      return '<tr><td style="padding:5px 8px;border:1px solid #ddd;font-size:12px">'+item.t+'</td><td style="padding:5px;border:1px solid #ddd;text-align:center;font-weight:700;color:'+sc(v)+'">'+v+'</td></tr>';
+    }).join('');
+  }).join('');
 
-  const commentsHTML = [
-    {label:"مواطن القوة", val:data.strengths, color:"#22c55e"},
-    {label:"مواطن الضعف", val:data.weaknesses, color:"#ef4444"},
-    {label:"التوجيهات والتوصيات", val:data.recommendations, color:"#f59e0b"},
-    {label:"رأي المدير", val:data.managerOpinion, color:"#94a3b8"},
-    {label:"ملاحظات الموظف", val:data.employeeComment, color:"#60a5fa"},
-  ].filter(c=>c.val).map(c=>`
-    <div style="margin-bottom:10px">
-      <div style="font-weight:700;color:${c.color};font-size:11px;margin-bottom:4px">${c.label}</div>
-      <div style="background:#1a2535;padding:8px;border-radius:4px;font-size:11px;color:#cbd5e1;line-height:1.6">${c.val}</div>
-    </div>
-  `).join("");
+  var commentsRows = [
+    {l:'مواطن القوة',v:data.strengths,c:'#16a34a'},
+    {l:'مواطن الضعف',v:data.weaknesses,c:'#dc2626'},
+    {l:'التوجيهات والتوصيات',v:data.recommendations,c:'#d97706'},
+    {l:'راي المدير',v:data.managerOpinion,c:'#6b7280'},
+    {l:'ملاحظات الموظف',v:data.employeeComment,c:'#2563eb'},
+  ].filter(function(x){return x.v;}).map(function(x){
+    return '<tr><td style="padding:6px 8px;font-weight:700;color:'+x.c+';border:1px solid #ddd;width:140px">'+x.l+'</td><td style="padding:6px 8px;border:1px solid #ddd;font-size:12px">'+x.v+'</td></tr>';
+  }).join('');
 
-  const html = `<!DOCTYPE html>
+  var html = '<!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="UTF-8"><title>تقييم - '+data.employeeName+'</title>'+
+  '<style>body{font-family:Tahoma,Arial,sans-serif;direction:rtl;background:#fff;color:#1e293b;margin:0;padding:16px}'+
+  '.container{max-width:800px;margin:0 auto;background:#fff;border-radius:8px;border:1px solid #e2e8f0}'+
+  '.header{background:linear-gradient(90deg,#2d3748,#1a202c);color:white;padding:16px 20px;border-radius:8px 8px 0 0}'+
+  '.section{padding:14px 16px;border-bottom:1px solid #e2e8f0}'+
+  'table{width:100%;border-collapse:collapse}'+
+  '.progress{background:#e2e8f0;border-radius:4px;height:8px;margin:8px 0}'+
+  '.sig-box{background:#f8fafc;border:2px solid #e2e8f0;border-radius:8px;padding:12px;text-align:center}'+
+  '@media print{.no-print{display:none}}</style></head><body>'+
+
+‘<div class="container">’+
+‘<div class="header"><h2 style="margin:0;font-size:18px">نظام تقييم الاداء — شركة تبارك المحدودة</h2><p style="margin:4px 0 0;font-size:11px;opacity:.85">TABARK COMPANY. LTD</p></div>’+
+‘<div class="section"><table>’+
+‘<tr><td style="padding:4px 8px;color:#64748b;font-size:12px;width:120px">الموظف</td><td style="padding:4px 8px;font-weight:700">’+data.employeeName+’</td><td style="padding:4px 8px;color:#64748b;font-size:12px;width:120px">المسمى</td><td style="padding:4px 8px;font-weight:700">’+data.jobTitle+’</td></tr>’+
+‘<tr><td style="padding:4px 8px;color:#64748b;font-size:12px">القسم</td><td style="padding:4px 8px;font-weight:700">’+data.department+’</td><td style="padding:4px 8px;color:#64748b;font-size:12px">الفئة</td><td style="padding:4px 8px;font-weight:700">’+roleName+’</td></tr>’+
+‘<tr><td style="padding:4px 8px;color:#64748b;font-size:12px">الفترة</td><td style="padding:4px 8px;font-weight:700">’+data.period+’</td><td style="padding:4px 8px;color:#64748b;font-size:12px">المقيم</td><td style="padding:4px 8px;font-weight:700">’+data.evaluatorName+’</td></tr>’+
+‘</table></div>’+
+‘<div class="section" style="text-align:center">’+
+‘<div style="font-size:36px;font-weight:900;color:'+grade.color+'">’+total+’ / ‘+totalMax+’</div>’+
+‘<div style="display:inline-block;background:'+grade.color+';color:#fff;padding:4px 20px;border-radius:20px;font-weight:700;margin:6px 0">’+grade.ar+’ — ‘+grade.en+’ — ‘+pct+’%</div>’+
+‘<div class="progress"><div style="background:'+grade.color+';height:100%;border-radius:4px;width:'+pct+'%"></div></div>’+
+‘<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px">’+
+‘<div style="background:#f1f5f9;border-radius:6px;padding:8px"><div style="font-size:10px;color:#64748b">الكفاءة الفنية</div><strong>’+c1+’/’+items.cat1.length*5+’</strong></div>’+
+‘<div style="background:#f1f5f9;border-radius:6px;padding:8px"><div style="font-size:10px;color:#64748b">السلوك</div><strong>’+c2+’/’+items.cat2.length*5+’</strong></div>’+
+‘<div style="background:#f1f5f9;border-radius:6px;padding:8px"><div style="font-size:10px;color:#64748b">العلاقات</div><strong>’+c3+’/’+items.cat3.length*5+’</strong></div>’+
+‘</div></div>’+
+‘<div class="section"><table><tr style="background:#f1f5f9"><th style="padding:6px 8px;border:1px solid #ddd;text-align:right">العنصر</th><th style="padding:6px;border:1px solid #ddd;width:60px">الدرجة</th></tr>’+scoresRows+’</table></div>’+
+(commentsRows ? ‘<div class="section"><table>’+commentsRows+’</table></div>’ : ‘’)+
+‘<div class="section"><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">’+
+‘<div class="sig-box" style="border-color:#2d3748"><div style="color:#2d3748;font-weight:700;margin-bottom:6px">اعتماد المدير المباشر</div><div style="font-weight:700;font-size:15px">’+data.managerSignature+’</div><div style="font-size:11px;color:#64748b">التاريخ: ‘+data.managerApprovalDate+’</div><div style="margin-top:10px;border-top:1px solid #e2e8f0;padding-top:8px;font-size:10px;color:#94a3b8">التوقيع: _____________________</div></div>’+
+‘<div class="sig-box" style="border-color:#16a34a"><div style="color:#16a34a;font-weight:700;margin-bottom:6px">اقرار الموظف بالاطلاع</div><div style="font-weight:700;font-size:15px">’+(data.employeeSignature||’’)+’</div><div style="font-size:11px;color:#64748b">التاريخ: ‘+(data.employeeApprovalDate||’’)+’</div><div style="margin-top:10px;border-top:1px solid #e2e8f0;padding-top:8px;font-size:10px;color:#94a3b8">التوقيع: _____________________</div></div>’+
+‘</div><div style="margin-top:10px;font-size:10px;color:#94a3b8;text-align:center;border-top:1px solid #e2e8f0;padding-top:8px">اقر الموظف المذكور اعلاه بالاطلاع على نتيجة تقييم ادائه وفهم محتواها</div></div>’+
+‘<div class="no-print" style="text-align:center;padding:16px">’+
+‘<button onclick="window.print()" style="background:#2d3748;color:#fff;border:none;border-radius:8px;padding:12px 32px;font-size:14px;font-weight:700;cursor:pointer;font-family:Tahoma;margin-left:8px">طباعة PDF</button>’+
+‘<button onclick="document.getElementById('reportOv').remove()" style="background:#e2e8f0;color:#374151;border:none;border-radius:8px;padding:12px 24px;font-size:14px;cursor:pointer;font-family:Tahoma">رجوع</button>’+
+‘</div></div></body></html>’;
+
+var old = document.getElementById(‘reportOv’);
+if(old) old.remove();
+var d = document.createElement(‘div’);
+d.id = ‘reportOv’;
+d.style.cssText = ‘position:fixed;inset:0;z-index:9999;overflow-y:auto;background:#fff’;
+d.innerHTML = html;
+document.body.appendChild(d);
+};
+
+// ===== MANAGER DASHBOARD =====
+window.loadDashboard = async function() {
+var el = document.getElementById(‘dashboardList’);
+if (!el) return;
+el.innerHTML = ‘<div style="text-align:center;padding:40px;color:#64748b">جاري التحميل…</div>’;
+try {
+var { collection, getDocs, query, where } = await import(‘https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js’);
+var db = window._db;
+if (!db) { el.innerHTML = ‘<div style="color:#ef4444;text-align:center;padding:20px">خطأ في الاتصال</div>’; return; }
+var q = query(collection(db, ‘evaluations’), where(‘stage’, ‘==’, ‘completed’));
+var snap = await getDocs(q);
+if (snap.empty) { el.innerHTML = ‘<div style="text-align:center;padding:40px;color:#64748b">لا توجد تقييمات مكتملة بعد</div>’; return; }
+var evals = [];
+snap.forEach(function(doc) { evals.push(doc.data()); });
+evals.sort(function(a,b){ return new Date(b.completedAt||b.createdAt) - new Date(a.completedAt||a.createdAt); });
+el.innerHTML = evals.map(function(d) {
+var items = ITEMS[d.role];
+if (!items) return ‘’;
+var all = […items.cat1,…items.cat2,…items.cat3];
+var total = all.reduce(function(s,i){return s+(d.scores[i.id]||0);},0);
+var totalMax = all.length * 5;
+var grade = getGrade(total);
+var pct = Math.round(total/totalMax*100);
+var roleName = ROLES.find(function(r){return r.id===d.role;})||{label:’’};
+return ‘<div style="background:#fff;border:1px solid #e2e8f0;border-top:3px solid #9b2335;border-radius:12px;padding:16px;margin-bottom:12px">’+
+‘<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">’+
+‘<div><div style="font-weight:800;font-size:16px;color:#1e293b">’+d.employeeName+’</div>’+
+‘<div style="font-size:12px;color:#64748b;margin-top:2px">’+d.jobTitle+’ — ‘+d.department+’</div>’+
+‘<div style="font-size:12px;color:#64748b">’+roleName.label+’ | ‘+d.period+’</div></div>’+
+‘<div style="text-align:center"><div style="font-size:22px;font-weight:900;color:'+grade.color+'">’+total+’</div>’+
+‘<div style="font-size:10px;color:#94a3b8">من ‘+totalMax+’</div>’+
+‘<div style="background:'+grade.color+';color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:700;margin-top:2px">’+grade.ar+’</div></div></div>’+
+‘<div style="background:#e2e8f0;border-radius:6px;height:6px;margin-bottom:10px">’+
+‘<div style="width:'+pct+'%;height:100%;background:'+grade.color+';border-radius:6px"></div></div>’+
+‘<button onclick="window.printEval(''+d.evalId+'')" style="width:100%;background:linear-gradient(135deg,#2d3748,#1a202c);color:#fff;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:700;cursor:pointer">طباعة التقييم</button>’+
+‘</div>’;
+}).join(’’);
+} catch(e) {
+el.innerHTML = ‘<div style="color:#ef4444;text-align:center;padding:20px">خطأ: ‘+e.message+’</div>’;
+}
+};
+
+window.printEval = async function(evalId) {
+var data = await window.loadEval(evalId);
+if (!data) { alert(‘لم يُعثر على التقييم’); return; }
+showEvalReport(data);
+};
+
+// ===== PDF GENERATION (Print-based) =====
+window.downloadPDF = function() {
+const data = state.empData;
+if (!data) { alert(‘لا توجد بيانات’); return; }
+showEvalReport(data);
+return;
+// old code below
+const _data = state.empData;
+if (!_data) return;
+
+const items = ITEMS[data.role];
+const allItems = […items.cat1, …items.cat2, …items.cat3];
+const total = allItems.reduce((s,i) => s + (data.scores[i.id]||0), 0);
+const totalMax = allItems.length * 5;
+const grade = getGrade(total);
+const pct = Math.round(total/totalMax*100);
+const roleName = ROLES.find(r => r.id === data.role)?.label || “”;
+const c1 = items.cat1.reduce((s,i)=>s+(data.scores[i.id]||0),0);
+const c2 = items.cat2.reduce((s,i)=>s+(data.scores[i.id]||0),0);
+const c3 = items.cat3.reduce((s,i)=>s+(data.scores[i.id]||0),0);
+
+function scoreColor(v) {
+return v<=2?”#ef4444”:v===3?”#f97316”:v===4?”#3b82f6”:”#22c55e”;
+}
+
+const catsHTML = [
+{label:“الفئة الأولى: الكفاءة الفنية والإنتاجية”, cat:items.cat1},
+{label:“الفئة الثانية: السلوك والانضباط”, cat:items.cat2},
+{label:“الفئة الثالثة: العلاقات المهنية”, cat:items.cat3},
+].map(({label,cat}) => `<div style="margin-bottom:12px"> <div style="background:#2d1f5e;padding:6px 10px;border-radius:4px;font-weight:700;color:#a78bfa;margin-bottom:6px">${label}</div> ${cat.map(item => { const v = data.scores[item.id]||0; return`<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 8px;background:#1a2535;border-radius:4px;margin-bottom:3px">
+<span style="font-size:11px;color:#cbd5e1">${item.t}</span>
+<span style="background:${scoreColor(v)};color:#fff;width:22px;height:22px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0">${v}</span>
+</div>`; }).join("")} </div> `).join(””);
+
+const commentsHTML = [
+{label:“مواطن القوة”, val:data.strengths, color:”#22c55e”},
+{label:“مواطن الضعف”, val:data.weaknesses, color:”#ef4444”},
+{label:“التوجيهات والتوصيات”, val:data.recommendations, color:”#f59e0b”},
+{label:“رأي المدير”, val:data.managerOpinion, color:”#94a3b8”},
+{label:“ملاحظات الموظف”, val:data.employeeComment, color:”#60a5fa”},
+].filter(c=>c.val).map(c=>`<div style="margin-bottom:10px"> <div style="font-weight:700;color:${c.color};font-size:11px;margin-bottom:4px">${c.label}</div> <div style="background:#1a2535;padding:8px;border-radius:4px;font-size:11px;color:#cbd5e1;line-height:1.6">${c.val}</div> </div>`).join(””);
+
+const html = `<!DOCTYPE html>
+
 <html dir="rtl" lang="ar">
 <head>
 <meta charset="UTF-8">
@@ -1116,6 +1260,7 @@ window.downloadPDF = function() {
 <div style="max-width:800px;margin:0 auto;padding:20px">
 
   <!-- Header -->
+
   <div style="background:linear-gradient(90deg,#7c3aed,#4f46e5);padding:16px 20px;border-radius:10px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center">
     <div>
       <div style="font-weight:900;font-size:18px">نظام تقييم الأداء</div>
@@ -1125,6 +1270,7 @@ window.downloadPDF = function() {
   </div>
 
   <!-- Employee Info -->
+
   <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
     <div><div style="font-size:10px;color:#64748b">اسم الموظف</div><div style="font-weight:700;font-size:14px">${data.employeeName}</div></div>
     <div><div style="font-size:10px;color:#64748b">المسمى الوظيفي</div><div style="font-weight:600">${data.jobTitle}</div></div>
@@ -1135,6 +1281,7 @@ window.downloadPDF = function() {
   </div>
 
   <!-- Score Summary -->
+
   <div style="background:#1e293b;border:2px solid ${grade.color};border-radius:8px;padding:14px;margin-bottom:12px">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
       <div style="text-align:center">
@@ -1170,18 +1317,22 @@ window.downloadPDF = function() {
   </div>
 
   <!-- Scores -->
+
   <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px">
     <div style="font-weight:800;margin-bottom:12px;font-size:13px">تفاصيل عناصر التقييم</div>
     ${catsHTML}
   </div>
 
   <!-- Comments -->
-  ${commentsHTML ? `<div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px">
-    <div style="font-weight:800;margin-bottom:12px;font-size:13px">الملاحظات والتوجيهات</div>
-    ${commentsHTML}
+
+${commentsHTML ? `<div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px">
+<div style="font-weight:800;margin-bottom:12px;font-size:13px">الملاحظات والتوجيهات</div>
+${commentsHTML}
+
   </div>` : ""}
 
   <!-- Signatures -->
+
   <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:16px">
     <div style="font-weight:800;margin-bottom:12px;font-size:13px">التوقيعات والاعتمادات</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
@@ -1204,6 +1355,7 @@ window.downloadPDF = function() {
   </div>
 
   <!-- Print button -->
+
   <div class="no-print" style="text-align:center;margin-bottom:20px">
     <button onclick="window.print()" style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border:none;border-radius:10px;padding:14px 40px;font-size:15px;font-weight:700;cursor:pointer;margin-left:10px">طباعة / حفظ PDF 🖨️</button>
     <button onclick="window.close()" style="background:rgba(255,255,255,0.1);color:#64748b;border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:14px 24px;font-size:14px;cursor:pointer">إغلاق</button>
@@ -1212,6 +1364,7 @@ window.downloadPDF = function() {
 </div>
 
 <!-- MANAGER ACCESS MODAL -->
+
 <div id="managerAccessModal" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center">
   <div style="background:#fff;border-radius:16px;padding:32px;width:320px;max-width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
     <div style="font-size:48px;margin-bottom:12px">🔐</div>
@@ -1228,18 +1381,19 @@ window.downloadPDF = function() {
 </body>
 </html>`;
 
-  // overlay for mobile
-  const ov = document.getElementById("evalOv");
-  if(ov) ov.remove();
-  const d = document.createElement("div");
-  d.id = "evalOv";
-  d.style.cssText = "position:fixed;inset:0;z-index:9999;overflow-y:auto;background:#f8fafc";
-  d.innerHTML = html;
-  document.body.appendChild(d);
+// overlay for mobile
+const ov = document.getElementById(“evalOv”);
+if(ov) ov.remove();
+const d = document.createElement(“div”);
+d.id = “evalOv”;
+d.style.cssText = “position:fixed;inset:0;z-index:9999;overflow-y:auto;background:#f8fafc”;
+d.innerHTML = html;
+document.body.appendChild(d);
 };
 </script>
 
 <!-- MANAGER ACCESS MODAL -->
+
 <div id="managerAccessModal" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center">
   <div style="background:#fff;border-radius:16px;padding:32px;width:320px;max-width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
     <div style="font-size:48px;margin-bottom:12px">🔐</div>
