@@ -1600,14 +1600,12 @@ const medalColors = [”#f59e0b”,”#94a3b8”,”#b45309”];
 
 const top3HTML = top3.map((ev, i) => {
 const pct = evalGetPct(ev);
-const pct = evalGetPct(ev);
 const grade = getGrade(evalGetTotal(ev));
 const roleName = ROLES.find(r => r.id === ev.role)?.label || “”;
 return `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-bottom:8px;border-right:4px solid ${medalColors[i]};display:flex;align-items:center;gap:12px"> <div style="font-size:32px;flex-shrink:0">${medalIcons[i]}</div> <div style="flex:1"> <div style="font-weight:800;font-size:15px;color:#1e293b">${ev.employeeName || "—"}</div> <div style="font-size:12px;color:#64748b">${ev.jobTitle || ""} • ${roleName}</div> <div style="font-size:11px;color:#94a3b8">${ev.department || ""} • ${ev.period || ""}</div> </div> <div style="text-align:center"> <div style="font-size:26px;font-weight:900;color:${grade.color}">${pct}%</div> <div style="font-size:11px;color:${grade.color};font-weight:700">${grade.ar}</div> <div style="font-size:10px;color:#94a3b8">${evalGetTotal(ev)} / ${evalGetMax(ev)}</div> </div> </div>`;
 }).join(””);
 
 const perRoleHTML = topPerRole.map(({role, best}) => {
-const pct = evalGetPct(best);
 const pct = evalGetPct(best);
 const grade = getGrade(evalGetTotal(best));
 const roleEvals = evals.filter(e => e.role === role.id);
