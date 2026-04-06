@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html dir="rtl" lang="ar">
 <head>
 <meta charset="UTF-8">
@@ -208,6 +209,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 }
 .loading-overlay.show { display: flex; }
 </style>
+
 </head>
 <body>
 
@@ -219,6 +221,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- HOME PAGE -->
+
 <div class="page active" id="page-home">
   <div class="header" style="background:linear-gradient(135deg,#2d3748,#1a202c);padding:0">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 20px">
@@ -256,8 +259,8 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
   </div>
 </div>
 
-
 <!-- MANAGER DASHBOARD PAGE -->
+
 <div class="page" id="page-manager-login">
   <div class="top-bar">
     <button class="back-btn" onclick="showPage('page-home')">← رجوع</button>
@@ -277,6 +280,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- MANAGER DASHBOARD -->
+
 <div class="page" id="page-dashboard">
   <div class="top-bar">
     <button class="back-btn" onclick="showPage('page-home')">← رجوع</button>
@@ -294,6 +298,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- SETUP PAGE -->
+
 <div class="page" id="page-setup">
   <div class="top-bar">
     <button class="back-btn" onclick="showPage('page-home')">← رجوع</button>
@@ -320,6 +325,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- FILL PAGE -->
+
 <div class="page" id="page-fill">
   <div class="top-bar">
     <button class="back-btn" onclick="showPage('page-setup')">← رجوع</button>
@@ -352,6 +358,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- APPROVE PAGE -->
+
 <div class="page" id="page-approve">
   <div class="top-bar">
     <button class="back-btn" onclick="showPage('page-fill')">← رجوع</button>
@@ -378,6 +385,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- MANAGER DONE PAGE -->
+
 <div class="page" id="page-done">
   <div class="top-bar">
     <div style="width:60px"></div>
@@ -405,6 +413,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- EMPLOYEE PAGE -->
+
 <div class="page" id="page-employee">
   <div class="top-bar">
     <div>
@@ -440,6 +449,7 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- EMP DONE PAGE -->
+
 <div class="page" id="page-emp-done">
   <div class="top-bar">
     <div class="top-bar-title">نظام تقييم الأداء — تبارك</div>
@@ -508,12 +518,16 @@ window._db = db;
 <script>
 // ===== DATA =====
 const ROLES = [
-  { id: "site_eng", label: "مهندس موقع", en: "Site Engineer" },
-  { id: "tech_off", label: "مهندس مكتب فني", en: "Technical Office Engineer" },
-  { id: "surveyor", label: "مسّاح", en: "Land Surveyor" },
-  { id: "skilled", label: "عامل حرفي", en: "Skilled Worker" },
-  { id: "laborer", label: "عامل عام", en: "General Laborer" },
-  { id: "supervisor", label: "مراقب مشروع", en: "Project Supervisor" },
+  { id: "site_eng",    label: "مهندس موقع",                en: "Site Engineer" },
+  { id: "tech_off",   label: "مهندس مكتب فني",            en: "Technical Office Engineer" },
+  { id: "surveyor",   label: "مسّاح",                     en: "Land Surveyor" },
+  { id: "skilled",    label: "عامل حرفي",                 en: "Skilled Worker" },
+  { id: "laborer",    label: "عامل عام",                  en: "General Laborer" },
+  { id: "supervisor", label: "مراقب مشروع",               en: "Project Supervisor" },
+  { id: "hr_recruit", label: "مسؤول التوظيف والعلاقات الحكومية", en: "HR & Gov. Relations" },
+  { id: "hr_payroll", label: "شؤون موظفين ورواتب",        en: "HR & Payroll" },
+  { id: "fleet_mgr",  label: "إدارة الحركة والتشغيل",     en: "Fleet Operations" },
+  { id: "mechanic",   label: "ميكانيكا السيارات",         en: "Vehicle Mechanic" },
 ];
 
 const ITEMS = {
@@ -714,15 +728,156 @@ const ITEMS = {
       {id:"c3_2",t:"العلاقة مع الزملاء",d:"يتعاون مع الفريق ويُظهر روح العمل الجماعي"},
       {id:"c3_3",t:"العلاقة مع العملاء",d:"يتعامل مع ممثلي العميل باحترام ولباقة"},
     ]
+  },
+
+  // ===== مسؤول التوظيف والعلاقات الحكومية =====
+  hr_recruit: {
+    cat1: [
+      {id:"c1_1",t:"تخطيط الاحتياج الوظيفي",d:"يحدد احتياجات التوظيف بناءً على خطط العمل والتوسع"},
+      {id:"c1_2",t:"تنفيذ عمليات التوظيف",d:"يدير عمليات الاستقطاب والمقابلات بكفاءة"},
+      {id:"c1_3",t:"اختيار المرشحين المناسبين",d:"يقيّم المرشحين بدقة وفق متطلبات الوظيفة"},
+      {id:"c1_4",t:"إدارة منصات التوظيف",d:"يستخدم قنوات التوظيف بفعالية لجذب الكفاءات"},
+      {id:"c1_5",t:"الالتزام بإجراءات التوظيف",d:"يطبق سياسات وإجراءات الشركة في التوظيف"},
+      {id:"c1_6",t:"إدارة العلاقات الحكومية",d:"يتابع المعاملات الحكومية (قوى، مقيم، التأمينات...)"},
+      {id:"c1_7",t:"سرعة إنجاز المعاملات",d:"ينهي الإجراءات الحكومية دون تأخير"},
+      {id:"c1_8",t:"دقة البيانات الرسمية",d:"يتأكد من صحة البيانات في الأنظمة الحكومية"},
+      {id:"c1_9",t:"متابعة الإقامات والتأشيرات",d:"يراقب صلاحيات الإقامات والتأشيرات بشكل مستمر"},
+      {id:"c1_10",t:"حل مشاكل الجهات الحكومية",d:"يعالج أي تعثر أو ملاحظات من الجهات الرسمية"},
+      {id:"c1_11",t:"التوثيق والأرشفة",d:"يحتفظ بسجلات منظمة للمقابلات والتعيينات"},
+      {id:"c1_12",t:"التحقق من الوثائق",d:"يتحقق من صحة الشهادات والوثائق الرسمية للمرشحين"},
+      {id:"c1_13",t:"السعودة والالتزام النظامي",d:"يتابع نسب السعودة ومتطلبات وزارة الموارد البشرية"},
+      {id:"c1_14",t:"عقود العمل والإلحاق",d:"يُعد عقود التعيين ويُنجز إجراءات الإلحاق بدقة"},
+      {id:"c1_15",t:"التنسيق مع الجهات الخارجية",d:"يتعاون مع شركات الاستقدام والوكالات الخارجية"},
+      {id:"c1_16",t:"تتبع طلبات الاستقدام",d:"يتابع حالة تأشيرات الاستقدام وطلبات النقل"},
+      {id:"c1_17",t:"تطوير مصادر التوظيف",d:"يبحث باستمرار عن قنوات جديدة لاستقطاب الكفاءات"},
+    ],
+    cat2: [
+      {id:"c2_1",t:"التنسيق مع الإدارات",d:"التعاون مع الإدارات لتحديد الاحتياج الوظيفي"},
+      {id:"c2_2",t:"العلاقة مع الجهات الحكومية",d:"بناء علاقات فعالة مع الجهات الرسمية"},
+      {id:"c2_3",t:"متابعة المعاملات",d:"التواصل المستمر لإنهاء الإجراءات"},
+      {id:"c2_4",t:"خدمة المرشحين",d:"التعامل الاحترافي مع المتقدمين للوظائف"},
+      {id:"c2_5",t:"تمثيل الشركة",d:"الظهور بمظهر مهني أمام الجهات والمرشحين"},
+    ],
+    cat3: [
+      {id:"c3_1",t:"مهارات التواصل",d:"يتواصل بوضوح مع المرشحين والجهات الحكومية"},
+      {id:"c3_2",t:"إدارة الوقت",d:"ينظم المهام ويعطي الأولويات بشكل صحيح"},
+      {id:"c3_3",t:"العمل تحت الضغط",d:"يتعامل مع ضغط العمل خاصة في مواسم التوظيف"},
+    ]
+  },
+
+  // ===== شؤون موظفين ورواتب =====
+  hr_payroll: {
+    cat1: [
+      {id:"c1_1",t:"إعداد الرواتب",d:"يجهز الرواتب بدقة في المواعيد الشهرية المحددة"},
+      {id:"c1_2",t:"احتساب المستحقات",d:"يحسب البدلات والخصومات والإضافي بشكل صحيح"},
+      {id:"c1_3",t:"إدارة الحضور والانصراف",d:"يراقب الدوام ويعالج المخالفات بموضوعية"},
+      {id:"c1_4",t:"إدارة الإجازات",d:"يتابع أرصدة الإجازات ويعتمدها وفق اللوائح"},
+      {id:"c1_5",t:"إعداد عقود العمل",d:"يصيغ العقود ويحدّثها وفق الأنظمة المعتمدة"},
+      {id:"c1_6",t:"إدارة ملفات الموظفين",d:"يحافظ على ملفات محدثة ومنظمة لجميع الموظفين"},
+      {id:"c1_7",t:"إنهاء الخدمات",d:"ينفذ إجراءات نهاية الخدمة بدقة وفي الوقت المناسب"},
+      {id:"c1_8",t:"التعامل مع التأمينات",d:"تسجيل الموظفين واستبعادهم وتحديث الأجور"},
+      {id:"c1_9",t:"إعداد التقارير",d:"يرفع تقارير الرواتب والحضور بدقة وفي موعدها"},
+      {id:"c1_10",t:"مراجعة الرواتب قبل الصرف",d:"يدقق الأرقام لتجنب الأخطاء قبل اعتماد الصرف"},
+      {id:"c1_11",t:"إدارة السلف والقروض",d:"يتابع السلف ويخصمها بدقة من مستحقات الموظفين"},
+      {id:"c1_12",t:"نظام العمل والأنظمة النظامية",d:"ملم بنظام العمل السعودي ويطبقه في قراراته"},
+      {id:"c1_13",t:"إدارة بيانات الموظفين في الأنظمة",d:"يُحدّث بيانات الموظفين في الأنظمة الإلكترونية"},
+      {id:"c1_14",t:"تسوية الفروقات",d:"يكتشف الفروقات في الرواتب ويعالجها فوراً"},
+      {id:"c1_15",t:"إعداد شهادات الراتب والخبرة",d:"يُصدر الشهادات الرسمية في الوقت المناسب"},
+      {id:"c1_16",t:"الامتثال لمتطلبات حماية الأجور",d:"يضمن الالتزام بنظام حماية الأجور (WPS)"},
+      {id:"c1_17",t:"تطوير إجراءات العمل",d:"يقترح تحسينات لرفع كفاءة العمليات"},
+    ],
+    cat2: [
+      {id:"c2_1",t:"خدمة الموظفين",d:"الرد على الاستفسارات بسرعة واحترافية"},
+      {id:"c2_2",t:"التنسيق مع الإدارات",d:"متابعة الحضور والإجازات مع المديرين"},
+      {id:"c2_3",t:"التواصل مع المالية",d:"التنسيق في صرف الرواتب والمستحقات"},
+      {id:"c2_4",t:"التعامل مع الجهات الرسمية",d:"التعاون مع التأمينات وجهات العمل"},
+      {id:"c2_5",t:"حل مشاكل الموظفين",d:"معالجة الشكاوى المتعلقة بالرواتب والإجازات"},
+    ],
+    cat3: [
+      {id:"c3_1",t:"الدقة وتقليل الأخطاء",d:"ينتبه للتفاصيل ويتجنب الأخطاء في البيانات"},
+      {id:"c3_2",t:"تحمل المسؤولية",d:"يتعامل بجدية مع الأخطاء ويعالجها فوراً"},
+      {id:"c3_3",t:"السرية وحماية البيانات",d:"يحافظ على سرية معلومات الرواتب والملفات"},
+    ]
+  },
+
+  // ===== إدارة الحركة والتشغيل =====
+  fleet_mgr: {
+    cat1: [
+      {id:"c1_1",t:"إعداد خطط الحركة",d:"ينظم توزيع المركبات وفق احتياجات العمل اليومية"},
+      {id:"c1_2",t:"جدولة الرحلات",d:"يعد جداول دقيقة ويلتزم بتنفيذها"},
+      {id:"c1_3",t:"متابعة تشغيل المركبات",d:"يضمن جاهزية الأسطول وعدم توقف أي مركبة"},
+      {id:"c1_4",t:"إدارة السائقين",d:"يوزع المهام ويتابع الأداء ويعالج المخالفات"},
+      {id:"c1_5",t:"مراقبة الوقود",d:"يتابع استهلاك الوقود ويقلل الهدر"},
+      {id:"c1_6",t:"متابعة الصيانة الدورية",d:"يجدول الصيانة ويضمن تنفيذها في مواعيدها"},
+      {id:"c1_7",t:"إدارة الأعطال الطارئة",d:"يتعامل مع الأعطال المفاجئة بسرعة وكفاءة"},
+      {id:"c1_8",t:"تتبع المركبات عبر GPS",d:"يراقب التحركات ويكتشف الانحرافات"},
+      {id:"c1_9",t:"ضبط التكاليف التشغيلية",d:"يسعى لتقليل المصاريف وتحسين الكفاءة"},
+      {id:"c1_10",t:"إعداد تقارير التشغيل",d:"يرفع تقارير دقيقة عن حالة الأسطول والرحلات"},
+      {id:"c1_11",t:"إدارة وثائق المركبات",d:"يتابع تجديد التراخيص والتأمين وفحص المركبات"},
+      {id:"c1_12",t:"ضبط مخالفات السير",d:"يتابع المخالفات المرورية ويتخذ الإجراءات اللازمة"},
+      {id:"c1_13",t:"تخطيط المسارات",d:"يختار المسارات الأمثل لتقليل الوقت والتكلفة"},
+      {id:"c1_14",t:"إدارة سجلات السائقين",d:"يحتفظ بملفات السائقين ورخصهم وسجلاتهم"},
+      {id:"c1_15",t:"مراقبة قيادة السائقين",d:"يراجع تقارير السلوك القيادي ويتخذ الإجراء المناسب"},
+      {id:"c1_16",t:"تخصيص المركبات للمشاريع",d:"يوزع المركبات على المشاريع وفق الأولوية والحاجة"},
+      {id:"c1_17",t:"التخطيط طويل المدى للأسطول",d:"يقترح الاحتياج المستقبلي من المركبات والاستبدال"},
+    ],
+    cat2: [
+      {id:"c2_1",t:"التنسيق مع الإدارات",d:"تلبية طلبات النقل من مختلف الأقسام"},
+      {id:"c2_2",t:"إدارة وتوجيه السائقين",d:"توجيه ومتابعة السائقين بأسلوب مهني"},
+      {id:"c2_3",t:"التواصل مع الصيانة",d:"تنسيق الإصلاح وتسليم المركبات في الوقت المناسب"},
+      {id:"c2_4",t:"التعامل مع الموردين",d:"إدارة علاقات موردي الوقود وقطع الغيار"},
+      {id:"c2_5",t:"إدارة الطوارئ",d:"التعامل مع الحوادث والأعطال بهدوء وفعالية"},
+    ],
+    cat3: [
+      {id:"c3_1",t:"سرعة الاستجابة",d:"يستجيب لطلبات النقل الطارئة بسرعة"},
+      {id:"c3_2",t:"اتخاذ القرار الميداني",d:"يتخذ قرارات سريعة وصائبة في الحالات الطارئة"},
+      {id:"c3_3",t:"تحمل ضغط العمل",d:"يحافظ على كفاءته في أوقات الذروة والضغط"},
+    ]
+  },
+
+  // ===== ميكانيكا السيارات =====
+  mechanic: {
+    cat1: [
+      {id:"c1_1",t:"تشخيص الأعطال",d:"يحدد الأعطال بدقة قبل البدء في الإصلاح"},
+      {id:"c1_2",t:"تنفيذ الصيانة الدورية",d:"يجري الصيانة الدورية وفق الجدول المعتمد"},
+      {id:"c1_3",t:"إصلاح الأعطال الميكانيكية",d:"يعالج الأعطال الميكانيكية بكفاءة وسرعة"},
+      {id:"c1_4",t:"استخدام أجهزة الفحص الإلكتروني",d:"يتعامل بكفاءة مع أجهزة OBD والتشخيص"},
+      {id:"c1_5",t:"صيانة المحرك",d:"يفحص المحركات ويصلح أي خلل بدقة"},
+      {id:"c1_6",t:"صيانة الفرامل والتعليق",d:"يضمن سلامة منظومة الفرامل والتعليق"},
+      {id:"c1_7",t:"صيانة الأنظمة الكهربائية",d:"يشخص ويصلح الأعطال الكهربائية للمركبات"},
+      {id:"c1_8",t:"تغيير الزيوت والسوائل",d:"يجري التغييرات الدورية وفق توصيات الشركة المصنعة"},
+      {id:"c1_9",t:"الالتزام بخطة الصيانة",d:"ينفذ خطط الصيانة المجدولة دون تأجيل"},
+      {id:"c1_10",t:"إدارة قطع الغيار",d:"يختار القطع المناسبة ويوثق الاستهلاك"},
+      {id:"c1_11",t:"توثيق أعمال الصيانة",d:"يسجل كل عملية صيانة بتفاصيلها في السجلات"},
+      {id:"c1_12",t:"معرفة أنظمة الوقود",d:"يشخص ويصلح مشاكل منظومة الوقود والمحرق"},
+      {id:"c1_13",t:"صيانة ناقل الحركة",d:"يتعامل مع أعطال ناقل الحركة والقير بدقة"},
+      {id:"c1_14",t:"الالتزام بمعايير السلامة",d:"يلتزم بإجراءات السلامة أثناء أعمال الصيانة"},
+      {id:"c1_15",t:"التحديث والتطوير التقني",d:"يتابع المستجدات التقنية في مجال صيانة المركبات"},
+      {id:"c1_16",t:"الفحص الشامل قبل التسليم",d:"يُجري فحصاً شاملاً للمركبة قبل إعادتها للتشغيل"},
+      {id:"c1_17",t:"تقدير وقت الإصلاح",d:"يقدّر وقت إنجاز الأعمال بدقة ويلتزم به"},
+    ],
+    cat2: [
+      {id:"c2_1",t:"التنسيق مع إدارة الحركة",d:"يستقبل البلاغات ويتواصل بشأن جاهزية المركبات"},
+      {id:"c2_2",t:"التواصل مع السائقين",d:"يستمع لوصف الأعطال ويوضح ما تم إصلاحه"},
+      {id:"c2_3",t:"التعامل مع موردي قطع الغيار",d:"يطلب القطع المناسبة ويتحقق من جودتها"},
+      {id:"c2_4",t:"العمل الجماعي مع الفنيين",d:"يتعاون مع الفريق في حالات الإصلاح المعقدة"},
+      {id:"c2_5",t:"رفع التقارير للإدارة",d:"يوضح حالة المركبات ويوثق ما تم إنجازه"},
+    ],
+    cat3: [
+      {id:"c3_1",t:"الدقة وتقليل الأخطاء",d:"يتحقق من عمله قبل تسليم المركبة"},
+      {id:"c3_2",t:"تحمل ضغط العمل",d:"يؤدي عمله بكفاءة في الظروف الصعبة"},
+      {id:"c3_3",t:"المحافظة على الأدوات والمعدات",d:"يستخدم الأدوات بشكل صحيح ويحافظ عليها"},
+    ]
   }
 };
 
+// GRADES — raw score out of 125 (all roles = 25 items × 5 = 125 max)
 const GRADES = [
-  {min:0,max:49,ar:"يحتاج تطوير",en:"Needs Improvement",color:"#ef4444"},
-  {min:50,max:74,ar:"مقبول",en:"Acceptable",color:"#f97316"},
-  {min:75,max:94,ar:"جيد",en:"Good",color:"#eab308"},
-  {min:95,max:109,ar:"جيد جداً",en:"Very Good",color:"#3b82f6"},
-  {min:110,max:125,ar:"ممتاز",en:"Excellent",color:"#22c55e"},
+  {min:0,   max:49,  ar:"يحتاج تطوير", en:"Needs Improvement", color:"#ef4444"},
+  {min:50,  max:74,  ar:"مقبول",        en:"Acceptable",        color:"#f97316"},
+  {min:75,  max:94,  ar:"جيد",          en:"Good",              color:"#eab308"},
+  {min:95,  max:109, ar:"جيد جداً",     en:"Very Good",         color:"#3b82f6"},
+  {min:110, max:125, ar:"ممتاز",        en:"Excellent",         color:"#22c55e"},
 ];
 
 function getGrade(s) { return GRADES.find(g => s >= g.min && s <= g.max) || GRADES[0]; }
@@ -1134,11 +1289,13 @@ window.downloadPDF = function() {
     .no-print { display:none; }
   }
 </style>
+
 </head>
 <body>
 <div style="max-width:800px;margin:0 auto;padding:20px">
 
   <!-- Header -->
+
   <div style="background:linear-gradient(90deg,#7c3aed,#4f46e5);padding:16px 20px;border-radius:10px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center">
     <div>
       <div style="font-weight:900;font-size:18px">نظام تقييم الأداء</div>
@@ -1148,6 +1305,7 @@ window.downloadPDF = function() {
   </div>
 
   <!-- Employee Info -->
+
   <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
     <div><div style="font-size:10px;color:#64748b">اسم الموظف</div><div style="font-weight:700;font-size:14px">${data.employeeName}</div></div>
     <div><div style="font-size:10px;color:#64748b">المسمى الوظيفي</div><div style="font-weight:600">${data.jobTitle}</div></div>
@@ -1158,6 +1316,7 @@ window.downloadPDF = function() {
   </div>
 
   <!-- Score Summary -->
+
   <div style="background:#1e293b;border:2px solid ${grade.color};border-radius:8px;padding:14px;margin-bottom:12px">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
       <div style="text-align:center">
@@ -1193,18 +1352,22 @@ window.downloadPDF = function() {
   </div>
 
   <!-- Scores -->
+
   <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px">
     <div style="font-weight:800;margin-bottom:12px;font-size:13px">تفاصيل عناصر التقييم</div>
     ${catsHTML}
   </div>
 
   <!-- Comments -->
-  ${commentsHTML ? `<div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px">
-    <div style="font-weight:800;margin-bottom:12px;font-size:13px">الملاحظات والتوجيهات</div>
-    ${commentsHTML}
+
+${commentsHTML ? `<div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px">
+<div style="font-weight:800;margin-bottom:12px;font-size:13px">الملاحظات والتوجيهات</div>
+${commentsHTML}
+
   </div>` : ""}
 
   <!-- Signatures -->
+
   <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:16px">
     <div style="font-weight:800;margin-bottom:12px;font-size:13px">التوقيعات والاعتمادات</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
@@ -1227,6 +1390,7 @@ window.downloadPDF = function() {
   </div>
 
   <!-- Print button -->
+
   <div class="no-print" style="text-align:center;margin-bottom:20px">
     <button onclick="window.print()" style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border:none;border-radius:10px;padding:14px 40px;font-size:15px;font-weight:700;cursor:pointer;margin-left:10px">طباعة / حفظ PDF 🖨️</button>
     <button onclick="window.close()" style="background:rgba(255,255,255,0.1);color:#64748b;border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:14px 24px;font-size:14px;cursor:pointer">إغلاق</button>
@@ -1237,305 +1401,243 @@ window.downloadPDF = function() {
 </body>
 </html>`;
 
-  // overlay for mobile
-  const ov = document.getElementById("evalOv");
-  if(ov) ov.remove();
-  const d = document.createElement("div");
-  d.id = "evalOv";
-  d.style.cssText = "position:fixed;inset:0;z-index:9999;overflow-y:auto;background:#f8fafc";
-  d.innerHTML = html;
-  document.body.appendChild(d);
+// overlay for mobile
+const ov = document.getElementById(“evalOv”);
+if(ov) ov.remove();
+const d = document.createElement(“div”);
+d.id = “evalOv”;
+d.style.cssText = “position:fixed;inset:0;z-index:9999;overflow-y:auto;background:#f8fafc”;
+d.innerHTML = html;
+document.body.appendChild(d);
 };
 // ===== MANAGER AUTH & DASHBOARD =====
-const MANAGER_PASS = "tabarak2026";    // باسورد بدء التقييم
-const DASHBOARD_PASS = "tabarak@admin"; // باسورد لوحة التحكم
+const MANAGER_PASS = “tabarak2026”;    // باسورد بدء التقييم
+const DASHBOARD_PASS = “tabarak@admin”; // باسورد لوحة التحكم
 let managerAuthenticated = false;
 
-// Called from home page "المدير" card
+// Called from home page “المدير” card
 window.checkManagerAccess = function() {
-  document.getElementById("managerAccessPwd").value = "";
-  document.getElementById("managerAccessError").textContent = "";
-  const modal = document.getElementById("managerAccessModal");
-  modal.style.display = "flex";
-  setTimeout(() => document.getElementById("managerAccessPwd").focus(), 100);
+document.getElementById(“managerAccessPwd”).value = “”;
+document.getElementById(“managerAccessError”).textContent = “”;
+const modal = document.getElementById(“managerAccessModal”);
+modal.style.display = “flex”;
+setTimeout(() => document.getElementById(“managerAccessPwd”).focus(), 100);
 };
 
 window.closeManagerModal = function() {
-  document.getElementById("managerAccessModal").style.display = "none";
+document.getElementById(“managerAccessModal”).style.display = “none”;
 };
 
 window.submitManagerAccess = function() {
-  const pwd = document.getElementById("managerAccessPwd").value;
-  if (pwd === MANAGER_PASS) {
-    document.getElementById("managerAccessModal").style.display = "none";
-    managerAuthenticated = true;
-    showPage("page-setup");
-  } else {
-    document.getElementById("managerAccessError").textContent = "كلمة المرور غير صحيحة";
-    document.getElementById("managerAccessPwd").value = "";
-  }
+const pwd = document.getElementById(“managerAccessPwd”).value;
+if (pwd === MANAGER_PASS) {
+document.getElementById(“managerAccessModal”).style.display = “none”;
+managerAuthenticated = true;
+showPage(“page-setup”);
+} else {
+document.getElementById(“managerAccessError”).textContent = “كلمة المرور غير صحيحة”;
+document.getElementById(“managerAccessPwd”).value = “”;
+}
 };
 
-// Called from dashboard "لوحة تحكم المدير" button
+// Called from dashboard “لوحة تحكم المدير” button
 window.checkManagerPassword = function() {
-  const pwd = document.getElementById("managerPassword").value;
-  if (pwd === DASHBOARD_PASS) {
-    document.getElementById("passwordError").textContent = "";
-    managerAuthenticated = true;
-    loadDashboard();
-  } else {
-    document.getElementById("passwordError").textContent = "كلمة المرور غير صحيحة";
-    document.getElementById("managerPassword").value = "";
-  }
+const pwd = document.getElementById(“managerPassword”).value;
+if (pwd === DASHBOARD_PASS) {
+document.getElementById(“passwordError”).textContent = “”;
+managerAuthenticated = true;
+loadDashboard();
+} else {
+document.getElementById(“passwordError”).textContent = “كلمة المرور غير صحيحة”;
+document.getElementById(“managerPassword”).value = “”;
+}
 };
 
 // ===== DASHBOARD LOGIC =====
 let allEvalsCache = [];
-let dashFilter = "all";       // all | pending | completed
-let dashRoleFilter = "all";   // all | site_eng | tech_off | ...
-let dashView = "list";        // list | insights
+let dashFilter = “all”;       // all | pending | completed
+let dashRoleFilter = “all”;   // all | site_eng | tech_off | …
+let dashView = “list”;        // list | insights
 
 function evalGetTotal(ev) {
-  if (!ev.scores || !ev.role) return 0;
-  const items = ITEMS[ev.role];
-  if (!items) return 0;
-  return [...items.cat1, ...items.cat2, ...items.cat3].reduce((s,i) => s + (ev.scores[i.id]||0), 0);
+if (!ev.scores || !ev.role) return 0;
+const items = ITEMS[ev.role];
+if (!items) return 0;
+return […items.cat1, …items.cat2, …items.cat3].reduce((s,i) => s + (ev.scores[i.id]||0), 0);
 }
 function evalGetMax(ev) {
-  if (!ev.role) return 125;
-  const items = ITEMS[ev.role];
-  if (!items) return 125;
-  return [...items.cat1, ...items.cat2, ...items.cat3].length * 5;
+if (!ev.role) return 125;
+const items = ITEMS[ev.role];
+if (!items) return 125;
+return […items.cat1, …items.cat2, …items.cat3].length * 5;
 }
 function evalGetPct(ev) {
-  const mx = evalGetMax(ev);
-  return mx > 0 ? Math.round(evalGetTotal(ev) / mx * 100) : 0;
+const mx = evalGetMax(ev);
+return mx > 0 ? Math.round(evalGetTotal(ev) / mx * 100) : 0;
 }
 
 async function loadDashboard() {
-  showPage("page-dashboard");
-  document.getElementById("dashboardList").innerHTML = `<div style="text-align:center;padding:40px;color:#64748b">⏳ جاري تحميل التقييمات...</div>`;
-  if (!window.loadAllEvals) {
-    document.getElementById("dashboardList").innerHTML = `<div style="text-align:center;padding:40px;color:#ef4444">خطأ: Firebase لم يُحمَّل بعد. أعد المحاولة.</div>`;
-    return;
-  }
-  const evals = await window.loadAllEvals();
-  allEvalsCache = evals;
-  renderDashboard();
+showPage(“page-dashboard”);
+document.getElementById(“dashboardList”).innerHTML = `<div style="text-align:center;padding:40px;color:#64748b">⏳ جاري تحميل التقييمات...</div>`;
+if (!window.loadAllEvals) {
+document.getElementById(“dashboardList”).innerHTML = `<div style="text-align:center;padding:40px;color:#ef4444">خطأ: Firebase لم يُحمَّل بعد. أعد المحاولة.</div>`;
+return;
+}
+const evals = await window.loadAllEvals();
+allEvalsCache = evals;
+renderDashboard();
 }
 
 function getAppliedFilters() {
-  return allEvalsCache.filter(e => {
-    const stageOk = dashFilter === "all" || 
-      (dashFilter === "pending" && e.stage === "pending_employee") ||
-      (dashFilter === "completed" && e.stage === "completed");
-    const roleOk = dashRoleFilter === "all" || e.role === dashRoleFilter;
-    return stageOk && roleOk;
-  });
+return allEvalsCache.filter(e => {
+const stageOk = dashFilter === “all” ||
+(dashFilter === “pending” && e.stage === “pending_employee”) ||
+(dashFilter === “completed” && e.stage === “completed”);
+const roleOk = dashRoleFilter === “all” || e.role === dashRoleFilter;
+return stageOk && roleOk;
+});
 }
 
 function renderDashboard() {
-  const evals = allEvalsCache;
-  const container = document.getElementById("dashboardList");
+const evals = allEvalsCache;
+const container = document.getElementById(“dashboardList”);
 
-  if (!evals || evals.length === 0) {
-    container.innerHTML = `<div style="text-align:center;padding:60px 20px;color:#64748b">
-      <div style="font-size:48px;margin-bottom:16px">📭</div>
-      <div style="font-size:16px;font-weight:700;margin-bottom:8px">لا توجد تقييمات بعد</div>
-      <div style="font-size:13px">ستظهر التقييمات هنا فور اعتمادها</div>
-    </div>`;
-    return;
-  }
+if (!evals || evals.length === 0) {
+container.innerHTML = `<div style="text-align:center;padding:60px 20px;color:#64748b"> <div style="font-size:48px;margin-bottom:16px">📭</div> <div style="font-size:16px;font-weight:700;margin-bottom:8px">لا توجد تقييمات بعد</div> <div style="font-size:13px">ستظهر التقييمات هنا فور اعتمادها</div> </div>`;
+return;
+}
 
-  const total = evals.length;
-  const pending = evals.filter(e => e.stage === "pending_employee").length;
-  const completed = evals.filter(e => e.stage === "completed").length;
-  const scores = evals.map(e => evalGetTotal(e)).filter(s => s > 0);
-  const avgScore = scores.length > 0 ? Math.round(scores.reduce((a,b)=>a+b,0)/scores.length) : 0;
+const total = evals.length;
+const pending = evals.filter(e => e.stage === “pending_employee”).length;
+const completed = evals.filter(e => e.stage === “completed”).length;
+const scores = evals.map(e => evalGetTotal(e)).filter(s => s > 0);
+const avgScore = scores.length > 0 ? Math.round(scores.reduce((a,b)=>a+b,0)/scores.length) : 0;
 
-  const filtered = getAppliedFilters();
+const filtered = getAppliedFilters();
 
-  // Role filter pills
-  const roleCountMap = {};
-  ROLES.forEach(r => { roleCountMap[r.id] = evals.filter(e => e.role === r.id).length; });
-  const rolePills = ROLES.filter(r => roleCountMap[r.id] > 0).map(r =>
-    `<button onclick="setDashRole('${r.id}')" style="padding:5px 10px;border-radius:20px;border:none;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;${dashRoleFilter===r.id?'background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff':'background:#f1f5f9;color:#475569'}">${r.label} (${roleCountMap[r.id]})</button>`
-  ).join("");
+// Role filter pills
+const roleCountMap = {};
+ROLES.forEach(r => { roleCountMap[r.id] = evals.filter(e => e.role === r.id).length; });
+const rolePills = ROLES.filter(r => roleCountMap[r.id] > 0).map(r =>
+`<button onclick="setDashRole('${r.id}')" style="padding:5px 10px;border-radius:20px;border:none;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;${dashRoleFilter===r.id?'background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff':'background:#f1f5f9;color:#475569'}">${r.label} (${roleCountMap[r.id]})</button>`
+).join(””);
 
-  container.innerHTML = `
-    <!-- Stats -->
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:14px">
-      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
-        <div style="font-size:22px;font-weight:900;color:#1e293b">${total}</div>
-        <div style="font-size:10px;color:#64748b">إجمالي</div>
-      </div>
-      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
-        <div style="font-size:22px;font-weight:900;color:#f97316">${pending}</div>
-        <div style="font-size:10px;color:#64748b">بانتظار الموظف</div>
-      </div>
-      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
-        <div style="font-size:22px;font-weight:900;color:#22c55e">${completed}</div>
-        <div style="font-size:10px;color:#64748b">مكتملة</div>
-      </div>
-      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
-        <div style="font-size:22px;font-weight:900;color:#7b1d35">${avgScore}</div>
-        <div style="font-size:10px;color:#64748b">متوسط الدرجة</div>
-      </div>
-    </div>
+container.innerHTML = `
+<!-- Stats -->
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:14px">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
+<div style="font-size:22px;font-weight:900;color:#1e293b">${total}</div>
+<div style="font-size:10px;color:#64748b">إجمالي</div>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
+<div style="font-size:22px;font-weight:900;color:#f97316">${pending}</div>
+<div style="font-size:10px;color:#64748b">بانتظار الموظف</div>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
+<div style="font-size:22px;font-weight:900;color:#22c55e">${completed}</div>
+<div style="font-size:10px;color:#64748b">مكتملة</div>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
+<div style="font-size:22px;font-weight:900;color:#7b1d35">${avgScore}</div>
+<div style="font-size:10px;color:#64748b">متوسط الدرجة</div>
+</div>
+</div>
 
-    <!-- View toggle -->
-    <div style="display:flex;gap:6px;margin-bottom:10px">
-      <button onclick="setDashView('list')" style="flex:1;padding:8px;border-radius:8px;border:none;font-size:12px;font-weight:700;cursor:pointer;${dashView==='list'?'background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff':'background:#f1f5f9;color:#64748b'}">📋 القائمة</button>
-      <button onclick="setDashView('insights')" style="flex:1;padding:8px;border-radius:8px;border:none;font-size:12px;font-weight:700;cursor:pointer;${dashView==='insights'?'background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff':'background:#f1f5f9;color:#64748b'}">🏆 المتميزون</button>
-    </div>
+```
+<!-- View toggle -->
+<div style="display:flex;gap:6px;margin-bottom:10px">
+  <button onclick="setDashView('list')" style="flex:1;padding:8px;border-radius:8px;border:none;font-size:12px;font-weight:700;cursor:pointer;${dashView==='list'?'background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff':'background:#f1f5f9;color:#64748b'}">📋 القائمة</button>
+  <button onclick="setDashView('insights')" style="flex:1;padding:8px;border-radius:8px;border:none;font-size:12px;font-weight:700;cursor:pointer;${dashView==='insights'?'background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff':'background:#f1f5f9;color:#64748b'}">🏆 المتميزون</button>
+</div>
 
-    ${dashView === 'insights' ? buildInsightsView(evals) : `
-      <!-- Stage filter -->
-      <div style="display:flex;gap:6px;margin-bottom:8px">
-        <button onclick="setDashFilter('all')" style="flex:1;padding:7px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashFilter==='all'?'background:#1e293b;color:#fff':'background:#f1f5f9;color:#64748b'}">الكل (${total})</button>
-        <button onclick="setDashFilter('pending')" style="flex:1;padding:7px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashFilter==='pending'?'background:#f97316;color:#fff':'background:#f1f5f9;color:#64748b'}">⏳ بانتظار (${pending})</button>
-        <button onclick="setDashFilter('completed')" style="flex:1;padding:7px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashFilter==='completed'?'background:#22c55e;color:#fff':'background:#f1f5f9;color:#64748b'}">✓ مكتملة (${completed})</button>
-      </div>
+${dashView === 'insights' ? buildInsightsView(evals) : `
+  <!-- Stage filter -->
+  <div style="display:flex;gap:6px;margin-bottom:8px">
+    <button onclick="setDashFilter('all')" style="flex:1;padding:7px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashFilter==='all'?'background:#1e293b;color:#fff':'background:#f1f5f9;color:#64748b'}">الكل (${total})</button>
+    <button onclick="setDashFilter('pending')" style="flex:1;padding:7px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashFilter==='pending'?'background:#f97316;color:#fff':'background:#f1f5f9;color:#64748b'}">⏳ بانتظار (${pending})</button>
+    <button onclick="setDashFilter('completed')" style="flex:1;padding:7px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashFilter==='completed'?'background:#22c55e;color:#fff':'background:#f1f5f9;color:#64748b'}">✓ مكتملة (${completed})</button>
+  </div>
 
-      <!-- Role filter pills -->
-      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;align-items:center">
-        <button onclick="setDashRole('all')" style="padding:5px 10px;border-radius:20px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashRoleFilter==='all'?'background:#1e293b;color:#fff':'background:#f1f5f9;color:#475569'}">كل المهن</button>
-        ${rolePills}
-      </div>
+  <!-- Role filter pills -->
+  <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;align-items:center">
+    <button onclick="setDashRole('all')" style="padding:5px 10px;border-radius:20px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashRoleFilter==='all'?'background:#1e293b;color:#fff':'background:#f1f5f9;color:#475569'}">كل المهن</button>
+    ${rolePills}
+  </div>
 
-      <!-- Cards -->
-      <div id="evalCardsList">
-        ${filtered.length === 0
-          ? `<div style="text-align:center;padding:40px;color:#64748b;font-size:14px">لا توجد تقييمات في هذه الفئة</div>`
-          : filtered.map(ev => buildEvalCard(ev)).join("")
-        }
-      </div>
-    `}
+  <!-- Cards -->
+  <div id="evalCardsList">
+    ${filtered.length === 0
+      ? `<div style="text-align:center;padding:40px;color:#64748b;font-size:14px">لا توجد تقييمات في هذه الفئة</div>`
+      : filtered.map(ev => buildEvalCard(ev)).join("")
+    }
+  </div>
+`}
 
-    <div style="text-align:center;margin-top:14px;padding-bottom:20px;display:flex;gap:8px;justify-content:center">
-      <button onclick="loadDashboard()" style="background:#f1f5f9;border:1px solid #cbd5e1;border-radius:8px;color:#4a5568;font-size:12px;cursor:pointer;padding:7px 16px">🔄 تحديث</button>
-      <button onclick="showPage('page-manager-login')" style="background:#f1f5f9;border:1px solid #cbd5e1;border-radius:8px;color:#4a5568;font-size:12px;cursor:pointer;padding:7px 16px">🔐 إعادة الدخول</button>
-    </div>
-  `;
+<div style="text-align:center;margin-top:14px;padding-bottom:20px;display:flex;gap:8px;justify-content:center">
+  <button onclick="loadDashboard()" style="background:#f1f5f9;border:1px solid #cbd5e1;border-radius:8px;color:#4a5568;font-size:12px;cursor:pointer;padding:7px 16px">🔄 تحديث</button>
+  <button onclick="showPage('page-manager-login')" style="background:#f1f5f9;border:1px solid #cbd5e1;border-radius:8px;color:#4a5568;font-size:12px;cursor:pointer;padding:7px 16px">🔐 إعادة الدخول</button>
+</div>
+```
+
+`;
 }
 
 function buildInsightsView(evals) {
-  // Overall top 3
-  const ranked = [...evals].sort((a,b) => evalGetPct(b) - evalGetPct(a));
-  const top3 = ranked.slice(0, 3);
+// Overall top 3
+const ranked = […evals].sort((a,b) => evalGetPct(b) - evalGetPct(a));
+const top3 = ranked.slice(0, 3);
 
-  // Top per role
-  const topPerRole = ROLES.map(role => {
-    const roleEvals = evals.filter(e => e.role === role.id);
-    if (!roleEvals.length) return null;
-    const best = roleEvals.sort((a,b) => evalGetPct(b) - evalGetPct(a))[0];
-    return { role, best };
-  }).filter(Boolean);
+// Top per role
+const topPerRole = ROLES.map(role => {
+const roleEvals = evals.filter(e => e.role === role.id);
+if (!roleEvals.length) return null;
+const best = roleEvals.sort((a,b) => evalGetPct(b) - evalGetPct(a))[0];
+return { role, best };
+}).filter(Boolean);
 
-  const medalIcons = ["🥇","🥈","🥉"];
-  const medalColors = ["#f59e0b","#94a3b8","#b45309"];
+const medalIcons = [“🥇”,“🥈”,“🥉”];
+const medalColors = [”#f59e0b”,”#94a3b8”,”#b45309”];
 
-  const top3HTML = top3.map((ev, i) => {
-    const pct = evalGetPct(ev);
-    const grade = getGrade(evalGetTotal(ev));
-    const roleName = ROLES.find(r => r.id === ev.role)?.label || "";
-    return `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-bottom:8px;border-right:4px solid ${medalColors[i]};display:flex;align-items:center;gap:12px">
-      <div style="font-size:32px;flex-shrink:0">${medalIcons[i]}</div>
-      <div style="flex:1">
-        <div style="font-weight:800;font-size:15px;color:#1e293b">${ev.employeeName || "—"}</div>
-        <div style="font-size:12px;color:#64748b">${ev.jobTitle || ""} • ${roleName}</div>
-        <div style="font-size:11px;color:#94a3b8">${ev.department || ""} • ${ev.period || ""}</div>
-      </div>
-      <div style="text-align:center">
-        <div style="font-size:26px;font-weight:900;color:${grade.color}">${pct}%</div>
-        <div style="font-size:11px;color:${grade.color};font-weight:700">${grade.ar}</div>
-        <div style="font-size:10px;color:#94a3b8">${evalGetTotal(ev)} / ${evalGetMax(ev)}</div>
-      </div>
-    </div>`;
-  }).join("");
+const top3HTML = top3.map((ev, i) => {
+const pct = evalGetPct(ev);
+const pct = evalGetPct(ev);
+const grade = getGrade(evalGetTotal(ev));
+const roleName = ROLES.find(r => r.id === ev.role)?.label || “”;
+return `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-bottom:8px;border-right:4px solid ${medalColors[i]};display:flex;align-items:center;gap:12px"> <div style="font-size:32px;flex-shrink:0">${medalIcons[i]}</div> <div style="flex:1"> <div style="font-weight:800;font-size:15px;color:#1e293b">${ev.employeeName || "—"}</div> <div style="font-size:12px;color:#64748b">${ev.jobTitle || ""} • ${roleName}</div> <div style="font-size:11px;color:#94a3b8">${ev.department || ""} • ${ev.period || ""}</div> </div> <div style="text-align:center"> <div style="font-size:26px;font-weight:900;color:${grade.color}">${pct}%</div> <div style="font-size:11px;color:${grade.color};font-weight:700">${grade.ar}</div> <div style="font-size:10px;color:#94a3b8">${evalGetTotal(ev)} / ${evalGetMax(ev)}</div> </div> </div>`;
+}).join(””);
 
-  const perRoleHTML = topPerRole.map(({role, best}) => {
-    const pct = evalGetPct(best);
-    const grade = getGrade(evalGetTotal(best));
-    const roleEvals = evals.filter(e => e.role === role.id);
-    return `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;margin-bottom:8px">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <div>
-          <div style="font-size:11px;font-weight:700;color:#7b1d35;margin-bottom:2px">🏅 الأعلى في: ${role.label}</div>
-          <div style="font-weight:800;font-size:14px;color:#1e293b">${best.employeeName || "—"}</div>
-          <div style="font-size:11px;color:#64748b">${best.department || ""} • ${best.period || ""}</div>
-        </div>
-        <div style="text-align:center">
-          <div style="font-size:22px;font-weight:900;color:${grade.color}">${pct}%</div>
-          <div style="font-size:10px;color:#64748b">${roleEvals.length} موظف في هذه المهنة</div>
-        </div>
-      </div>
-      <div style="background:#f1f5f9;border-radius:4px;height:5px;overflow:hidden">
-        <div style="width:${pct}%;height:100%;background:${grade.color};border-radius:4px"></div>
-      </div>
-    </div>`;
-  }).join("");
+const perRoleHTML = topPerRole.map(({role, best}) => {
+const pct = evalGetPct(best);
+const pct = evalGetPct(best);
+const grade = getGrade(evalGetTotal(best));
+const roleEvals = evals.filter(e => e.role === role.id);
+return `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;margin-bottom:8px"> <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"> <div> <div style="font-size:11px;font-weight:700;color:#7b1d35;margin-bottom:2px">🏅 الأعلى في: ${role.label}</div> <div style="font-weight:800;font-size:14px;color:#1e293b">${best.employeeName || "—"}</div> <div style="font-size:11px;color:#64748b">${best.department || ""} • ${best.period || ""}</div> </div> <div style="text-align:center"> <div style="font-size:22px;font-weight:900;color:${grade.color}">${pct}%</div> <div style="font-size:10px;color:#64748b">${roleEvals.length} موظف في هذه المهنة</div> </div> </div> <div style="background:#f1f5f9;border-radius:4px;height:5px;overflow:hidden"> <div style="width:${pct}%;height:100%;background:${grade.color};border-radius:4px"></div> </div> </div>`;
+}).join(””);
 
-  return `
-    <div style="background:linear-gradient(135deg,#7b1d35,#9b2335);border-radius:12px;padding:14px;margin-bottom:14px;color:#fff;text-align:center">
-      <div style="font-size:24px;margin-bottom:4px">🏆</div>
-      <div style="font-weight:800;font-size:15px">لوحة المتميزين</div>
-      <div style="font-size:12px;opacity:0.8">الأعلى تقييماً من جميع الفئات</div>
-    </div>
-    ${top3.length > 0 ? `<div style="margin-bottom:16px">${top3HTML}</div>` : ""}
-    <div style="font-size:13px;font-weight:800;color:#1e293b;margin-bottom:10px;border-right:3px solid #9b2335;padding-right:8px">الأعلى تقييماً لكل مهنة</div>
-    ${perRoleHTML}
-  `;
+return `<div style="background:linear-gradient(135deg,#7b1d35,#9b2335);border-radius:12px;padding:14px;margin-bottom:14px;color:#fff;text-align:center"> <div style="font-size:24px;margin-bottom:4px">🏆</div> <div style="font-weight:800;font-size:15px">لوحة المتميزين</div> <div style="font-size:12px;opacity:0.8">الأعلى تقييماً من جميع الفئات</div> </div> ${top3.length > 0 ?`<div style="margin-bottom:16px">${top3HTML}</div>`: ""} <div style="font-size:13px;font-weight:800;color:#1e293b;margin-bottom:10px;border-right:3px solid #9b2335;padding-right:8px">الأعلى تقييماً لكل مهنة</div> ${perRoleHTML}`;
 }
 
 function buildEvalCard(ev) {
-  const total = evalGetTotal(ev);
-  const totalMax = evalGetMax(ev);
-  const pct = evalGetPct(ev);
-  const grade = getGrade(total);
-  const roleName = ROLES.find(r => r.id === ev.role)?.label || ev.role || "";
-  const isCompleted = ev.stage === "completed";
-  const statusBadge = isCompleted
-    ? `<span style="background:#dcfce7;color:#16a34a;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px">✓ مكتمل</span>`
-    : `<span style="background:#fff7ed;color:#ea580c;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px">⏳ بانتظار الموظف</span>`;
-  const dateStr = ev.createdAt ? new Date(ev.createdAt).toLocaleDateString("ar-SA", {year:"numeric",month:"short",day:"numeric"}) : "";
+const total = evalGetTotal(ev);
+const totalMax = evalGetMax(ev);
+const pct = evalGetPct(ev);
+const grade = getGrade(evalGetTotal(ev));
+const roleName = ROLES.find(r => r.id === ev.role)?.label || ev.role || “”;
+const isCompleted = ev.stage === “completed”;
+const statusBadge = isCompleted
+? `<span style="background:#dcfce7;color:#16a34a;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px">✓ مكتمل</span>`
+: `<span style="background:#fff7ed;color:#ea580c;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px">⏳ بانتظار الموظف</span>`;
+const dateStr = ev.createdAt ? new Date(ev.createdAt).toLocaleDateString(“ar-SA”, {year:“numeric”,month:“short”,day:“numeric”}) : “”;
 
-  return `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-bottom:10px;border-right:3px solid ${grade.color}">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
-      <div style="flex:1">
-        <div style="font-weight:800;font-size:15px;color:#1e293b;margin-bottom:2px">${ev.employeeName || "—"}</div>
-        <div style="font-size:12px;color:#64748b">${ev.jobTitle || ""} • ${roleName}</div>
-        <div style="font-size:11px;color:#94a3b8;margin-top:2px">${ev.department || ""} • ${ev.period || ""}</div>
-      </div>
-      <div style="text-align:center;min-width:60px">
-        <div style="font-size:24px;font-weight:900;color:${grade.color};line-height:1">${total}</div>
-        <div style="font-size:10px;color:#64748b">من ${totalMax}</div>
-        <div style="font-size:13px;font-weight:700;color:${grade.color}">${pct}%</div>
-      </div>
-    </div>
-    <div style="background:#f1f5f9;border-radius:4px;height:5px;margin-bottom:10px;overflow:hidden">
-      <div style="width:${pct}%;height:100%;background:${grade.color};border-radius:4px"></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap">
-        ${statusBadge}
-        <span style="font-size:11px;font-weight:700;color:${grade.color};background:${grade.color}22;padding:3px 8px;border-radius:20px">${grade.ar}</span>
-        <span style="font-size:10px;color:#94a3b8">${dateStr}</span>
-      </div>
-      <div style="display:flex;gap:5px;align-items:center">
-        <button onclick="viewEvalDetail('${ev.evalId}')" style="background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;border:none;border-radius:7px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer">عرض</button>
-        <button onclick="confirmDeleteEval('${ev.evalId}','${(ev.employeeName||'').replace(/'/g,"\'")}')" style="background:#fff;border:1px solid #fca5a5;color:#dc2626;border-radius:7px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer">🗑 حذف</button>
-      </div>
-    </div>
-    ${isCompleted && ev.employeeSignature ? `<div style="margin-top:8px;padding-top:8px;border-top:1px dashed #e2e8f0;font-size:11px;color:#64748b">وقّع الموظف: <strong style="color:#16a34a">${ev.employeeSignature}</strong> — ${ev.employeeApprovalDate || ""}</div>` : ""}
-    ${!isCompleted && ev.evalId ? `
-    <div style="margin-top:10px;padding-top:10px;border-top:1px dashed #fed7aa;background:#fff7ed;border-radius:8px;padding:10px;display:flex;align-items:center;justify-content:space-between;gap:8px">
-      <div>
-        <div style="font-size:10px;color:#ea580c;font-weight:700;margin-bottom:3px">📤 رمز الموظف — لم يُرسَل بعد</div>
-        <div style="font-size:20px;font-weight:900;letter-spacing:6px;color:#9b2335;font-family:monospace">${ev.evalId}</div>
-      </div>
-      <button onclick="copyEvalCode('${ev.evalId}')" style="background:linear-gradient(135deg,#ea580c,#f97316);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0">📋 نسخ الرمز</button>
-    </div>` : ""}
+return `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-bottom:10px;border-right:3px solid ${grade.color}"> <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px"> <div style="flex:1"> <div style="font-weight:800;font-size:15px;color:#1e293b;margin-bottom:2px">${ev.employeeName || "—"}</div> <div style="font-size:12px;color:#64748b">${ev.jobTitle || ""} • ${roleName}</div> <div style="font-size:11px;color:#94a3b8;margin-top:2px">${ev.department || ""} • ${ev.period || ""}</div> </div> <div style="text-align:center;min-width:60px"> <div style="font-size:24px;font-weight:900;color:${grade.color};line-height:1">${total}</div> <div style="font-size:10px;color:#64748b">من ${totalMax}</div> <div style="font-size:13px;font-weight:700;color:${grade.color}">${pct}%</div> </div> </div> <div style="background:#f1f5f9;border-radius:4px;height:5px;margin-bottom:10px;overflow:hidden"> <div style="width:${pct}%;height:100%;background:${grade.color};border-radius:4px"></div> </div> <div style="display:flex;justify-content:space-between;align-items:center"> <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap"> ${statusBadge} <span style="font-size:11px;font-weight:700;color:${grade.color};background:${grade.color}22;padding:3px 8px;border-radius:20px">${grade.ar}</span> <span style="font-size:10px;color:#94a3b8">${dateStr}</span> </div> <div style="display:flex;gap:5px;align-items:center"> <button onclick="viewEvalDetail('${ev.evalId}')" style="background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;border:none;border-radius:7px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer">عرض</button> <button onclick="confirmDeleteEval('${ev.evalId}','${(ev.employeeName||'').replace(/'/g,"\'")}')" style="background:#fff;border:1px solid #fca5a5;color:#dc2626;border-radius:7px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer">🗑 حذف</button> </div> </div> ${isCompleted && ev.employeeSignature ? `<div style="margin-top:8px;padding-top:8px;border-top:1px dashed #e2e8f0;font-size:11px;color:#64748b">وقّع الموظف: <strong style="color:#16a34a">${ev.employeeSignature}</strong> — ${ev.employeeApprovalDate || “”}</div>`: ""} ${!isCompleted && ev.evalId ?`
+<div style="margin-top:10px;padding-top:10px;border-top:1px dashed #fed7aa;background:#fff7ed;border-radius:8px;padding:10px;display:flex;align-items:center;justify-content:space-between;gap:8px">
+<div>
+<div style="font-size:10px;color:#ea580c;font-weight:700;margin-bottom:3px">📤 رمز الموظف — لم يُرسَل بعد</div>
+<div style="font-size:20px;font-weight:900;letter-spacing:6px;color:#9b2335;font-family:monospace">${ev.evalId}</div>
+</div>
+<button onclick="copyEvalCode('${ev.evalId}')" style="background:linear-gradient(135deg,#ea580c,#f97316);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0">📋 نسخ الرمز</button>
+</div>` : “”}
+
   </div>`;
 }
 
@@ -1544,54 +1646,54 @@ window.setDashRole = function(r) { dashRoleFilter = r; renderDashboard(); };
 window.setDashView = function(v) { dashView = v; renderDashboard(); };
 
 window.copyEvalCode = function(code) {
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(code).then(() => {
-      alert("✅ تم نسخ الرمز: " + code + "\n\nأرسله للموظف ليفتح تقييمه على:\ntabarak-eval.vercel.app");
-    });
-  } else {
-    prompt("انسخ الرمز التالي وأرسله للموظف:", code);
-  }
+if (navigator.clipboard) {
+navigator.clipboard.writeText(code).then(() => {
+alert(“✅ تم نسخ الرمز: “ + code + “\n\nأرسله للموظف ليفتح تقييمه على:\ntabarak-eval.vercel.app”);
+});
+} else {
+prompt(“انسخ الرمز التالي وأرسله للموظف:”, code);
+}
 };
 
 window.confirmDeleteEval = function(id, name) {
-  if (!id) return;
-  if (!confirm(`هل أنت متأكد من حذف تقييم "${name}"؟\nلا يمكن التراجع عن هذا الإجراء.`)) return;
-  deleteEvalAndRefresh(id);
+if (!id) return;
+if (!confirm(`هل أنت متأكد من حذف تقييم "${name}"؟\nلا يمكن التراجع عن هذا الإجراء.`)) return;
+deleteEvalAndRefresh(id);
 };
 
 async function deleteEvalAndRefresh(id) {
-  showLoading(true);
-  const ok = await window.deleteEval(id);
-  showLoading(false);
-  if (ok) {
-    allEvalsCache = allEvalsCache.filter(e => e.evalId !== id);
-    renderDashboard();
-  } else {
-    alert("حدث خطأ أثناء الحذف. تحقق من الاتصال وأعد المحاولة.");
-  }
+showLoading(true);
+const ok = await window.deleteEval(id);
+showLoading(false);
+if (ok) {
+allEvalsCache = allEvalsCache.filter(e => e.evalId !== id);
+renderDashboard();
+} else {
+alert(“حدث خطأ أثناء الحذف. تحقق من الاتصال وأعد المحاولة.”);
+}
 }
 
 window.viewEvalDetail = async function(id) {
-  if (!id) return;
-  showLoading(true);
-  const data = await window.loadEval(id);
-  showLoading(false);
-  if (!data) { alert("لم يُعثر على التقييم"); return; }
-  state.empCode = id;
-  state.empData = data;
-  buildEmployeePage(data);
-  document.querySelector("#page-employee .card:last-child").style.display = "none";
-  showPage("page-employee");
-  document.querySelector("#page-employee .top-bar .back-btn").onclick = function() {
-    document.querySelector("#page-employee .card:last-child").style.display = "block";
-    showPage("page-dashboard");
-  };
+if (!id) return;
+showLoading(true);
+const data = await window.loadEval(id);
+showLoading(false);
+if (!data) { alert(“لم يُعثر على التقييم”); return; }
+state.empCode = id;
+state.empData = data;
+buildEmployeePage(data);
+document.querySelector(”#page-employee .card:last-child”).style.display = “none”;
+showPage(“page-employee”);
+document.querySelector(”#page-employee .top-bar .back-btn”).onclick = function() {
+document.querySelector(”#page-employee .card:last-child”).style.display = “block”;
+showPage(“page-dashboard”);
 };
-
+};
 
 </script>
 
 <!-- MANAGER ACCESS MODAL -->
+
 <div id="managerAccessModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.6);align-items:center;justify-content:center">
   <div style="background:#fff;border-radius:16px;padding:32px;width:320px;max-width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
     <div style="font-size:48px;margin-bottom:12px">🔐</div>
@@ -1605,7 +1707,6 @@ window.viewEvalDetail = async function(id) {
     <button onclick="closeManagerModal()" style="width:100%;background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0;border-radius:10px;padding:10px;font-size:14px;cursor:pointer;font-family:inherit">إلغاء</button>
   </div>
 </div>
-
 
 </body>
 </html>
