@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html dir="rtl" lang="ar">
 <head>
 <meta charset="UTF-8">
@@ -209,7 +208,6 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 }
 .loading-overlay.show { display: flex; }
 </style>
-
 </head>
 <body>
 
@@ -221,7 +219,6 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- HOME PAGE -->
-
 <div class="page active" id="page-home">
   <div class="header" style="background:linear-gradient(135deg,#2d3748,#1a202c);padding:0">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 20px">
@@ -259,8 +256,8 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
   </div>
 </div>
 
-<!-- MANAGER DASHBOARD PAGE -->
 
+<!-- MANAGER DASHBOARD PAGE -->
 <div class="page" id="page-manager-login">
   <div class="top-bar">
     <button class="back-btn" onclick="showPage('page-home')">← رجوع</button>
@@ -280,7 +277,6 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- MANAGER DASHBOARD -->
-
 <div class="page" id="page-dashboard">
   <div class="top-bar">
     <button class="back-btn" onclick="showPage('page-home')">← رجوع</button>
@@ -298,7 +294,6 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- SETUP PAGE -->
-
 <div class="page" id="page-setup">
   <div class="top-bar">
     <button class="back-btn" onclick="showPage('page-home')">← رجوع</button>
@@ -325,7 +320,6 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- FILL PAGE -->
-
 <div class="page" id="page-fill">
   <div class="top-bar">
     <button class="back-btn" onclick="showPage('page-setup')">← رجوع</button>
@@ -358,7 +352,6 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- APPROVE PAGE -->
-
 <div class="page" id="page-approve">
   <div class="top-bar">
     <button class="back-btn" onclick="showPage('page-fill')">← رجوع</button>
@@ -385,7 +378,6 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- MANAGER DONE PAGE -->
-
 <div class="page" id="page-done">
   <div class="top-bar">
     <div style="width:60px"></div>
@@ -413,7 +405,6 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- EMPLOYEE PAGE -->
-
 <div class="page" id="page-employee">
   <div class="top-bar">
     <div>
@@ -449,7 +440,6 @@ label { display: block; font-size: 12px; color: #475569; margin-bottom: 5px; }
 </div>
 
 <!-- EMP DONE PAGE -->
-
 <div class="page" id="page-emp-done">
   <div class="top-bar">
     <div class="top-bar-title">نظام تقييم الأداء — تبارك</div>
@@ -1286,158 +1276,167 @@ function buildPrintOverlay(data) {
       }
     </style>
 
-```
-<!-- Header -->
-<div style="background:linear-gradient(90deg,#7b1d35,#9b2335);padding:14px 20px;display:flex;justify-content:space-between;align-items:center">
-  <div>
-    <div style="font-weight:900;font-size:17px">نظام تقييم الأداء — شركة تبارك المحدودة</div>
-    <div style="font-size:11px;opacity:0.8">Performance Evaluation — TABARK COMPANY LTD</div>
-  </div>
-  <div style="font-size:11px;opacity:0.7">tabarak-eval.vercel.app</div>
-</div>
-
-<div style="max-width:800px;margin:0 auto;padding:16px">
-
-  <!-- Employee Info -->
-  <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
-    <div><div style="font-size:10px;color:#64748b">اسم الموظف</div><div style="font-weight:700;font-size:14px">${data.employeeName||""}</div></div>
-    <div><div style="font-size:10px;color:#64748b">المسمى الوظيفي</div><div style="font-weight:600;font-size:13px">${data.jobTitle||""}</div></div>
-    <div><div style="font-size:10px;color:#64748b">القسم / المشروع</div><div style="font-weight:600;font-size:13px">${data.department||""}</div></div>
-    <div><div style="font-size:10px;color:#64748b">الفئة الوظيفية</div><div style="font-weight:600;font-size:13px">${roleName}</div></div>
-    <div><div style="font-size:10px;color:#64748b">فترة التقييم</div><div style="font-weight:600;font-size:13px">${data.period||""}</div></div>
-    <div><div style="font-size:10px;color:#64748b">المقيِّم</div><div style="font-weight:600;font-size:13px">${data.evaluatorName||""}</div></div>
-  </div>
-
-  <!-- Score Summary -->
-  <div style="background:#1e293b;border:2px solid ${grade.color};border-radius:8px;padding:14px;margin-bottom:12px">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-      <div style="text-align:center">
-        <div style="font-size:36px;font-weight:900;color:${grade.color};line-height:1">${total}</div>
-        <div style="font-size:11px;color:#64748b">من ${totalMax}</div>
+    <!-- Header -->
+    <div style="background:linear-gradient(90deg,#7b1d35,#9b2335);padding:14px 20px;display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-weight:900;font-size:17px">نظام تقييم الأداء — شركة تبارك المحدودة</div>
+        <div style="font-size:11px;opacity:0.8">Performance Evaluation — TABARK COMPANY LTD</div>
       </div>
-      <div style="text-align:center">
-        <div style="font-size:22px;font-weight:800;color:${grade.color}">${grade.ar}</div>
-        <div style="font-size:12px;color:#64748b">${grade.en}</div>
-      </div>
-      <div style="text-align:center">
-        <div style="font-size:36px;font-weight:900;color:${grade.color};line-height:1">${pct}%</div>
-        <div style="font-size:11px;color:#64748b">النسبة</div>
-      </div>
+      <div style="font-size:11px;opacity:0.7">tabarak-eval.vercel.app</div>
     </div>
-    <div style="background:#334155;border-radius:4px;height:8px;margin-bottom:10px;overflow:hidden">
-      <div style="width:${pct}%;height:100%;background:${grade.color};border-radius:4px"></div>
+
+    <div style="max-width:800px;margin:0 auto;padding:16px">
+
+      <!-- Employee Info -->
+      <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div><div style="font-size:10px;color:#64748b">اسم الموظف</div><div style="font-weight:700;font-size:14px">${data.employeeName||""}</div></div>
+        <div><div style="font-size:10px;color:#64748b">المسمى الوظيفي</div><div style="font-weight:600;font-size:13px">${data.jobTitle||""}</div></div>
+        <div><div style="font-size:10px;color:#64748b">القسم / المشروع</div><div style="font-weight:600;font-size:13px">${data.department||""}</div></div>
+        <div><div style="font-size:10px;color:#64748b">الفئة الوظيفية</div><div style="font-weight:600;font-size:13px">${roleName}</div></div>
+        <div><div style="font-size:10px;color:#64748b">فترة التقييم</div><div style="font-weight:600;font-size:13px">${data.period||""}</div></div>
+        <div><div style="font-size:10px;color:#64748b">المقيِّم</div><div style="font-weight:600;font-size:13px">${data.evaluatorName||""}</div></div>
+      </div>
+
+      <!-- Score Summary -->
+      <div style="background:#1e293b;border:2px solid ${grade.color};border-radius:8px;padding:14px;margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <div style="text-align:center">
+            <div style="font-size:36px;font-weight:900;color:${grade.color};line-height:1">${total}</div>
+            <div style="font-size:11px;color:#64748b">من ${totalMax}</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:22px;font-weight:800;color:${grade.color}">${grade.ar}</div>
+            <div style="font-size:12px;color:#64748b">${grade.en}</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:36px;font-weight:900;color:${grade.color};line-height:1">${pct}%</div>
+            <div style="font-size:11px;color:#64748b">النسبة</div>
+          </div>
+        </div>
+        <div style="background:#334155;border-radius:4px;height:8px;margin-bottom:10px;overflow:hidden">
+          <div style="width:${pct}%;height:100%;background:${grade.color};border-radius:4px"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+          <div style="background:#0f172a;border-radius:6px;padding:8px;text-align:center">
+            <div style="font-size:10px;color:#64748b">الكفاءة الفنية</div>
+            <div style="font-weight:800;font-size:16px">${c1}<span style="font-size:10px;color:#475569">/${items.cat1.length*5}</span></div>
+          </div>
+          <div style="background:#0f172a;border-radius:6px;padding:8px;text-align:center">
+            <div style="font-size:10px;color:#64748b">السلوك والانضباط</div>
+            <div style="font-weight:800;font-size:16px">${c2}<span style="font-size:10px;color:#475569">/${items.cat2.length*5}</span></div>
+          </div>
+          <div style="background:#0f172a;border-radius:6px;padding:8px;text-align:center">
+            <div style="font-size:10px;color:#64748b">العلاقات المهنية</div>
+            <div style="font-weight:800;font-size:16px">${c3}<span style="font-size:10px;color:#475569">/${items.cat3.length*5}</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scores Detail -->
+      <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px">
+        <div style="font-weight:800;margin-bottom:12px;font-size:13px;color:#e2e8f0">تفاصيل عناصر التقييم</div>
+        ${catsHTML}
+      </div>
+
+      <!-- Comments -->
+      ${commentsHTML ? `<div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px">
+        <div style="font-weight:800;margin-bottom:10px;font-size:13px">الملاحظات والتوجيهات</div>
+        ${commentsHTML}
+      </div>` : ""}
+
+      <!-- Signatures -->
+      <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:16px">
+        <div style="font-weight:800;margin-bottom:12px;font-size:13px">التوقيعات والاعتمادات</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div style="background:#0f172a;border-radius:8px;padding:12px;border-right:3px solid #9b2335">
+            <div style="font-size:10px;color:#9b2335;font-weight:700;margin-bottom:4px">✅ اعتماد المدير المباشر</div>
+            <div style="font-weight:700;font-size:13px;margin-bottom:2px">${data.managerSignature||""}</div>
+            <div style="font-size:11px;color:#64748b">التاريخ: ${data.managerApprovalDate||""}</div>
+            <div style="margin-top:8px;border-top:1px solid #334155;padding-top:6px;font-size:10px;color:#64748b">التوقيع: ___________________</div>
+          </div>
+          <div style="background:#0f172a;border-radius:8px;padding:12px;border-right:3px solid #22c55e">
+            <div style="font-size:10px;color:#22c55e;font-weight:700;margin-bottom:4px">✅ إقرار الموظف بالاطلاع</div>
+            <div style="font-weight:700;font-size:13px;margin-bottom:2px">${data.employeeSignature||"لم يوقع بعد"}</div>
+            <div style="font-size:11px;color:#64748b">التاريخ: ${data.employeeApprovalDate||""}</div>
+            <div style="margin-top:8px;border-top:1px solid #334155;padding-top:6px;font-size:10px;color:#64748b">التوقيع: ___________________</div>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:10px;color:#475569;text-align:center">
+          أقر الموظف المذكور أعلاه بالاطلاع على نتيجة تقييم أدائه وفهم محتواها
+        </div>
+      </div>
+
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-      <div style="background:#0f172a;border-radius:6px;padding:8px;text-align:center">
-        <div style="font-size:10px;color:#64748b">الكفاءة الفنية</div>
-        <div style="font-weight:800;font-size:16px">${c1}<span style="font-size:10px;color:#475569">/${items.cat1.length*5}</span></div>
-      </div>
-      <div style="background:#0f172a;border-radius:6px;padding:8px;text-align:center">
-        <div style="font-size:10px;color:#64748b">السلوك والانضباط</div>
-        <div style="font-weight:800;font-size:16px">${c2}<span style="font-size:10px;color:#475569">/${items.cat2.length*5}</span></div>
-      </div>
-      <div style="background:#0f172a;border-radius:6px;padding:8px;text-align:center">
-        <div style="font-size:10px;color:#64748b">العلاقات المهنية</div>
-        <div style="font-weight:800;font-size:16px">${c3}<span style="font-size:10px;color:#475569">/${items.cat3.length*5}</span></div>
-      </div>
+
+    <!-- Print/Close buttons -->
+    <div class="no-print" style="text-align:center;padding:16px 0 24px">
+      <button onclick="window.print()" style="background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff;border:none;border-radius:10px;padding:13px 36px;font-size:14px;font-weight:700;cursor:pointer;margin-left:10px">🖨️ طباعة / حفظ PDF</button>
+      <button onclick="document.getElementById('pdfOverlay').remove()" style="background:rgba(255,255,255,0.1);color:#94a3b8;border:1px solid #334155;border-radius:10px;padding:13px 24px;font-size:13px;cursor:pointer">✕ إغلاق</button>
     </div>
-  </div>
-
-  <!-- Scores Detail -->
-  <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px">
-    <div style="font-weight:800;margin-bottom:12px;font-size:13px;color:#e2e8f0">تفاصيل عناصر التقييم</div>
-    ${catsHTML}
-  </div>
-
-  <!-- Comments -->
-  ${commentsHTML ? `<div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px">
-    <div style="font-weight:800;margin-bottom:10px;font-size:13px">الملاحظات والتوجيهات</div>
-    ${commentsHTML}
-  </div>` : ""}
-
-  <!-- Signatures -->
-  <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:16px">
-    <div style="font-weight:800;margin-bottom:12px;font-size:13px">التوقيعات والاعتمادات</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      <div style="background:#0f172a;border-radius:8px;padding:12px;border-right:3px solid #9b2335">
-        <div style="font-size:10px;color:#9b2335;font-weight:700;margin-bottom:4px">✅ اعتماد المدير المباشر</div>
-        <div style="font-weight:700;font-size:13px;margin-bottom:2px">${data.managerSignature||""}</div>
-        <div style="font-size:11px;color:#64748b">التاريخ: ${data.managerApprovalDate||""}</div>
-        <div style="margin-top:8px;border-top:1px solid #334155;padding-top:6px;font-size:10px;color:#64748b">التوقيع: ___________________</div>
-      </div>
-      <div style="background:#0f172a;border-radius:8px;padding:12px;border-right:3px solid #22c55e">
-        <div style="font-size:10px;color:#22c55e;font-weight:700;margin-bottom:4px">✅ إقرار الموظف بالاطلاع</div>
-        <div style="font-weight:700;font-size:13px;margin-bottom:2px">${data.employeeSignature||"لم يوقع بعد"}</div>
-        <div style="font-size:11px;color:#64748b">التاريخ: ${data.employeeApprovalDate||""}</div>
-        <div style="margin-top:8px;border-top:1px solid #334155;padding-top:6px;font-size:10px;color:#64748b">التوقيع: ___________________</div>
-      </div>
-    </div>
-    <div style="margin-top:10px;font-size:10px;color:#475569;text-align:center">
-      أقر الموظف المذكور أعلاه بالاطلاع على نتيجة تقييم أدائه وفهم محتواها
-    </div>
-  </div>
-
-</div>
-
-<!-- Print/Close buttons -->
-<div class="no-print" style="text-align:center;padding:16px 0 24px">
-  <button onclick="window.print()" style="background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff;border:none;border-radius:10px;padding:13px 36px;font-size:14px;font-weight:700;cursor:pointer;margin-left:10px">🖨️ طباعة / حفظ PDF</button>
-  <button onclick="document.getElementById('pdfOverlay').remove()" style="background:rgba(255,255,255,0.1);color:#94a3b8;border:1px solid #334155;border-radius:10px;padding:13px 24px;font-size:13px;cursor:pointer">✕ إغلاق</button>
-</div>
-```
-
   </div>`;
 
-const existing = document.getElementById(“pdfOverlay”);
-if (existing) existing.remove();
-const ov = document.createElement(“div”);
-ov.id = “pdfOverlay”;
-ov.style.cssText = “position:fixed;inset:0;z-index:99999;overflow-y:auto;background:#0f172a”;
-ov.innerHTML = html;
-document.body.appendChild(ov);
+  const existing = document.getElementById("pdfOverlay");
+  if (existing) existing.remove();
+  const ov = document.createElement("div");
+  ov.id = "pdfOverlay";
+  ov.style.cssText = "position:fixed;inset:0;z-index:99999;overflow-y:auto;background:#0f172a";
+  ov.innerHTML = html;
+  document.body.appendChild(ov);
 }
 
 // keep old disabled code
 window._downloadPDF_disabled = function() {
-const _unused = true;
-// old code below
-const _data = state.empData;
-if (!_data) return;
+  const _unused = true;
+  // old code below
+  const _data = state.empData;
+  if (!_data) return;
 
-const items = ITEMS[data.role];
-const allItems = […items.cat1, …items.cat2, …items.cat3];
-const total = allItems.reduce((s,i) => s + (data.scores[i.id]||0), 0);
-const totalMax = allItems.length * 5;
-const grade = getGrade(total);
-const pct = Math.round(total/totalMax*100);
-const roleName = ROLES.find(r => r.id === data.role)?.label || “”;
-const c1 = items.cat1.reduce((s,i)=>s+(data.scores[i.id]||0),0);
-const c2 = items.cat2.reduce((s,i)=>s+(data.scores[i.id]||0),0);
-const c3 = items.cat3.reduce((s,i)=>s+(data.scores[i.id]||0),0);
+  const items = ITEMS[data.role];
+  const allItems = [...items.cat1, ...items.cat2, ...items.cat3];
+  const total = allItems.reduce((s,i) => s + (data.scores[i.id]||0), 0);
+  const totalMax = allItems.length * 5;
+  const grade = getGrade(total);
+  const pct = Math.round(total/totalMax*100);
+  const roleName = ROLES.find(r => r.id === data.role)?.label || "";
+  const c1 = items.cat1.reduce((s,i)=>s+(data.scores[i.id]||0),0);
+  const c2 = items.cat2.reduce((s,i)=>s+(data.scores[i.id]||0),0);
+  const c3 = items.cat3.reduce((s,i)=>s+(data.scores[i.id]||0),0);
 
-function scoreColor(v) {
-return v<=2?”#ef4444”:v===3?”#f97316”:v===4?”#3b82f6”:”#22c55e”;
-}
+  function scoreColor(v) {
+    return v<=2?"#ef4444":v===3?"#f97316":v===4?"#3b82f6":"#22c55e";
+  }
 
-const catsHTML = [
-{label:“الفئة الأولى: الكفاءة الفنية والإنتاجية”, cat:items.cat1},
-{label:“الفئة الثانية: السلوك والانضباط”, cat:items.cat2},
-{label:“الفئة الثالثة: العلاقات المهنية”, cat:items.cat3},
-].map(({label,cat}) => `<div style="margin-bottom:12px"> <div style="background:#2d1f5e;padding:6px 10px;border-radius:4px;font-weight:700;color:#a78bfa;margin-bottom:6px">${label}</div> ${cat.map(item => { const v = data.scores[item.id]||0; return`<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 8px;background:#1a2535;border-radius:4px;margin-bottom:3px">
-<span style="font-size:11px;color:#cbd5e1">${item.t}</span>
-<span style="background:${scoreColor(v)};color:#fff;width:22px;height:22px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0">${v}</span>
-</div>`; }).join("")} </div> `).join(””);
+  const catsHTML = [
+    {label:"الفئة الأولى: الكفاءة الفنية والإنتاجية", cat:items.cat1},
+    {label:"الفئة الثانية: السلوك والانضباط", cat:items.cat2},
+    {label:"الفئة الثالثة: العلاقات المهنية", cat:items.cat3},
+  ].map(({label,cat}) => `
+    <div style="margin-bottom:12px">
+      <div style="background:#2d1f5e;padding:6px 10px;border-radius:4px;font-weight:700;color:#a78bfa;margin-bottom:6px">${label}</div>
+      ${cat.map(item => {
+        const v = data.scores[item.id]||0;
+        return `<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 8px;background:#1a2535;border-radius:4px;margin-bottom:3px">
+          <span style="font-size:11px;color:#cbd5e1">${item.t}</span>
+          <span style="background:${scoreColor(v)};color:#fff;width:22px;height:22px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0">${v}</span>
+        </div>`;
+      }).join("")}
+    </div>
+  `).join("");
 
-const commentsHTML = [
-{label:“مواطن القوة”, val:data.strengths, color:”#22c55e”},
-{label:“مواطن الضعف”, val:data.weaknesses, color:”#ef4444”},
-{label:“التوجيهات والتوصيات”, val:data.recommendations, color:”#f59e0b”},
-{label:“رأي المدير”, val:data.managerOpinion, color:”#94a3b8”},
-{label:“ملاحظات الموظف”, val:data.employeeComment, color:”#60a5fa”},
-].filter(c=>c.val).map(c=>`<div style="margin-bottom:10px"> <div style="font-weight:700;color:${c.color};font-size:11px;margin-bottom:4px">${c.label}</div> <div style="background:#1a2535;padding:8px;border-radius:4px;font-size:11px;color:#cbd5e1;line-height:1.6">${c.val}</div> </div>`).join(””);
+  const commentsHTML = [
+    {label:"مواطن القوة", val:data.strengths, color:"#22c55e"},
+    {label:"مواطن الضعف", val:data.weaknesses, color:"#ef4444"},
+    {label:"التوجيهات والتوصيات", val:data.recommendations, color:"#f59e0b"},
+    {label:"رأي المدير", val:data.managerOpinion, color:"#94a3b8"},
+    {label:"ملاحظات الموظف", val:data.employeeComment, color:"#60a5fa"},
+  ].filter(c=>c.val).map(c=>`
+    <div style="margin-bottom:10px">
+      <div style="font-weight:700;color:${c.color};font-size:11px;margin-bottom:4px">${c.label}</div>
+      <div style="background:#1a2535;padding:8px;border-radius:4px;font-size:11px;color:#cbd5e1;line-height:1.6">${c.val}</div>
+    </div>
+  `).join("");
 
-const html = `<!DOCTYPE html>
-
+  const html = `<!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
 <meta charset="UTF-8">
@@ -1455,7 +1454,6 @@ const html = `<!DOCTYPE html>
 <div style="max-width:800px;margin:0 auto;padding:20px">
 
   <!-- Header -->
-
   <div style="background:linear-gradient(90deg,#7c3aed,#4f46e5);padding:16px 20px;border-radius:10px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center">
     <div>
       <div style="font-weight:900;font-size:18px">نظام تقييم الأداء</div>
@@ -1465,7 +1463,6 @@ const html = `<!DOCTYPE html>
   </div>
 
   <!-- Employee Info -->
-
   <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
     <div><div style="font-size:10px;color:#64748b">اسم الموظف</div><div style="font-weight:700;font-size:14px">${data.employeeName}</div></div>
     <div><div style="font-size:10px;color:#64748b">المسمى الوظيفي</div><div style="font-weight:600">${data.jobTitle}</div></div>
@@ -1476,7 +1473,6 @@ const html = `<!DOCTYPE html>
   </div>
 
   <!-- Score Summary -->
-
   <div style="background:#1e293b;border:2px solid ${grade.color};border-radius:8px;padding:14px;margin-bottom:12px">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
       <div style="text-align:center">
@@ -1512,22 +1508,18 @@ const html = `<!DOCTYPE html>
   </div>
 
   <!-- Scores -->
-
   <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px">
     <div style="font-weight:800;margin-bottom:12px;font-size:13px">تفاصيل عناصر التقييم</div>
     ${catsHTML}
   </div>
 
   <!-- Comments -->
-
-${commentsHTML ? `<div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px">
-<div style="font-weight:800;margin-bottom:12px;font-size:13px">الملاحظات والتوجيهات</div>
-${commentsHTML}
-
+  ${commentsHTML ? `<div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:12px">
+    <div style="font-weight:800;margin-bottom:12px;font-size:13px">الملاحظات والتوجيهات</div>
+    ${commentsHTML}
   </div>` : ""}
 
   <!-- Signatures -->
-
   <div style="background:#1e293b;border-radius:8px;padding:14px;margin-bottom:16px">
     <div style="font-weight:800;margin-bottom:12px;font-size:13px">التوقيعات والاعتمادات</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
@@ -1550,7 +1542,6 @@ ${commentsHTML}
   </div>
 
   <!-- Print button -->
-
   <div class="no-print" style="text-align:center;margin-bottom:20px">
     <button onclick="window.print()" style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border:none;border-radius:10px;padding:14px 40px;font-size:15px;font-weight:700;cursor:pointer;margin-left:10px">طباعة / حفظ PDF 🖨️</button>
     <button onclick="window.close()" style="background:rgba(255,255,255,0.1);color:#64748b;border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:14px 24px;font-size:14px;cursor:pointer">إغلاق</button>
@@ -1561,241 +1552,305 @@ ${commentsHTML}
 </body>
 </html>`;
 
-// overlay for mobile
-const ov = document.getElementById(“evalOv”);
-if(ov) ov.remove();
-const d = document.createElement(“div”);
-d.id = “evalOv”;
-d.style.cssText = “position:fixed;inset:0;z-index:9999;overflow-y:auto;background:#f8fafc”;
-d.innerHTML = html;
-document.body.appendChild(d);
+  // overlay for mobile
+  const ov = document.getElementById("evalOv");
+  if(ov) ov.remove();
+  const d = document.createElement("div");
+  d.id = "evalOv";
+  d.style.cssText = "position:fixed;inset:0;z-index:9999;overflow-y:auto;background:#f8fafc";
+  d.innerHTML = html;
+  document.body.appendChild(d);
 };
 // ===== MANAGER AUTH & DASHBOARD =====
-const MANAGER_PASS = “tabarak2026”;    // باسورد بدء التقييم
-const DASHBOARD_PASS = “tabarak@admin”; // باسورد لوحة التحكم
+const MANAGER_PASS = "tabarak2026";    // باسورد بدء التقييم
+const DASHBOARD_PASS = "tabarak@admin"; // باسورد لوحة التحكم
 let managerAuthenticated = false;
 
-// Called from home page “المدير” card
+// Called from home page "المدير" card
 window.checkManagerAccess = function() {
-document.getElementById(“managerAccessPwd”).value = “”;
-document.getElementById(“managerAccessError”).textContent = “”;
-const modal = document.getElementById(“managerAccessModal”);
-modal.style.display = “flex”;
-setTimeout(() => document.getElementById(“managerAccessPwd”).focus(), 100);
+  document.getElementById("managerAccessPwd").value = "";
+  document.getElementById("managerAccessError").textContent = "";
+  const modal = document.getElementById("managerAccessModal");
+  modal.style.display = "flex";
+  setTimeout(() => document.getElementById("managerAccessPwd").focus(), 100);
 };
 
 window.closeManagerModal = function() {
-document.getElementById(“managerAccessModal”).style.display = “none”;
+  document.getElementById("managerAccessModal").style.display = "none";
 };
 
 window.submitManagerAccess = function() {
-const pwd = document.getElementById(“managerAccessPwd”).value;
-if (pwd === MANAGER_PASS) {
-document.getElementById(“managerAccessModal”).style.display = “none”;
-managerAuthenticated = true;
-showPage(“page-setup”);
-} else {
-document.getElementById(“managerAccessError”).textContent = “كلمة المرور غير صحيحة”;
-document.getElementById(“managerAccessPwd”).value = “”;
-}
+  const pwd = document.getElementById("managerAccessPwd").value;
+  if (pwd === MANAGER_PASS) {
+    document.getElementById("managerAccessModal").style.display = "none";
+    managerAuthenticated = true;
+    showPage("page-setup");
+  } else {
+    document.getElementById("managerAccessError").textContent = "كلمة المرور غير صحيحة";
+    document.getElementById("managerAccessPwd").value = "";
+  }
 };
 
-// Called from dashboard “لوحة تحكم المدير” button
+// Called from dashboard "لوحة تحكم المدير" button
 window.checkManagerPassword = function() {
-const pwd = document.getElementById(“managerPassword”).value;
-if (pwd === DASHBOARD_PASS) {
-document.getElementById(“passwordError”).textContent = “”;
-managerAuthenticated = true;
-loadDashboard();
-} else {
-document.getElementById(“passwordError”).textContent = “كلمة المرور غير صحيحة”;
-document.getElementById(“managerPassword”).value = “”;
-}
+  const pwd = document.getElementById("managerPassword").value;
+  if (pwd === DASHBOARD_PASS) {
+    document.getElementById("passwordError").textContent = "";
+    managerAuthenticated = true;
+    loadDashboard();
+  } else {
+    document.getElementById("passwordError").textContent = "كلمة المرور غير صحيحة";
+    document.getElementById("managerPassword").value = "";
+  }
 };
 
 // ===== DASHBOARD LOGIC =====
 let allEvalsCache = [];
-let dashFilter = “all”;       // all | pending | completed
-let dashRoleFilter = “all”;   // all | site_eng | tech_off | …
-let dashView = “list”;        // list | insights
+let dashFilter = "all";       // all | pending | completed
+let dashRoleFilter = "all";   // all | site_eng | tech_off | ...
+let dashView = "list";        // list | insights
 
 function evalGetTotal(ev) {
-if (!ev.scores || !ev.role) return 0;
-const items = ITEMS[ev.role];
-if (!items) return 0;
-return […items.cat1, …items.cat2, …items.cat3].reduce((s,i) => s + (ev.scores[i.id]||0), 0);
+  if (!ev.scores || !ev.role) return 0;
+  const items = ITEMS[ev.role];
+  if (!items) return 0;
+  return [...items.cat1, ...items.cat2, ...items.cat3].reduce((s,i) => s + (ev.scores[i.id]||0), 0);
 }
 function evalGetMax(ev) {
-if (!ev.role) return 125;
-const items = ITEMS[ev.role];
-if (!items) return 125;
-return […items.cat1, …items.cat2, …items.cat3].length * 5;
+  if (!ev.role) return 125;
+  const items = ITEMS[ev.role];
+  if (!items) return 125;
+  return [...items.cat1, ...items.cat2, ...items.cat3].length * 5;
 }
 function evalGetPct(ev) {
-const mx = evalGetMax(ev);
-return mx > 0 ? Math.round(evalGetTotal(ev) / mx * 100) : 0;
+  const mx = evalGetMax(ev);
+  return mx > 0 ? Math.round(evalGetTotal(ev) / mx * 100) : 0;
 }
 
 async function loadDashboard() {
-showPage(“page-dashboard”);
-document.getElementById(“dashboardList”).innerHTML = `<div style="text-align:center;padding:40px;color:#64748b">⏳ جاري تحميل التقييمات...</div>`;
-if (!window.loadAllEvals) {
-document.getElementById(“dashboardList”).innerHTML = `<div style="text-align:center;padding:40px;color:#ef4444">خطأ: Firebase لم يُحمَّل بعد. أعد المحاولة.</div>`;
-return;
-}
-const evals = await window.loadAllEvals();
-allEvalsCache = evals;
-renderDashboard();
+  showPage("page-dashboard");
+  document.getElementById("dashboardList").innerHTML = `<div style="text-align:center;padding:40px;color:#64748b">⏳ جاري تحميل التقييمات...</div>`;
+  if (!window.loadAllEvals) {
+    document.getElementById("dashboardList").innerHTML = `<div style="text-align:center;padding:40px;color:#ef4444">خطأ: Firebase لم يُحمَّل بعد. أعد المحاولة.</div>`;
+    return;
+  }
+  const evals = await window.loadAllEvals();
+  allEvalsCache = evals;
+  renderDashboard();
 }
 
 function getAppliedFilters() {
-return allEvalsCache.filter(e => {
-const stageOk = dashFilter === “all” ||
-(dashFilter === “pending” && e.stage === “pending_employee”) ||
-(dashFilter === “completed” && e.stage === “completed”);
-const roleOk = dashRoleFilter === “all” || e.role === dashRoleFilter;
-return stageOk && roleOk;
-});
+  return allEvalsCache.filter(e => {
+    const stageOk = dashFilter === "all" || 
+      (dashFilter === "pending" && e.stage === "pending_employee") ||
+      (dashFilter === "completed" && e.stage === "completed");
+    const roleOk = dashRoleFilter === "all" || e.role === dashRoleFilter;
+    return stageOk && roleOk;
+  });
 }
 
 function renderDashboard() {
-const evals = allEvalsCache;
-const container = document.getElementById(“dashboardList”);
+  const evals = allEvalsCache;
+  const container = document.getElementById("dashboardList");
 
-if (!evals || evals.length === 0) {
-container.innerHTML = `<div style="text-align:center;padding:60px 20px;color:#64748b"> <div style="font-size:48px;margin-bottom:16px">📭</div> <div style="font-size:16px;font-weight:700;margin-bottom:8px">لا توجد تقييمات بعد</div> <div style="font-size:13px">ستظهر التقييمات هنا فور اعتمادها</div> </div>`;
-return;
-}
+  if (!evals || evals.length === 0) {
+    container.innerHTML = `<div style="text-align:center;padding:60px 20px;color:#64748b">
+      <div style="font-size:48px;margin-bottom:16px">📭</div>
+      <div style="font-size:16px;font-weight:700;margin-bottom:8px">لا توجد تقييمات بعد</div>
+      <div style="font-size:13px">ستظهر التقييمات هنا فور اعتمادها</div>
+    </div>`;
+    return;
+  }
 
-const total = evals.length;
-const pending = evals.filter(e => e.stage === “pending_employee”).length;
-const completed = evals.filter(e => e.stage === “completed”).length;
-const scores = evals.map(e => evalGetTotal(e)).filter(s => s > 0);
-const avgScore = scores.length > 0 ? Math.round(scores.reduce((a,b)=>a+b,0)/scores.length) : 0;
+  const total = evals.length;
+  const pending = evals.filter(e => e.stage === "pending_employee").length;
+  const completed = evals.filter(e => e.stage === "completed").length;
+  const scores = evals.map(e => evalGetTotal(e)).filter(s => s > 0);
+  const avgScore = scores.length > 0 ? Math.round(scores.reduce((a,b)=>a+b,0)/scores.length) : 0;
 
-const filtered = getAppliedFilters();
+  const filtered = getAppliedFilters();
 
-// Role filter pills
-const roleCountMap = {};
-ROLES.forEach(r => { roleCountMap[r.id] = evals.filter(e => e.role === r.id).length; });
-const rolePills = ROLES.filter(r => roleCountMap[r.id] > 0).map(r =>
-`<button onclick="setDashRole('${r.id}')" style="padding:5px 10px;border-radius:20px;border:none;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;${dashRoleFilter===r.id?'background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff':'background:#f1f5f9;color:#475569'}">${r.label} (${roleCountMap[r.id]})</button>`
-).join(””);
+  // Role filter pills
+  const roleCountMap = {};
+  ROLES.forEach(r => { roleCountMap[r.id] = evals.filter(e => e.role === r.id).length; });
+  const rolePills = ROLES.filter(r => roleCountMap[r.id] > 0).map(r =>
+    `<button onclick="setDashRole('${r.id}')" style="padding:5px 10px;border-radius:20px;border:none;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;${dashRoleFilter===r.id?'background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff':'background:#f1f5f9;color:#475569'}">${r.label} (${roleCountMap[r.id]})</button>`
+  ).join("");
 
-container.innerHTML = `
-<!-- Stats -->
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:14px">
-<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
-<div style="font-size:22px;font-weight:900;color:#1e293b">${total}</div>
-<div style="font-size:10px;color:#64748b">إجمالي</div>
-</div>
-<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
-<div style="font-size:22px;font-weight:900;color:#f97316">${pending}</div>
-<div style="font-size:10px;color:#64748b">بانتظار الموظف</div>
-</div>
-<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
-<div style="font-size:22px;font-weight:900;color:#22c55e">${completed}</div>
-<div style="font-size:10px;color:#64748b">مكتملة</div>
-</div>
-<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
-<div style="font-size:22px;font-weight:900;color:#7b1d35">${avgScore}</div>
-<div style="font-size:10px;color:#64748b">متوسط الدرجة</div>
-</div>
-</div>
+  container.innerHTML = `
+    <!-- Stats -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:14px">
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:22px;font-weight:900;color:#1e293b">${total}</div>
+        <div style="font-size:10px;color:#64748b">إجمالي</div>
+      </div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:22px;font-weight:900;color:#f97316">${pending}</div>
+        <div style="font-size:10px;color:#64748b">بانتظار الموظف</div>
+      </div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:22px;font-weight:900;color:#22c55e">${completed}</div>
+        <div style="font-size:10px;color:#64748b">مكتملة</div>
+      </div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:22px;font-weight:900;color:#7b1d35">${avgScore}</div>
+        <div style="font-size:10px;color:#64748b">متوسط الدرجة</div>
+      </div>
+    </div>
 
-```
-<!-- View toggle -->
-<div style="display:flex;gap:6px;margin-bottom:10px">
-  <button onclick="setDashView('list')" style="flex:1;padding:8px;border-radius:8px;border:none;font-size:12px;font-weight:700;cursor:pointer;${dashView==='list'?'background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff':'background:#f1f5f9;color:#64748b'}">📋 القائمة</button>
-  <button onclick="setDashView('insights')" style="flex:1;padding:8px;border-radius:8px;border:none;font-size:12px;font-weight:700;cursor:pointer;${dashView==='insights'?'background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff':'background:#f1f5f9;color:#64748b'}">🏆 المتميزون</button>
-</div>
+    <!-- View toggle -->
+    <div style="display:flex;gap:6px;margin-bottom:10px">
+      <button onclick="setDashView('list')" style="flex:1;padding:8px;border-radius:8px;border:none;font-size:12px;font-weight:700;cursor:pointer;${dashView==='list'?'background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff':'background:#f1f5f9;color:#64748b'}">📋 القائمة</button>
+      <button onclick="setDashView('insights')" style="flex:1;padding:8px;border-radius:8px;border:none;font-size:12px;font-weight:700;cursor:pointer;${dashView==='insights'?'background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff':'background:#f1f5f9;color:#64748b'}">🏆 المتميزون</button>
+    </div>
 
-${dashView === 'insights' ? buildInsightsView(evals) : `
-  <!-- Stage filter -->
-  <div style="display:flex;gap:6px;margin-bottom:8px">
-    <button onclick="setDashFilter('all')" style="flex:1;padding:7px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashFilter==='all'?'background:#1e293b;color:#fff':'background:#f1f5f9;color:#64748b'}">الكل (${total})</button>
-    <button onclick="setDashFilter('pending')" style="flex:1;padding:7px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashFilter==='pending'?'background:#f97316;color:#fff':'background:#f1f5f9;color:#64748b'}">⏳ بانتظار (${pending})</button>
-    <button onclick="setDashFilter('completed')" style="flex:1;padding:7px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashFilter==='completed'?'background:#22c55e;color:#fff':'background:#f1f5f9;color:#64748b'}">✓ مكتملة (${completed})</button>
-  </div>
+    ${dashView === 'insights' ? buildInsightsView(evals) : `
+      <!-- Stage filter -->
+      <div style="display:flex;gap:6px;margin-bottom:8px">
+        <button onclick="setDashFilter('all')" style="flex:1;padding:7px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashFilter==='all'?'background:#1e293b;color:#fff':'background:#f1f5f9;color:#64748b'}">الكل (${total})</button>
+        <button onclick="setDashFilter('pending')" style="flex:1;padding:7px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashFilter==='pending'?'background:#f97316;color:#fff':'background:#f1f5f9;color:#64748b'}">⏳ بانتظار (${pending})</button>
+        <button onclick="setDashFilter('completed')" style="flex:1;padding:7px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashFilter==='completed'?'background:#22c55e;color:#fff':'background:#f1f5f9;color:#64748b'}">✓ مكتملة (${completed})</button>
+      </div>
 
-  <!-- Role filter pills -->
-  <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;align-items:center">
-    <button onclick="setDashRole('all')" style="padding:5px 10px;border-radius:20px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashRoleFilter==='all'?'background:#1e293b;color:#fff':'background:#f1f5f9;color:#475569'}">كل المهن</button>
-    ${rolePills}
-  </div>
+      <!-- Role filter pills -->
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;align-items:center">
+        <button onclick="setDashRole('all')" style="padding:5px 10px;border-radius:20px;border:none;font-size:11px;font-weight:700;cursor:pointer;${dashRoleFilter==='all'?'background:#1e293b;color:#fff':'background:#f1f5f9;color:#475569'}">كل المهن</button>
+        ${rolePills}
+      </div>
 
-  <!-- Cards -->
-  <div id="evalCardsList">
-    ${filtered.length === 0
-      ? `<div style="text-align:center;padding:40px;color:#64748b;font-size:14px">لا توجد تقييمات في هذه الفئة</div>`
-      : filtered.map(ev => buildEvalCard(ev)).join("")
-    }
-  </div>
-`}
+      <!-- Cards -->
+      <div id="evalCardsList">
+        ${filtered.length === 0
+          ? `<div style="text-align:center;padding:40px;color:#64748b;font-size:14px">لا توجد تقييمات في هذه الفئة</div>`
+          : filtered.map(ev => buildEvalCard(ev)).join("")
+        }
+      </div>
+    `}
 
-<div style="text-align:center;margin-top:14px;padding-bottom:20px;display:flex;gap:8px;justify-content:center">
-  <button onclick="loadDashboard()" style="background:#f1f5f9;border:1px solid #cbd5e1;border-radius:8px;color:#4a5568;font-size:12px;cursor:pointer;padding:7px 16px">🔄 تحديث</button>
-  <button onclick="showPage('page-manager-login')" style="background:#f1f5f9;border:1px solid #cbd5e1;border-radius:8px;color:#4a5568;font-size:12px;cursor:pointer;padding:7px 16px">🔐 إعادة الدخول</button>
-</div>
-```
-
-`;
+    <div style="text-align:center;margin-top:14px;padding-bottom:20px;display:flex;gap:8px;justify-content:center">
+      <button onclick="loadDashboard()" style="background:#f1f5f9;border:1px solid #cbd5e1;border-radius:8px;color:#4a5568;font-size:12px;cursor:pointer;padding:7px 16px">🔄 تحديث</button>
+      <button onclick="showPage('page-manager-login')" style="background:#f1f5f9;border:1px solid #cbd5e1;border-radius:8px;color:#4a5568;font-size:12px;cursor:pointer;padding:7px 16px">🔐 إعادة الدخول</button>
+    </div>
+  `;
 }
 
 function buildInsightsView(evals) {
-// Overall top 3
-const ranked = […evals].sort((a,b) => evalGetPct(b) - evalGetPct(a));
-const top3 = ranked.slice(0, 3);
+  // Overall top 3
+  const ranked = [...evals].sort((a,b) => evalGetPct(b) - evalGetPct(a));
+  const top3 = ranked.slice(0, 3);
 
-// Top per role
-const topPerRole = ROLES.map(role => {
-const roleEvals = evals.filter(e => e.role === role.id);
-if (!roleEvals.length) return null;
-const best = roleEvals.sort((a,b) => evalGetPct(b) - evalGetPct(a))[0];
-return { role, best };
-}).filter(Boolean);
+  // Top per role
+  const topPerRole = ROLES.map(role => {
+    const roleEvals = evals.filter(e => e.role === role.id);
+    if (!roleEvals.length) return null;
+    const best = roleEvals.sort((a,b) => evalGetPct(b) - evalGetPct(a))[0];
+    return { role, best };
+  }).filter(Boolean);
 
-const medalIcons = [“🥇”,“🥈”,“🥉”];
-const medalColors = [”#f59e0b”,”#94a3b8”,”#b45309”];
+  const medalIcons = ["🥇","🥈","🥉"];
+  const medalColors = ["#f59e0b","#94a3b8","#b45309"];
 
-const top3HTML = top3.map((ev, i) => {
-const pct = evalGetPct(ev);
-const grade = getGrade(evalGetTotal(ev));
-const roleName = ROLES.find(r => r.id === ev.role)?.label || “”;
-return `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-bottom:8px;border-right:4px solid ${medalColors[i]};display:flex;align-items:center;gap:12px"> <div style="font-size:32px;flex-shrink:0">${medalIcons[i]}</div> <div style="flex:1"> <div style="font-weight:800;font-size:15px;color:#1e293b">${ev.employeeName || "—"}</div> <div style="font-size:12px;color:#64748b">${ev.jobTitle || ""} • ${roleName}</div> <div style="font-size:11px;color:#94a3b8">${ev.department || ""} • ${ev.period || ""}</div> </div> <div style="text-align:center"> <div style="font-size:26px;font-weight:900;color:${grade.color}">${pct}%</div> <div style="font-size:11px;color:${grade.color};font-weight:700">${grade.ar}</div> <div style="font-size:10px;color:#94a3b8">${evalGetTotal(ev)} / ${evalGetMax(ev)}</div> </div> </div>`;
-}).join(””);
+  const top3HTML = top3.map((ev, i) => {
+    const pct = evalGetPct(ev);
+    const grade = getGrade(evalGetTotal(ev));
+    const roleName = ROLES.find(r => r.id === ev.role)?.label || "";
+    return `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-bottom:8px;border-right:4px solid ${medalColors[i]};display:flex;align-items:center;gap:12px">
+      <div style="font-size:32px;flex-shrink:0">${medalIcons[i]}</div>
+      <div style="flex:1">
+        <div style="font-weight:800;font-size:15px;color:#1e293b">${ev.employeeName || "—"}</div>
+        <div style="font-size:12px;color:#64748b">${ev.jobTitle || ""} • ${roleName}</div>
+        <div style="font-size:11px;color:#94a3b8">${ev.department || ""} • ${ev.period || ""}</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:26px;font-weight:900;color:${grade.color}">${pct}%</div>
+        <div style="font-size:11px;color:${grade.color};font-weight:700">${grade.ar}</div>
+        <div style="font-size:10px;color:#94a3b8">${evalGetTotal(ev)} / ${evalGetMax(ev)}</div>
+      </div>
+    </div>`;
+  }).join("");
 
-const perRoleHTML = topPerRole.map(({role, best}) => {
-const pct = evalGetPct(best);
-const grade = getGrade(evalGetTotal(best));
-const roleEvals = evals.filter(e => e.role === role.id);
-return `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;margin-bottom:8px"> <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"> <div> <div style="font-size:11px;font-weight:700;color:#7b1d35;margin-bottom:2px">🏅 الأعلى في: ${role.label}</div> <div style="font-weight:800;font-size:14px;color:#1e293b">${best.employeeName || "—"}</div> <div style="font-size:11px;color:#64748b">${best.department || ""} • ${best.period || ""}</div> </div> <div style="text-align:center"> <div style="font-size:22px;font-weight:900;color:${grade.color}">${pct}%</div> <div style="font-size:10px;color:#64748b">${roleEvals.length} موظف في هذه المهنة</div> </div> </div> <div style="background:#f1f5f9;border-radius:4px;height:5px;overflow:hidden"> <div style="width:${pct}%;height:100%;background:${grade.color};border-radius:4px"></div> </div> </div>`;
-}).join(””);
+  const perRoleHTML = topPerRole.map(({role, best}) => {
+    const pct = evalGetPct(best);
+    const grade = getGrade(evalGetTotal(best));
+    const roleEvals = evals.filter(e => e.role === role.id);
+    return `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div>
+          <div style="font-size:11px;font-weight:700;color:#7b1d35;margin-bottom:2px">🏅 الأعلى في: ${role.label}</div>
+          <div style="font-weight:800;font-size:14px;color:#1e293b">${best.employeeName || "—"}</div>
+          <div style="font-size:11px;color:#64748b">${best.department || ""} • ${best.period || ""}</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:22px;font-weight:900;color:${grade.color}">${pct}%</div>
+          <div style="font-size:10px;color:#64748b">${roleEvals.length} موظف في هذه المهنة</div>
+        </div>
+      </div>
+      <div style="background:#f1f5f9;border-radius:4px;height:5px;overflow:hidden">
+        <div style="width:${pct}%;height:100%;background:${grade.color};border-radius:4px"></div>
+      </div>
+    </div>`;
+  }).join("");
 
-return `<div style="background:linear-gradient(135deg,#7b1d35,#9b2335);border-radius:12px;padding:14px;margin-bottom:14px;color:#fff;text-align:center"> <div style="font-size:24px;margin-bottom:4px">🏆</div> <div style="font-weight:800;font-size:15px">لوحة المتميزين</div> <div style="font-size:12px;opacity:0.8">الأعلى تقييماً من جميع الفئات</div> </div> ${top3.length > 0 ?`<div style="margin-bottom:16px">${top3HTML}</div>`: ""} <div style="font-size:13px;font-weight:800;color:#1e293b;margin-bottom:10px;border-right:3px solid #9b2335;padding-right:8px">الأعلى تقييماً لكل مهنة</div> ${perRoleHTML}`;
+  return `
+    <div style="background:linear-gradient(135deg,#7b1d35,#9b2335);border-radius:12px;padding:14px;margin-bottom:14px;color:#fff;text-align:center">
+      <div style="font-size:24px;margin-bottom:4px">🏆</div>
+      <div style="font-weight:800;font-size:15px">لوحة المتميزين</div>
+      <div style="font-size:12px;opacity:0.8">الأعلى تقييماً من جميع الفئات</div>
+    </div>
+    ${top3.length > 0 ? `<div style="margin-bottom:16px">${top3HTML}</div>` : ""}
+    <div style="font-size:13px;font-weight:800;color:#1e293b;margin-bottom:10px;border-right:3px solid #9b2335;padding-right:8px">الأعلى تقييماً لكل مهنة</div>
+    ${perRoleHTML}
+  `;
 }
 
 function buildEvalCard(ev) {
-const total = evalGetTotal(ev);
-const totalMax = evalGetMax(ev);
-const pct = evalGetPct(ev);
-const grade = getGrade(evalGetTotal(ev));
-const roleName = ROLES.find(r => r.id === ev.role)?.label || ev.role || “”;
-const isCompleted = ev.stage === “completed”;
-const statusBadge = isCompleted
-? `<span style="background:#dcfce7;color:#16a34a;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px">✓ مكتمل</span>`
-: `<span style="background:#fff7ed;color:#ea580c;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px">⏳ بانتظار الموظف</span>`;
-const dateStr = ev.createdAt ? new Date(ev.createdAt).toLocaleDateString(“ar-SA”, {year:“numeric”,month:“short”,day:“numeric”}) : “”;
+  const total = evalGetTotal(ev);
+  const totalMax = evalGetMax(ev);
+  const pct = evalGetPct(ev);
+  const grade = getGrade(evalGetTotal(ev));
+  const roleName = ROLES.find(r => r.id === ev.role)?.label || ev.role || "";
+  const isCompleted = ev.stage === "completed";
+  const statusBadge = isCompleted
+    ? `<span style="background:#dcfce7;color:#16a34a;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px">✓ مكتمل</span>`
+    : `<span style="background:#fff7ed;color:#ea580c;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px">⏳ بانتظار الموظف</span>`;
+  const dateStr = ev.createdAt ? new Date(ev.createdAt).toLocaleDateString("ar-SA", {year:"numeric",month:"short",day:"numeric"}) : "";
 
-return `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-bottom:10px;border-right:3px solid ${grade.color}"> <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px"> <div style="flex:1"> <div style="font-weight:800;font-size:15px;color:#1e293b;margin-bottom:2px">${ev.employeeName || "—"}</div> <div style="font-size:12px;color:#64748b">${ev.jobTitle || ""} • ${roleName}</div> <div style="font-size:11px;color:#94a3b8;margin-top:2px">${ev.department || ""} • ${ev.period || ""}</div> </div> <div style="text-align:center;min-width:60px"> <div style="font-size:24px;font-weight:900;color:${grade.color};line-height:1">${total}</div> <div style="font-size:10px;color:#64748b">من ${totalMax}</div> <div style="font-size:13px;font-weight:700;color:${grade.color}">${pct}%</div> </div> </div> <div style="background:#f1f5f9;border-radius:4px;height:5px;margin-bottom:10px;overflow:hidden"> <div style="width:${pct}%;height:100%;background:${grade.color};border-radius:4px"></div> </div> <div style="display:flex;justify-content:space-between;align-items:center"> <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap"> ${statusBadge} <span style="font-size:11px;font-weight:700;color:${grade.color};background:${grade.color}22;padding:3px 8px;border-radius:20px">${grade.ar}</span> <span style="font-size:10px;color:#94a3b8">${dateStr}</span> </div> <div style="display:flex;gap:5px;align-items:center"> <button onclick="viewEvalDetail('${ev.evalId}')" style="background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;border:none;border-radius:7px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer">عرض</button> <button onclick="confirmDeleteEval('${ev.evalId}','${(ev.employeeName||'').replace(/'/g,"\'")}')" style="background:#fff;border:1px solid #fca5a5;color:#dc2626;border-radius:7px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer">🗑 حذف</button> </div> </div> ${isCompleted && ev.employeeSignature ? `<div style="margin-top:8px;padding-top:8px;border-top:1px dashed #e2e8f0;font-size:11px;color:#64748b">وقّع الموظف: <strong style="color:#16a34a">${ev.employeeSignature}</strong> — ${ev.employeeApprovalDate || “”}</div>`: ""} ${!isCompleted && ev.evalId ?`
-<div style="margin-top:10px;padding-top:10px;border-top:1px dashed #fed7aa;background:#fff7ed;border-radius:8px;padding:10px;display:flex;align-items:center;justify-content:space-between;gap:8px">
-<div>
-<div style="font-size:10px;color:#ea580c;font-weight:700;margin-bottom:3px">📤 رمز الموظف — لم يُرسَل بعد</div>
-<div style="font-size:20px;font-weight:900;letter-spacing:6px;color:#9b2335;font-family:monospace">${ev.evalId}</div>
-</div>
-<button onclick="copyEvalCode('${ev.evalId}')" style="background:linear-gradient(135deg,#ea580c,#f97316);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0">📋 نسخ الرمز</button>
-</div>` : “”}
-
+  return `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-bottom:10px;border-right:3px solid ${grade.color}">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+      <div style="flex:1">
+        <div style="font-weight:800;font-size:15px;color:#1e293b;margin-bottom:2px">${ev.employeeName || "—"}</div>
+        <div style="font-size:12px;color:#64748b">${ev.jobTitle || ""} • ${roleName}</div>
+        <div style="font-size:11px;color:#94a3b8;margin-top:2px">${ev.department || ""} • ${ev.period || ""}</div>
+      </div>
+      <div style="text-align:center;min-width:60px">
+        <div style="font-size:24px;font-weight:900;color:${grade.color};line-height:1">${total}</div>
+        <div style="font-size:10px;color:#64748b">من ${totalMax}</div>
+        <div style="font-size:13px;font-weight:700;color:${grade.color}">${pct}%</div>
+      </div>
+    </div>
+    <div style="background:#f1f5f9;border-radius:4px;height:5px;margin-bottom:10px;overflow:hidden">
+      <div style="width:${pct}%;height:100%;background:${grade.color};border-radius:4px"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap">
+        ${statusBadge}
+        <span style="font-size:11px;font-weight:700;color:${grade.color};background:${grade.color}22;padding:3px 8px;border-radius:20px">${grade.ar}</span>
+        <span style="font-size:10px;color:#94a3b8">${dateStr}</span>
+      </div>
+      <div style="display:flex;gap:5px;align-items:center">
+        <button onclick="viewEvalDetail('${ev.evalId}')" style="background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;border:none;border-radius:7px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer">عرض</button>
+        <button onclick="confirmDeleteEval('${ev.evalId}','${(ev.employeeName||'').replace(/'/g,"\'")}')" style="background:#fff;border:1px solid #fca5a5;color:#dc2626;border-radius:7px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer">🗑 حذف</button>
+      </div>
+    </div>
+    ${isCompleted && ev.employeeSignature ? `<div style="margin-top:8px;padding-top:8px;border-top:1px dashed #e2e8f0;font-size:11px;color:#64748b">وقّع الموظف: <strong style="color:#16a34a">${ev.employeeSignature}</strong> — ${ev.employeeApprovalDate || ""}</div>` : ""}
+    ${!isCompleted && ev.evalId ? `
+    <div style="margin-top:10px;padding-top:10px;border-top:1px dashed #fed7aa;background:#fff7ed;border-radius:8px;padding:10px;display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <div>
+        <div style="font-size:10px;color:#ea580c;font-weight:700;margin-bottom:3px">📤 رمز الموظف — لم يُرسَل بعد</div>
+        <div style="font-size:20px;font-weight:900;letter-spacing:6px;color:#9b2335;font-family:monospace">${ev.evalId}</div>
+      </div>
+      <button onclick="copyEvalCode('${ev.evalId}')" style="background:linear-gradient(135deg,#ea580c,#f97316);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0">📋 نسخ الرمز</button>
+    </div>` : ""}
   </div>`;
 }
 
@@ -1804,68 +1859,93 @@ window.setDashRole = function(r) { dashRoleFilter = r; renderDashboard(); };
 window.setDashView = function(v) { dashView = v; renderDashboard(); };
 
 window.copyEvalCode = function(code) {
-if (navigator.clipboard) {
-navigator.clipboard.writeText(code).then(() => {
-alert(“✅ تم نسخ الرمز: “ + code + “\n\nأرسله للموظف ليفتح تقييمه على:\ntabarak-eval.vercel.app”);
-});
-} else {
-prompt(“انسخ الرمز التالي وأرسله للموظف:”, code);
-}
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(code).then(() => {
+      alert("✅ تم نسخ الرمز: " + code + "\n\nأرسله للموظف ليفتح تقييمه على:\ntabarak-eval.vercel.app");
+    });
+  } else {
+    prompt("انسخ الرمز التالي وأرسله للموظف:", code);
+  }
 };
 
 window.confirmDeleteEval = function(id, name) {
-if (!id) return;
-if (!confirm(`هل أنت متأكد من حذف تقييم "${name}"؟\nلا يمكن التراجع عن هذا الإجراء.`)) return;
-deleteEvalAndRefresh(id);
+  if (!id) return;
+  if (!confirm(`هل أنت متأكد من حذف تقييم "${name}"؟\nلا يمكن التراجع عن هذا الإجراء.`)) return;
+  deleteEvalAndRefresh(id);
 };
 
 async function deleteEvalAndRefresh(id) {
-showLoading(true);
-const ok = await window.deleteEval(id);
-showLoading(false);
-if (ok) {
-allEvalsCache = allEvalsCache.filter(e => e.evalId !== id);
-renderDashboard();
-} else {
-alert(“حدث خطأ أثناء الحذف. تحقق من الاتصال وأعد المحاولة.”);
-}
+  showLoading(true);
+  const ok = await window.deleteEval(id);
+  showLoading(false);
+  if (ok) {
+    allEvalsCache = allEvalsCache.filter(e => e.evalId !== id);
+    renderDashboard();
+  } else {
+    alert("حدث خطأ أثناء الحذف. تحقق من الاتصال وأعد المحاولة.");
+  }
 }
 
 window.viewEvalDetail = async function(id) {
-if (!id) return;
-showLoading(true);
-const data = await window.loadEval(id);
-showLoading(false);
-if (!data) { alert(“لم يُعثر على التقييم”); return; }
-state.empCode = id;
-state.empData = data;
-buildEmployeePage(data);
+  if (!id) return;
+  showLoading(true);
+  const data = await window.loadEval(id);
+  showLoading(false);
+  if (!data) { alert("لم يُعثر على التقييم"); return; }
+  state.empCode = id;
+  state.empData = data;
+  buildEmployeePage(data);
 
-// Get the sign card (last card in page-employee)
-const signCard = document.querySelector(”#page-employee .card:last-child”);
+  // Get the sign card (last card in page-employee)
+  const signCard = document.querySelector("#page-employee .card:last-child");
 
-if (data.stage === “completed” && data.employeeSignature) {
-// Show completed signatures instead of sign form
-signCard.innerHTML = `<div class="section-title">التوقيعات والاعتمادات</div> <div class="sig-box" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#f8fafc;border-radius:10px;padding:14px;border:1px solid #e2e8f0"> <div style="background:#fff;border-radius:8px;padding:12px;border-right:3px solid #9b2335"> <div style="font-size:10px;color:#9b2335;font-weight:700;margin-bottom:4px">✅ اعتماد المدير</div> <div style="font-weight:800;font-size:13px">${data.managerSignature||"—"}</div> <div style="font-size:11px;color:#64748b;margin-top:2px">التاريخ: ${data.managerApprovalDate||""}</div> </div> <div style="background:#fff;border-radius:8px;padding:12px;border-right:3px solid #22c55e"> <div style="font-size:10px;color:#22c55e;font-weight:700;margin-bottom:4px">✅ إقرار الموظف</div> <div style="font-weight:800;font-size:13px">${data.employeeSignature||"—"}</div> <div style="font-size:11px;color:#64748b;margin-top:2px">التاريخ: ${data.employeeApprovalDate||""}</div> </div> </div> ${data.employeeComment ?`<div style="margin-top:10px;background:#f0fdf4;border-radius:8px;padding:10px;font-size:13px;color:#166534"><span style="font-weight:700">ملاحظة الموظف: </span>${data.employeeComment}</div>` : ""} <div style="margin-top:12px;text-align:center"> <button onclick="buildPrintOverlay(state.empData)" style="background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff;border:none;border-radius:9px;padding:10px 24px;font-size:13px;font-weight:700;cursor:pointer">🖨️ طباعة / تحميل PDF</button> </div>`;
-signCard.style.display = “block”;
-} else {
-// Pending — hide sign form
-signCard.style.display = “none”;
-}
+  if (data.stage === "completed" && data.employeeSignature) {
+    // Show completed signatures instead of sign form
+    signCard.innerHTML = `
+      <div class="section-title">التوقيعات والاعتمادات</div>
+      <div class="sig-box" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#f8fafc;border-radius:10px;padding:14px;border:1px solid #e2e8f0">
+        <div style="background:#fff;border-radius:8px;padding:12px;border-right:3px solid #9b2335">
+          <div style="font-size:10px;color:#9b2335;font-weight:700;margin-bottom:4px">✅ اعتماد المدير</div>
+          <div style="font-weight:800;font-size:13px">${data.managerSignature||"—"}</div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px">التاريخ: ${data.managerApprovalDate||""}</div>
+        </div>
+        <div style="background:#fff;border-radius:8px;padding:12px;border-right:3px solid #22c55e">
+          <div style="font-size:10px;color:#22c55e;font-weight:700;margin-bottom:4px">✅ إقرار الموظف</div>
+          <div style="font-weight:800;font-size:13px">${data.employeeSignature||"—"}</div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px">التاريخ: ${data.employeeApprovalDate||""}</div>
+        </div>
+      </div>
+      ${data.employeeComment ? `<div style="margin-top:10px;background:#f0fdf4;border-radius:8px;padding:10px;font-size:13px;color:#166534"><span style="font-weight:700">ملاحظة الموظف: </span>${data.employeeComment}</div>` : ""}
+      <div style="margin-top:12px;text-align:center">
+        <button onclick="buildPrintOverlay(state.empData)" style="background:linear-gradient(135deg,#7b1d35,#9b2335);color:#fff;border:none;border-radius:9px;padding:10px 24px;font-size:13px;font-weight:700;cursor:pointer">🖨️ طباعة / تحميل PDF</button>
+      </div>`;
+    signCard.style.display = "block";
+  } else {
+    // Pending — hide sign form
+    signCard.style.display = "none";
+  }
 
-showPage(“page-employee”);
-document.querySelector(”#page-employee .top-bar .back-btn”).onclick = function() {
-// Restore sign card to original state when going back
-signCard.innerHTML = ` <div class="section-title">توقيعي بالاطلاع</div> <div class="field"><label>ملاحظاتي (اختياري)</label><textarea id="empComment" rows="2"></textarea></div> <div class="grid2"> <div class="field"><label>اسمي / توقيعي</label><input type="text" id="empSig" placeholder="اكتب اسمك كتوقيع" oninput="checkEmpSign()"></div> <div class="field"><label>تاريخ الاطلاع</label><input type="date" id="empSignDate" oninput="checkEmpSign()"></div> </div> <div id="empSignMsg"></div> <button class="btn btn-green" id="empSignBtn" onclick="employeeSign()" disabled>توقيع بالاطلاع والاعتماد ✓</button>`;
-signCard.style.display = “block”;
-showPage(“page-dashboard”);
+  showPage("page-employee");
+  document.querySelector("#page-employee .top-bar .back-btn").onclick = function() {
+    // Restore sign card to original state when going back
+    signCard.innerHTML = `
+      <div class="section-title">توقيعي بالاطلاع</div>
+      <div class="field"><label>ملاحظاتي (اختياري)</label><textarea id="empComment" rows="2"></textarea></div>
+      <div class="grid2">
+        <div class="field"><label>اسمي / توقيعي</label><input type="text" id="empSig" placeholder="اكتب اسمك كتوقيع" oninput="checkEmpSign()"></div>
+        <div class="field"><label>تاريخ الاطلاع</label><input type="date" id="empSignDate" oninput="checkEmpSign()"></div>
+      </div>
+      <div id="empSignMsg"></div>
+      <button class="btn btn-green" id="empSignBtn" onclick="employeeSign()" disabled>توقيع بالاطلاع والاعتماد ✓</button>`;
+    signCard.style.display = "block";
+    showPage("page-dashboard");
+  };
 };
-};
+
 
 </script>
 
 <!-- MANAGER ACCESS MODAL -->
-
 <div id="managerAccessModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.6);align-items:center;justify-content:center">
   <div style="background:#fff;border-radius:16px;padding:32px;width:320px;max-width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
     <div style="font-size:48px;margin-bottom:12px">🔐</div>
@@ -1879,6 +1959,7 @@ showPage(“page-dashboard”);
     <button onclick="closeManagerModal()" style="width:100%;background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0;border-radius:10px;padding:10px;font-size:14px;cursor:pointer;font-family:inherit">إلغاء</button>
   </div>
 </div>
+
 
 </body>
 </html>
